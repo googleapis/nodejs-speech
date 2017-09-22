@@ -14,7 +14,8 @@
   "scripts": {
     "lint": "samples lint",
     "pretest": "npm run lint",
-    "test": "samples test run --cmd ava -- -T 20s --verbose system-test/*.test.js"
+    "test":
+      "samples test run --cmd ava -- -T 20s --verbose system-test/*.test.js"
   },
   "dependencies": {
     "@google-cloud/speech": "0.10.2",

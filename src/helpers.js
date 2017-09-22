@@ -96,7 +96,7 @@ module.exports = () => {
 
       // Write the initial configuration to the stream.
       requestStream.write({
-        streamingConfig: config
+        streamingConfig: config,
       });
 
       // Set up appropriate piping between the stream returned by
@@ -107,11 +107,11 @@ module.exports = () => {
         // the appropriate request structure.
         through.obj((obj, _, next) => {
           next(null, {
-            audioContent: obj
+            audioContent: obj,
           });
         }),
         requestStream,
-        through.obj()
+        through.obj(),
       ]);
     });
 

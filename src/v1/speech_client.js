@@ -38,16 +38,14 @@ var DEFAULT_SERVICE_PORT = 443;
 var CODE_GEN_NAME_VERSION = 'gapic/0.10.0';
 
 var STREAM_DESCRIPTORS = {
-  streamingRecognize: new gax.StreamDescriptor(gax.StreamType.BIDI_STREAMING)
+  streamingRecognize: new gax.StreamDescriptor(gax.StreamType.BIDI_STREAMING),
 };
 
 /**
  * The scopes needed to make gRPC calls to all of the methods defined in
  * this service.
  */
-var ALL_SCOPES = [
-  'https://www.googleapis.com/auth/cloud-platform'
-];
+var ALL_SCOPES = ['https://www.googleapis.com/auth/cloud-platform'];
 
 /**
  * Service that implements Google Cloud Speech API.
@@ -56,15 +54,16 @@ var ALL_SCOPES = [
  * @class
  */
 function SpeechClient(gaxGrpc, grpcClients, opts) {
-  opts = extend({
-    servicePath: SERVICE_ADDRESS,
-    port: DEFAULT_SERVICE_PORT,
-    clientConfig: {}
-  }, opts);
+  opts = extend(
+    {
+      servicePath: SERVICE_ADDRESS,
+      port: DEFAULT_SERVICE_PORT,
+      clientConfig: {},
+    },
+    opts
+  );
 
-  var googleApiClient = [
-    'gl-node/' + process.versions.node
-  ];
+  var googleApiClient = ['gl-node/' + process.versions.node];
   if (opts.libName && opts.libVersion) {
     googleApiClient.push(opts.libName + '/' + opts.libVersion);
   }
@@ -76,32 +75,35 @@ function SpeechClient(gaxGrpc, grpcClients, opts) {
 
   this.operationsClient = new gax.lro({
     auth: gaxGrpc.auth,
-    grpc: gaxGrpc.grpc
+    grpc: gaxGrpc.grpc,
   }).operationsClient(opts);
 
   this.longrunningDescriptors = {
     longRunningRecognize: new gax.LongrunningDescriptor(
       this.operationsClient,
       grpcClients.google.cloud.speech.v1.LongRunningRecognizeResponse.decode,
-      grpcClients.google.cloud.speech.v1.LongRunningRecognizeMetadata.decode)
+      grpcClients.google.cloud.speech.v1.LongRunningRecognizeMetadata.decode
+    ),
   };
 
   var defaults = gaxGrpc.constructSettings(
-      'google.cloud.speech.v1.Speech',
-      configData,
-      opts.clientConfig,
-      {'x-goog-api-client': googleApiClient.join(' ')});
+    'google.cloud.speech.v1.Speech',
+    configData,
+    opts.clientConfig,
+    {'x-goog-api-client': googleApiClient.join(' ')}
+  );
 
   var self = this;
 
   this.auth = gaxGrpc.auth;
   var speechStub = gaxGrpc.createStub(
-      grpcClients.google.cloud.speech.v1.Speech,
-      opts);
+    grpcClients.google.cloud.speech.v1.Speech,
+    opts
+  );
   var speechStubMethods = [
     'recognize',
     'longRunningRecognize',
-    'streamingRecognize'
+    'streamingRecognize',
   ];
   speechStubMethods.forEach(function(methodName) {
     self['_' + methodName] = gax.createApiCall(
@@ -112,10 +114,10 @@ function SpeechClient(gaxGrpc, grpcClients, opts) {
         };
       }),
       defaults[methodName],
-      STREAM_DESCRIPTORS[methodName] || self.longrunningDescriptors[methodName]);
+      STREAM_DESCRIPTORS[methodName] || self.longrunningDescriptors[methodName]
+    );
   });
 }
-
 
 /**
  * Get the project ID used by this class.
@@ -315,7 +317,11 @@ SpeechClient.prototype.recognize = function(request, options, callback) {
  *     console.error(err);
  * });
  */
-SpeechClient.prototype.longRunningRecognize = function(request, options, callback) {
+SpeechClient.prototype.longRunningRecognize = function(
+  request,
+  options,
+  callback
+) {
   if (options instanceof Function && callback === undefined) {
     callback = options;
     options = {};
@@ -367,12 +373,13 @@ function SpeechClientBuilder(gaxGrpc) {
     return new SpeechClientBuilder(gaxGrpc);
   }
 
-  var speechClient = gaxGrpc.load([{
-    root: require('google-proto-files')('..'),
-    file: 'google/cloud/speech/v1/cloud_speech.proto'
-  }]);
+  var speechClient = gaxGrpc.load([
+    {
+      root: require('google-proto-files')('..'),
+      file: 'google/cloud/speech/v1/cloud_speech.proto',
+    },
+  ]);
   extend(this, speechClient.google.cloud.speech.v1);
-
 
   /**
    * Build a new instance of {@link SpeechClient}.

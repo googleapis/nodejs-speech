@@ -23,7 +23,7 @@
 
 var extend = require('extend');
 var gapic = {
-  v1: require('./v1')
+  v1: require('./v1'),
 };
 var gaxGrpc = require('google-gax').grpc();
 var helpers = require('./helpers');
@@ -50,7 +50,7 @@ function speechV1(options) {
   // Define the header options.
   options = extend({}, options, {
     libName: 'gccl',
-    libVersion: VERSION
+    libVersion: VERSION,
   });
 
   // Create the speech client with the provided options.
@@ -61,10 +61,15 @@ function speechV1(options) {
 
 var v1Protos = {};
 
-extend(v1Protos, gaxGrpc.load([{
-  root: require('google-proto-files')('..'),
-  file: 'google/cloud/speech/v1/cloud_speech.proto'
-}]).google.cloud.speech.v1);
+extend(
+  v1Protos,
+  gaxGrpc.load([
+    {
+      root: require('google-proto-files')('..'),
+      file: 'google/cloud/speech/v1/cloud_speech.proto',
+    },
+  ]).google.cloud.speech.v1
+);
 
 module.exports = speechV1;
 module.exports.types = v1Protos;

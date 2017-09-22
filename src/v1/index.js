@@ -20,9 +20,12 @@ var gax = require('google-gax');
 var extend = require('extend');
 
 function v1(options) {
-  options = extend({
-    scopes: v1.ALL_SCOPES
-  }, options);
+  options = extend(
+    {
+      scopes: v1.ALL_SCOPES,
+    },
+    options
+  );
   var gaxGrpc = gax.grpc(options);
   return speechClient(gaxGrpc);
 }

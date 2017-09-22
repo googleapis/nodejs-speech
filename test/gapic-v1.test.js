@@ -32,17 +32,17 @@ describe('SpeechClient', function() {
       var sampleRateHertz = 44100;
       var languageCode = 'en-US';
       var config = {
-          encoding : encoding,
-          sampleRateHertz : sampleRateHertz,
-          languageCode : languageCode
+        encoding: encoding,
+        sampleRateHertz: sampleRateHertz,
+        languageCode: languageCode,
       };
       var uri = 'gs://bucket_name/file_name.flac';
       var audio = {
-          uri : uri
+        uri: uri,
       };
       var request = {
-          config : config,
-          audio : audio
+        config: config,
+        audio: audio,
       };
 
       // Mock response
@@ -65,17 +65,17 @@ describe('SpeechClient', function() {
       var sampleRateHertz = 44100;
       var languageCode = 'en-US';
       var config = {
-          encoding : encoding,
-          sampleRateHertz : sampleRateHertz,
-          languageCode : languageCode
+        encoding: encoding,
+        sampleRateHertz: sampleRateHertz,
+        languageCode: languageCode,
       };
       var uri = 'gs://bucket_name/file_name.flac';
       var audio = {
-          uri : uri
+        uri: uri,
       };
       var request = {
-          config : config,
-          audio : audio
+        config: config,
+        audio: audio,
       };
 
       // Mock Grpc layer
@@ -97,34 +97,41 @@ describe('SpeechClient', function() {
       var sampleRateHertz = 44100;
       var languageCode = 'en-US';
       var config = {
-          encoding : encoding,
-          sampleRateHertz : sampleRateHertz,
-          languageCode : languageCode
+        encoding: encoding,
+        sampleRateHertz: sampleRateHertz,
+        languageCode: languageCode,
       };
       var uri = 'gs://bucket_name/file_name.flac';
       var audio = {
-          uri : uri
+        uri: uri,
       };
       var request = {
-          config : config,
-          audio : audio
+        config: config,
+        audio: audio,
       };
 
       // Mock response
       var expectedResponse = {};
 
       // Mock Grpc layer
-      client._longRunningRecognize = mockLongRunningGrpcMethod(request, expectedResponse);
+      client._longRunningRecognize = mockLongRunningGrpcMethod(
+        request,
+        expectedResponse
+      );
 
-      client.longRunningRecognize(request).then(function(responses) {
-        var operation = responses[0];
-        return operation.promise();
-      }).then(function(responses) {
-        assert.deepStrictEqual(responses[0], expectedResponse);
-        done();
-      }).catch(function(err) {
-        done(err);
-      });
+      client
+        .longRunningRecognize(request)
+        .then(function(responses) {
+          var operation = responses[0];
+          return operation.promise();
+        })
+        .then(function(responses) {
+          assert.deepStrictEqual(responses[0], expectedResponse);
+          done();
+        })
+        .catch(function(err) {
+          done(err);
+        });
     });
 
     it('invokes longRunningRecognize with error', function(done) {
@@ -134,32 +141,40 @@ describe('SpeechClient', function() {
       var sampleRateHertz = 44100;
       var languageCode = 'en-US';
       var config = {
-          encoding : encoding,
-          sampleRateHertz : sampleRateHertz,
-          languageCode : languageCode
+        encoding: encoding,
+        sampleRateHertz: sampleRateHertz,
+        languageCode: languageCode,
       };
       var uri = 'gs://bucket_name/file_name.flac';
       var audio = {
-          uri : uri
+        uri: uri,
       };
       var request = {
-          config : config,
-          audio : audio
+        config: config,
+        audio: audio,
       };
 
       // Mock Grpc layer
-      client._longRunningRecognize = mockLongRunningGrpcMethod(request, null, error);
+      client._longRunningRecognize = mockLongRunningGrpcMethod(
+        request,
+        null,
+        error
+      );
 
-      client.longRunningRecognize(request).then(function(responses) {
-        var operation = responses[0];
-        return operation.promise();
-      }).then(function(responses) {
-        assert.fail();
-      }).catch(function(err) {
-        assert(err instanceof Error);
-        assert.equal(err.code, FAKE_STATUS_CODE);
-        done();
-      });
+      client
+        .longRunningRecognize(request)
+        .then(function(responses) {
+          var operation = responses[0];
+          return operation.promise();
+        })
+        .then(function(responses) {
+          assert.fail();
+        })
+        .catch(function(err) {
+          assert(err instanceof Error);
+          assert.equal(err.code, FAKE_STATUS_CODE);
+          done();
+        });
     });
   });
 
@@ -173,14 +188,20 @@ describe('SpeechClient', function() {
       var expectedResponse = {};
 
       // Mock Grpc layer
-      client._streamingRecognize = mockBidiStreamingGrpcMethod(request, expectedResponse);
+      client._streamingRecognize = mockBidiStreamingGrpcMethod(
+        request,
+        expectedResponse
+      );
 
-      var stream = client.streamingRecognize().on('data', function(response) {
-        assert.deepStrictEqual(response, expectedResponse);
-        done()
-      }).on('error', function(err) {
-        done(err);
-      });
+      var stream = client
+        .streamingRecognize()
+        .on('data', function(response) {
+          assert.deepStrictEqual(response, expectedResponse);
+          done();
+        })
+        .on('error', function(err) {
+          done(err);
+        });
 
       stream.write(request);
     });
@@ -191,20 +212,26 @@ describe('SpeechClient', function() {
       var request = {};
 
       // Mock Grpc layer
-      client._streamingRecognize = mockBidiStreamingGrpcMethod(request, null, error);
+      client._streamingRecognize = mockBidiStreamingGrpcMethod(
+        request,
+        null,
+        error
+      );
 
-      var stream = client.streamingRecognize().on('data', function(response) {
-        assert.fail();
-      }).on('error', function(err) {
-        assert(err instanceof Error);
-        assert.equal(err.code, FAKE_STATUS_CODE);
-        done();
-      });
+      var stream = client
+        .streamingRecognize()
+        .on('data', function(response) {
+          assert.fail();
+        })
+        .on('error', function(err) {
+          assert(err instanceof Error);
+          assert.equal(err.code, FAKE_STATUS_CODE);
+          done();
+        });
 
       stream.write(request);
     });
   });
-
 });
 
 function mockSimpleGrpcMethod(expectedRequest, response, error) {
@@ -222,7 +249,7 @@ function mockSimpleGrpcMethod(expectedRequest, response, error) {
 
 function mockBidiStreamingGrpcMethod(expectedRequest, response, error) {
   return function() {
-    var mockStream = through2.obj(function (chunk, enc, callback) {
+    var mockStream = through2.obj(function(chunk, enc, callback) {
       assert.deepStrictEqual(chunk, expectedRequest);
       if (error) {
         callback(error);
@@ -231,7 +258,7 @@ function mockBidiStreamingGrpcMethod(expectedRequest, response, error) {
       }
     });
     return mockStream;
-  }
+  };
 }
 
 function mockLongRunningGrpcMethod(expectedRequest, response, error) {
@@ -246,7 +273,7 @@ function mockLongRunningGrpcMethod(expectedRequest, response, error) {
             resolve([response]);
           }
         });
-      }
+      },
     };
     return Promise.resolve([mockOperation]);
   };
