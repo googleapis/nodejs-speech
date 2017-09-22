@@ -17,6 +17,7 @@
 'use strict';
 
 var assert = require('assert');
+var Buffer = require('safe-buffer').Buffer;
 var sinon = require('sinon');
 var stream = require('stream');
 
@@ -128,7 +129,7 @@ describe('Speech helper methods', () => {
       sandbox.stub(speech, '_streamingRecognize').returns(requestStream);
 
       var userStream = speech.streamingRecognize(CONFIG, OPTIONS);
-      var audioContent = new Buffer('audio content');
+      var audioContent = Buffer.from('audio content');
 
       requestStream._write = (data, enc, next) => {
         if (data && data.streamingConfig !== CONFIG) {
