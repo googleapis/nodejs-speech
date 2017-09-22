@@ -63,12 +63,15 @@
     "through2": "^2.0.3"
   },
   "devDependencies": {
-    "@google-cloud/nodejs-repo-tools": "^2.0.0-beta.12",
+    "@google-cloud/nodejs-repo-tools": "^2.0.1",
+    "ink-docstrap": "git+https://github.com/docstrap/docstrap.git",
+    "jsdoc": "^3.5.5",
     "mocha": "^3.2.0",
     "power-assert": "^1.4.2",
     "sinon": "^2.2.0"
   },
   "scripts": {
+    "docs": "jsdoc -c .jsdoc.js",
     "generate-scaffolding": "repo-tools generate all && repo-tools generate lib_samples_readme  -l samples/ --config ../.cloud-repo-tools.json",
     "publish-module": "node ../../scripts/publish.js speech",
     "smoke-test": "mocha smoke-test/*.js --timeout 5000",
