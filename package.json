@@ -1,5 +1,5 @@
 {
-  "repository": "GoogleCloudPlatform/google-cloud-node",
+  "repository": "googleapis/nodejs-speech",
   "name": "@google-cloud/speech",
   "version": "0.10.3",
   "author": "Google Inc.",
@@ -63,13 +63,16 @@
     "through2": "^2.0.3"
   },
   "devDependencies": {
+    "@google-cloud/nodejs-repo-tools": "^2.0.0-beta.12",
     "mocha": "^3.2.0",
     "power-assert": "^1.4.2",
     "sinon": "^2.2.0"
   },
   "scripts": {
+    "generate-scaffolding": "repo-tools generate all && repo-tools generate lib_samples_readme  -l samples/ --config ../.cloud-repo-tools.json",
     "publish-module": "node ../../scripts/publish.js speech",
     "smoke-test": "mocha smoke-test/*.js --timeout 5000",
+    "samples-test": "cd samples/ && npm test && cd ../",
     "test": "mocha test/*.js"
   },
   "license": "Apache-2.0",
