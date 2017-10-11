@@ -6,7 +6,7 @@
   "author": "Google Inc.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/GoogleCloudPlatform/nodejs-docs-samples.git"
+    "url": "https://github.com/googleapis/nodejs-speech.git"
   },
   "engines": {
     "node": ">=4.3.2"
@@ -27,19 +27,5 @@
     "ava": "0.21.0",
     "proxyquire": "1.8.0",
     "sinon": "3.2.0"
-  },
-  "cloud-repo-tools": {
-    "requiresKeyFile": true,
-    "requiresProjectId": true,
-    "product": "speech",
-    "samples": [
-      {
-        "id": "recognize",
-        "name": "Speech Recognition",
-        "file": "recognize.js",
-        "docs_link": "https://cloud.google.com/speech/docs",
-        "usage": "node recognize.js --help"
-      }
-    ]
   }
 }
