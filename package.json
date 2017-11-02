@@ -1,39 +1,13 @@
 {
-  "repository": "GoogleCloudPlatform/google-cloud-node",
   "name": "@google-cloud/speech",
-  "version": "0.10.3",
-  "author": "Google Inc.",
   "description": "Cloud Speech Client Library for Node.js",
-  "contributors": [
-    {
-      "name": "Burcu Dogan",
-      "email": "jbd@google.com"
-    },
-    {
-      "name": "Jason Dobry",
-      "email": "jason.dobry@gmail.com"
-    },
-    {
-      "name": "Johan Euphrosine",
-      "email": "proppy@google.com"
-    },
-    {
-      "name": "Patrick Costello",
-      "email": "pcostell@google.com"
-    },
-    {
-      "name": "Ryan Seys",
-      "email": "ryan@ryanseys.com"
-    },
-    {
-      "name": "Silvano Luciani",
-      "email": "silvano@google.com"
-    },
-    {
-      "name": "Stephen Sawchuk",
-      "email": "sawchuk@gmail.com"
-    }
-  ],
+  "version": "0.10.3",
+  "license": "Apache-2.0",
+  "author": "Google Inc.",
+  "engines": {
+    "node": ">=4.0.0"
+  },
+  "repository": "GoogleCloudPlatform/google-cloud-node",
   "main": "./src/index.js",
   "files": [
     "protos",
@@ -54,6 +28,35 @@
     "speech",
     "Google Cloud Speech API"
   ],
+  "contributors": [
+    "Ace Nassri <anassri@google.com>",
+    "Ali Ijaz Sheikh <ofrobots@google.com>",
+    "Daryush Laqab <dlaqab@gmail.com>",
+    "Dave Gramlich <callmehiphop@gmail.com>",
+    "Eric Uldall <ericuldall@gmail.com>",
+    "Ernest Landrito <landrito@google.com>",
+    "Gus Class <gguuss@gmail.com>",
+    "Jason Dobry <jason.dobry@gmail.com>",
+    "Jason Dobry <jmdobry@users.noreply.github.com>",
+    "Jerjou <jerjou@users.noreply.github.com>",
+    "Jun Mukai <jun.mukai@gmail.com>",
+    "Jun Mukai <mukai@google.com>",
+    "Luke Sneeringer <luke@sneeringer.com>",
+    "Luke Sneeringer <lukesneeringer@google.com>",
+    "Pierre Fritsch <PierreFritsch@users.noreply.github.com>",
+    "Song Wang <songwang@google.com>",
+    "Stephen Sawchuk <sawchuk@gmail.com>",
+    "Stephen Sawchuk <stephenplusplus@users.noreply.github.com>",
+    "Tim Swast <swast@google.com>",
+    "danaharon <daharon@google.com>",
+    "puneith <puneith@users.noreply.github.com>",
+    "wanacode <wanacode@users.noreply.github.com>"
+  ],
+  "scripts": {
+    "generate-scaffolding": "repo-tools generate all && repo-tools generate lib_samples_readme -l samples/ --config ../.cloud-repo-tools.json",
+    "system-test": "mocha system-test/*.js --timeout 5000",
+    "test": "mocha test/*.js"
+  },
   "dependencies": {
     "google-proto-files": "^0.13.1",
     "google-gax": "^0.14.2",
@@ -67,14 +70,5 @@
     "mocha": "^3.2.0",
     "power-assert": "^1.4.2",
     "sinon": "^2.2.0"
-  },
-  "scripts": {
-    "generate-scaffolding": "repo-tools generate all && repo-tools generate lib_samples_readme -l samples/ --config ../.cloud-repo-tools.json",
-    "system-test": "mocha system-test/*.js --timeout 5000",
-    "test": "mocha test/*.js"
-  },
-  "license": "Apache-2.0",
-  "engines": {
-    "node": ">=4.0.0"
   }
 }
