@@ -16,7 +16,6 @@
 'use strict';
 
 describe('SpeechSmokeTest', function() {
-
   it('successfully makes a call to the service', function(done) {
     var speech = require('../src');
 
@@ -28,23 +27,25 @@ describe('SpeechSmokeTest', function() {
     var sampleRateHertz = 44100;
     var encoding = speech.v1.types.RecognitionConfig.AudioEncoding.FLAC;
     var config = {
-        languageCode : languageCode,
-        sampleRateHertz : sampleRateHertz,
-        encoding : encoding
+      languageCode: languageCode,
+      sampleRateHertz: sampleRateHertz,
+      encoding: encoding,
     };
     var uri = 'gs://gapic-toolkit/hello.flac';
     var audio = {
-        uri : uri
+      uri: uri,
     };
     var request = {
-        config: config,
-        audio: audio
+      config: config,
+      audio: audio,
     };
-    client.recognize(request).then(function(responses) {
+    client
+      .recognize(request)
+      .then(function(responses) {
         var response = responses[0];
         console.log(response);
-    })
-    .then(done)
-    .catch(done);
+      })
+      .then(done)
+      .catch(done);
   });
 });
