@@ -74,7 +74,7 @@ module.exports = () => {
       options = {};
     }
 
-    var requestStream = this._streamingRecognize(options);
+    var requestStream = this._innerApiCalls.streamingRecognize(options);
 
     // Format the audio content as input request for pipeline
     var recognizeStream = streamEvents(pumpify.obj());
