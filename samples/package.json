@@ -12,8 +12,6 @@
     "node": ">=4.3.2"
   },
   "scripts": {
-    "lint": "samples lint",
-    "pretest": "npm run lint",
     "test": "samples test run --cmd ava -- -T 20s --verbose system-test/*.test.js"
   },
   "dependencies": {
@@ -27,19 +25,5 @@
     "ava": "0.21.0",
     "proxyquire": "1.8.0",
     "sinon": "3.2.0"
-  },
-  "cloud-repo-tools": {
-    "requiresKeyFile": true,
-    "requiresProjectId": true,
-    "product": "speech",
-    "samples": [
-      {
-        "id": "recognize",
-        "name": "Speech Recognition",
-        "file": "recognize.js",
-        "docs_link": "https://cloud.google.com/speech/docs",
-        "usage": "node recognize.js --help"
-      }
-    ]
   }
 }
