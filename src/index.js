@@ -27,10 +27,18 @@
 
 'use strict';
 
+const helpers = require('./helpers');
+
 // Import the clients for each version supported by this package.
 const gapic = Object.freeze({
   v1: require('./v1'),
 });
+
+// Augment the SpeechClient objects with the helpers.
+for (let gapicVersion of Object.keys(gapic)) {
+  let ClientClass = gapicVersion.SpeechClient;
+  Object.assign(ClientClass, helpers());
+}
 
 /**
  * The `@google-cloud/speech` package has the following named exports:
