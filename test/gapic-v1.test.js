@@ -224,14 +224,22 @@ describe('SpeechClient', () => {
         projectId: 'bogus',
       });
 
+      // Mock initial request
+      var initialRequest = {
+        streamingConfig: undefined,
+      };
+
       // Mock request
-      var request = {};
+      var request = {
+        audioContent: 'test',
+      };
 
       // Mock response
       var expectedResponse = {};
 
       // Mock Grpc layer
       client._innerApiCalls.streamingRecognize = mockBidiStreamingGrpcMethod(
+        initialRequest,
         request,
         expectedResponse
       );
@@ -239,14 +247,16 @@ describe('SpeechClient', () => {
       var stream = client
         .streamingRecognize()
         .on('data', response => {
-          assert.deepStrictEqual(response, expectedResponse);
-          done();
+          if (response !== undefined) {
+            assert.deepStrictEqual(response, expectedResponse);
+            done();
+          }
         })
         .on('error', err => {
           done(err);
         });
 
-      stream.write(request);
+      stream.write('test');
     });
 
     it('invokes streamingRecognize with error', done => {
@@ -255,11 +265,19 @@ describe('SpeechClient', () => {
         projectId: 'bogus',
       });
 
+      // Mock initial request
+      var initialRequest = {
+        streamingConfig: undefined,
+      };
+
       // Mock request
-      var request = {};
+      var request = {
+        audioContent: 'test',
+      };
 
       // Mock Grpc layer
       client._innerApiCalls.streamingRecognize = mockBidiStreamingGrpcMethod(
+        initialRequest,
         request,
         null,
         error
@@ -276,7 +294,7 @@ describe('SpeechClient', () => {
           done();
         });
 
-      stream.write(request);
+      stream.write('test');
     });
   });
 });
@@ -294,14 +312,27 @@ function mockSimpleGrpcMethod(expectedRequest, response, error) {
   };
 }
 
-function mockBidiStreamingGrpcMethod(expectedRequest, response, error) {
+function mockBidiStreamingGrpcMethod(
+  expectedInitialRequest,
+  expectedRequest,
+  response,
+  error
+) {
+  var requestNum = 1;
   return () => {
     var mockStream = through2.obj((chunk, enc, callback) => {
-      assert.deepStrictEqual(chunk, expectedRequest);
+      if (requestNum === 1) {
+        assert.deepStrictEqual(chunk, expectedInitialRequest);
+      } else {
+        assert.deepStrictEqual(chunk, expectedRequest);
+      }
+      requestNum++;
       if (error) {
         callback(error);
-      } else {
+      } else if (requestNum > 2) {
         callback(null, response);
+      } else {
+        callback(null);
       }
     });
     return mockStream;

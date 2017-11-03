@@ -12,6 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+/*!
+ * DO NOT REMOVE THE FOLLOWING NAMESPACE DEFINITIONS
+ */
 /**
  * @namespace google
  */
@@ -23,6 +26,12 @@
  */
 /**
  * @namespace google.cloud.speech.v1
+ */
+/**
+ * @namespace google.protobuf
+ */
+/**
+ * @namespace google.rpc
  */
 
 'use strict';
@@ -37,18 +46,16 @@ const gapic = Object.freeze({
 // Augment the SpeechClient objects with the helpers.
 for (let gapicVersion of Object.keys(gapic)) {
   let ClientClass = gapic[gapicVersion].SpeechClient;
-  Object.assign(ClientClass, helpers());
+  Object.assign(ClientClass.prototype, helpers());
 }
 
 /**
  * The `@google-cloud/speech` package has the following named exports:
  *
- * - `SpeechClient` - Reference to
- *   {@link v1.SpeechClient}
- * - `v1` - This is used for selecting or pinning a
- *   particular backend service version. It exports:
- *     - `SpeechClient` - Reference to
- *       {@link v1.SpeechClient}
+ * - `SpeechClient` - Reference to {@link v1.SpeechClient}
+ * - `v1` - This is used for selecting or pinning a particular backend service
+ *   version. It exports:
+ *   - `SpeechClient` - Reference to {@link v1.SpeechClient}
  *
  * @module {object} @google-cloud/speech
  * @alias nodejs-speech
@@ -71,15 +78,13 @@ for (let gapicVersion of Object.keys(gapic)) {
 
 /**
  * @type {object}
- * @property {constructor} SpeechClient
- *   Reference to {@link v1.SpeechClient}
+ * @property {constructor} SpeechClient Reference to {@link v1.SpeechClient}.
  */
 module.exports = gapic.v1;
 
 /**
  * @type {object}
- * @property {constructor} SpeechClient
- *   Reference to {@link v1.SpeechClient}
+ * @property {constructor} SpeechClient Reference to {@link v1.SpeechClient}.
  */
 module.exports.v1 = gapic.v1;
 

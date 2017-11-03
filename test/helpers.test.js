@@ -36,7 +36,9 @@ describe('Speech helper methods', () => {
   });
 
   describe('streamingRecognize', () => {
-    var CONFIG = {config: {languageCode: 'en-us'}};
+    var CONFIG = {
+      config: {encoding: 'LINEAR16', languageCode: 'en-us', sampleRate: 16000},
+    };
     var OPTIONS = {timeout: Infinity};
 
     it('writes the config to the resulting stream', done => {
