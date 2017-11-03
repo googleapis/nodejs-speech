@@ -134,7 +134,7 @@ jobs:
           name: Link the module being tested to the samples.
           command: |
             cd samples/
-            npm link @google-cloud/language
+            npm link @google-cloud/speech
             npm install
             cd ..
       - run:
@@ -173,7 +173,7 @@ jobs:
           name: Link the module being tested to the samples.
           command: |
             cd samples/
-            npm link @google-cloud/language
+            npm link @google-cloud/speech
             npm install
             cd ..
       - run:
@@ -181,12 +181,12 @@ jobs:
           command: npm run samples-test
           environment:
             GCLOUD_PROJECT: long-door-651
-            GOOGLE_APPLICATION_CREDENTIALS: /var/language/.circleci/key.json
+            GOOGLE_APPLICATION_CREDENTIALS: /var/speech/.circleci/key.json
       - run:
           name: Remove unencrypted key.
           command: rm .circleci/key.json
           when: always
-    working_directory: /var/language/
+    working_directory: /var/speech/
 
   system_tests:
     docker:
