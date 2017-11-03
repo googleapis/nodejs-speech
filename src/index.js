@@ -36,7 +36,7 @@ const gapic = Object.freeze({
 
 // Augment the SpeechClient objects with the helpers.
 for (let gapicVersion of Object.keys(gapic)) {
-  let ClientClass = gapicVersion.SpeechClient;
+  let ClientClass = gapic[gapicVersion].SpeechClient;
   Object.assign(ClientClass, helpers());
 }
 

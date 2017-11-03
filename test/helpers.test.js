@@ -21,14 +21,14 @@ var Buffer = require('safe-buffer').Buffer;
 var sinon = require('sinon');
 var stream = require('stream');
 
-var Speech = require('../');
+var speech = require('../');
 
 describe('Speech helper methods', () => {
   var sandbox = sinon.sandbox.create();
-  var speech;
+  var client;
 
   beforeEach(() => {
-    speech = Speech.v1();
+    client = new speech.v1.SpeechClient();
   });
 
   afterEach(() => {
@@ -44,12 +44,12 @@ describe('Speech helper methods', () => {
       // a bogus stream.
       var requestStream = new stream.PassThrough({objectMode: true});
       var sr = sandbox
-        .stub(speech, '_streamingRecognize')
+        .stub(client, '_streamingRecognize')
         .returns(requestStream);
 
       // Call the new helper method and establish that the config was
       // forwarded as expected.
-      var userStream = speech.streamingRecognize(CONFIG, OPTIONS);
+      var userStream = client.streamingRecognize(CONFIG, OPTIONS);
 
       // Establish that the underlying streamingRecognize was called with
       // the options.
@@ -72,10 +72,10 @@ describe('Speech helper methods', () => {
       // a bogus stream.
       var requestStream = new stream.PassThrough({objectMode: true});
       var sr = sandbox
-        .stub(speech, '_streamingRecognize')
+        .stub(client, '_streamingRecognize')
         .returns(requestStream);
 
-      var userStream = speech.streamingRecognize(CONFIG);
+      var userStream = client.streamingRecognize(CONFIG);
 
       userStream.emit('writing');
 
@@ -87,9 +87,9 @@ describe('Speech helper methods', () => {
       // Stub the underlying _streamingRecognize method to just return
       // a bogus stream.
       var requestStream = new stream.PassThrough({objectMode: true});
-      sandbox.stub(speech, '_streamingRecognize').returns(requestStream);
+      sandbox.stub(client, '_streamingRecognize').returns(requestStream);
 
-      var userStream = speech.streamingRecognize(CONFIG, OPTIONS);
+      var userStream = client.streamingRecognize(CONFIG, OPTIONS);
 
       var error = new Error('Request stream error');
 
@@ -107,9 +107,9 @@ describe('Speech helper methods', () => {
       // Stub the underlying _streamingRecognize method to just return
       // a bogus stream.
       var requestStream = new stream.PassThrough({objectMode: true});
-      sandbox.stub(speech, '_streamingRecognize').returns(requestStream);
+      sandbox.stub(client, '_streamingRecognize').returns(requestStream);
 
-      var userStream = speech.streamingRecognize(CONFIG, OPTIONS);
+      var userStream = client.streamingRecognize(CONFIG, OPTIONS);
 
       var response = {};
 
@@ -126,9 +126,9 @@ describe('Speech helper methods', () => {
       // Stub the underlying _streamingRecognize method to just return
       // a bogus stream.
       var requestStream = new stream.PassThrough({objectMode: true});
-      sandbox.stub(speech, '_streamingRecognize').returns(requestStream);
+      sandbox.stub(client, '_streamingRecognize').returns(requestStream);
 
-      var userStream = speech.streamingRecognize(CONFIG, OPTIONS);
+      var userStream = client.streamingRecognize(CONFIG, OPTIONS);
       var audioContent = Buffer.from('audio content');
 
       requestStream._write = (data, enc, next) => {
