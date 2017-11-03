@@ -1,34 +1,38 @@
-/*
- * Copyright 2017, Google Inc. All rights reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+// Copyright 2017, Google LLC All rights reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 'use strict';
 
-var assert = require('assert');
-var speechV1 = require('../src/v1')();
-var through2 = require('through2');
+const assert = require('assert');
+const through2 = require('through2');
+
+const speechModule = require('../src');
 
 var FAKE_STATUS_CODE = 1;
 var error = new Error();
 error.code = FAKE_STATUS_CODE;
 
-describe('SpeechClient', function() {
-  describe('recognize', function() {
-    it('invokes recognize without error', function(done) {
-      var client = speechV1.speechClient();
+describe('SpeechClient', () => {
+  describe('recognize', () => {
+    it('invokes recognize without error', done => {
+      var client = new speechModule.v1.SpeechClient({
+        credentials: {client_email: 'bogus', private_key: 'bogus'},
+        projectId: 'bogus',
+      });
+
       // Mock request
-      var encoding = speechV1.RecognitionConfig.AudioEncoding.FLAC;
+      var encoding = 'FLAC';
       var sampleRateHertz = 44100;
       var languageCode = 'en-US';
       var config = {
@@ -49,19 +53,26 @@ describe('SpeechClient', function() {
       var expectedResponse = {};
 
       // Mock Grpc layer
-      client._recognize = mockSimpleGrpcMethod(request, expectedResponse);
+      client._innerApiCalls.recognize = mockSimpleGrpcMethod(
+        request,
+        expectedResponse
+      );
 
-      client.recognize(request, function(err, response) {
+      client.recognize(request, (err, response) => {
         assert.ifError(err);
         assert.deepStrictEqual(response, expectedResponse);
         done();
       });
     });
 
-    it('invokes recognize with error', function(done) {
-      var client = speechV1.speechClient();
+    it('invokes recognize with error', done => {
+      var client = new speechModule.v1.SpeechClient({
+        credentials: {client_email: 'bogus', private_key: 'bogus'},
+        projectId: 'bogus',
+      });
+
       // Mock request
-      var encoding = speechV1.RecognitionConfig.AudioEncoding.FLAC;
+      var encoding = 'FLAC';
       var sampleRateHertz = 44100;
       var languageCode = 'en-US';
       var config = {
@@ -79,21 +90,30 @@ describe('SpeechClient', function() {
       };
 
       // Mock Grpc layer
-      client._recognize = mockSimpleGrpcMethod(request, null, error);
+      client._innerApiCalls.recognize = mockSimpleGrpcMethod(
+        request,
+        null,
+        error
+      );
 
-      client.recognize(request, function(err, response) {
+      client.recognize(request, (err, response) => {
         assert(err instanceof Error);
         assert.equal(err.code, FAKE_STATUS_CODE);
+        assert(typeof response === 'undefined');
         done();
       });
     });
   });
 
   describe('longRunningRecognize', function() {
-    it('invokes longRunningRecognize without error', function(done) {
-      var client = speechV1.speechClient();
+    it('invokes longRunningRecognize without error', done => {
+      var client = new speechModule.v1.SpeechClient({
+        credentials: {client_email: 'bogus', private_key: 'bogus'},
+        projectId: 'bogus',
+      });
+
       // Mock request
-      var encoding = speechV1.RecognitionConfig.AudioEncoding.FLAC;
+      var encoding = 'FLAC';
       var sampleRateHertz = 44100;
       var languageCode = 'en-US';
       var config = {
@@ -114,30 +134,34 @@ describe('SpeechClient', function() {
       var expectedResponse = {};
 
       // Mock Grpc layer
-      client._longRunningRecognize = mockLongRunningGrpcMethod(
+      client._innerApiCalls.longRunningRecognize = mockLongRunningGrpcMethod(
         request,
         expectedResponse
       );
 
       client
         .longRunningRecognize(request)
-        .then(function(responses) {
+        .then(responses => {
           var operation = responses[0];
           return operation.promise();
         })
-        .then(function(responses) {
+        .then(responses => {
           assert.deepStrictEqual(responses[0], expectedResponse);
           done();
         })
-        .catch(function(err) {
+        .catch(err => {
           done(err);
         });
     });
 
-    it('invokes longRunningRecognize with error', function(done) {
-      var client = speechV1.speechClient();
+    it('invokes longRunningRecognize with error', done => {
+      var client = new speechModule.v1.SpeechClient({
+        credentials: {client_email: 'bogus', private_key: 'bogus'},
+        projectId: 'bogus',
+      });
+
       // Mock request
-      var encoding = speechV1.RecognitionConfig.AudioEncoding.FLAC;
+      var encoding = 'FLAC';
       var sampleRateHertz = 44100;
       var languageCode = 'en-US';
       var config = {
@@ -155,7 +179,7 @@ describe('SpeechClient', function() {
       };
 
       // Mock Grpc layer
-      client._longRunningRecognize = mockLongRunningGrpcMethod(
+      client._innerApiCalls.longRunningRecognize = mockLongRunningGrpcMethod(
         request,
         null,
         error
@@ -163,24 +187,43 @@ describe('SpeechClient', function() {
 
       client
         .longRunningRecognize(request)
-        .then(function(responses) {
+        .then(responses => {
           var operation = responses[0];
           return operation.promise();
         })
-        .then(function(responses) {
+        .then(() => {
           assert.fail();
         })
-        .catch(function(err) {
+        .catch(err => {
           assert(err instanceof Error);
           assert.equal(err.code, FAKE_STATUS_CODE);
           done();
         });
     });
+
+    it('has longrunning decoder functions', () => {
+      var client = new speechModule.v1.SpeechClient({
+        credentials: {client_email: 'bogus', private_key: 'bogus'},
+        projectId: 'bogus',
+      });
+      assert(
+        client._descriptors.longrunning.longRunningRecognize
+          .responseDecoder instanceof Function
+      );
+      assert(
+        client._descriptors.longrunning.longRunningRecognize
+          .metadataDecoder instanceof Function
+      );
+    });
   });
 
-  describe('streamingRecognize', function() {
-    it('invokes streamingRecognize without error', function(done) {
-      var client = speechV1.speechClient();
+  describe('streamingRecognize', () => {
+    it('invokes streamingRecognize without error', done => {
+      var client = new speechModule.v1.SpeechClient({
+        credentials: {client_email: 'bogus', private_key: 'bogus'},
+        projectId: 'bogus',
+      });
+
       // Mock request
       var request = {};
 
@@ -188,31 +231,35 @@ describe('SpeechClient', function() {
       var expectedResponse = {};
 
       // Mock Grpc layer
-      client._streamingRecognize = mockBidiStreamingGrpcMethod(
+      client._innerApiCalls.streamingRecognize = mockBidiStreamingGrpcMethod(
         request,
         expectedResponse
       );
 
       var stream = client
         .streamingRecognize()
-        .on('data', function(response) {
+        .on('data', response => {
           assert.deepStrictEqual(response, expectedResponse);
           done();
         })
-        .on('error', function(err) {
+        .on('error', err => {
           done(err);
         });
 
       stream.write(request);
     });
 
-    it('invokes streamingRecognize with error', function(done) {
-      var client = speechV1.speechClient();
+    it('invokes streamingRecognize with error', done => {
+      var client = new speechModule.v1.SpeechClient({
+        credentials: {client_email: 'bogus', private_key: 'bogus'},
+        projectId: 'bogus',
+      });
+
       // Mock request
       var request = {};
 
       // Mock Grpc layer
-      client._streamingRecognize = mockBidiStreamingGrpcMethod(
+      client._innerApiCalls.streamingRecognize = mockBidiStreamingGrpcMethod(
         request,
         null,
         error
@@ -220,10 +267,10 @@ describe('SpeechClient', function() {
 
       var stream = client
         .streamingRecognize()
-        .on('data', function(response) {
+        .on('data', () => {
           assert.fail();
         })
-        .on('error', function(err) {
+        .on('error', err => {
           assert(err instanceof Error);
           assert.equal(err.code, FAKE_STATUS_CODE);
           done();
@@ -248,8 +295,8 @@ function mockSimpleGrpcMethod(expectedRequest, response, error) {
 }
 
 function mockBidiStreamingGrpcMethod(expectedRequest, response, error) {
-  return function() {
-    var mockStream = through2.obj(function(chunk, enc, callback) {
+  return () => {
+    var mockStream = through2.obj((chunk, enc, callback) => {
       assert.deepStrictEqual(chunk, expectedRequest);
       if (error) {
         callback(error);
@@ -262,11 +309,11 @@ function mockBidiStreamingGrpcMethod(expectedRequest, response, error) {
 }
 
 function mockLongRunningGrpcMethod(expectedRequest, response, error) {
-  return function(request) {
+  return request => {
     assert.deepStrictEqual(request, expectedRequest);
     var mockOperation = {
       promise: function() {
-        return new Promise(function(resolve, reject) {
+        return new Promise((resolve, reject) => {
           if (error) {
             reject(error);
           } else {
