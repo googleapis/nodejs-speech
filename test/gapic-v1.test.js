@@ -15,7 +15,6 @@
 'use strict';
 
 const assert = require('assert');
-const through2 = require('through2');
 
 const speechModule = require('../src');
 
