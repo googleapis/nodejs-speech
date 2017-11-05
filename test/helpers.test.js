@@ -44,7 +44,7 @@ describe('Speech helper methods', () => {
       // a bogus stream.
       var requestStream = new stream.PassThrough({objectMode: true});
       var sr = sandbox
-        .stub(client, '_streamingRecognize')
+        .stub(client._innerApiCalls, 'streamingRecognize')
         .returns(requestStream);
 
       // Call the new helper method and establish that the config was
@@ -72,7 +72,7 @@ describe('Speech helper methods', () => {
       // a bogus stream.
       var requestStream = new stream.PassThrough({objectMode: true});
       var sr = sandbox
-        .stub(client, '_streamingRecognize')
+        .stub(client._innerApiCalls, 'streamingRecognize')
         .returns(requestStream);
 
       var userStream = client.streamingRecognize(CONFIG);
@@ -87,7 +87,9 @@ describe('Speech helper methods', () => {
       // Stub the underlying _streamingRecognize method to just return
       // a bogus stream.
       var requestStream = new stream.PassThrough({objectMode: true});
-      sandbox.stub(client, '_streamingRecognize').returns(requestStream);
+      sandbox
+        .stub(client._innerApiCalls, 'streamingRecognize')
+        .returns(requestStream);
 
       var userStream = client.streamingRecognize(CONFIG, OPTIONS);
 
@@ -107,7 +109,9 @@ describe('Speech helper methods', () => {
       // Stub the underlying _streamingRecognize method to just return
       // a bogus stream.
       var requestStream = new stream.PassThrough({objectMode: true});
-      sandbox.stub(client, '_streamingRecognize').returns(requestStream);
+      sandbox
+        .stub(client._innerApiCalls, 'streamingRecognize')
+        .returns(requestStream);
 
       var userStream = client.streamingRecognize(CONFIG, OPTIONS);
 
@@ -126,7 +130,9 @@ describe('Speech helper methods', () => {
       // Stub the underlying _streamingRecognize method to just return
       // a bogus stream.
       var requestStream = new stream.PassThrough({objectMode: true});
-      sandbox.stub(client, '_streamingRecognize').returns(requestStream);
+      sandbox
+        .stub(client._innerApiCalls, 'streamingRecognize')
+        .returns(requestStream);
 
       var userStream = client.streamingRecognize(CONFIG, OPTIONS);
       var audioContent = Buffer.from('audio content');
