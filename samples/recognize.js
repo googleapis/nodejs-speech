@@ -27,22 +27,18 @@ function syncRecognize(filename, encoding, sampleRateHertz, languageCode) {
   // [START speech_sync_recognize]
   // Imports the Google Cloud client library
   const fs = require('fs');
-  const Speech = require('@google-cloud/speech');
+  const speech = require('@google-cloud/speech');
 
-  // Instantiates a client
-  const speech = Speech();
+  // Creates a client
+  const client = new speech.SpeechClient();
 
-  // The path to the local file on which to perform speech recognition, e.g. /path/to/audio.raw
-  // const filename = '/path/to/audio.raw';
-
-  // The encoding of the audio file, e.g. 'LINEAR16'
-  // const encoding = 'LINEAR16';
-
-  // The sample rate of the audio file in hertz, e.g. 16000
+  /**
+   * TODO(developer): Uncomment the following lines before running the sample.
+   */
+  // const filename = 'Local path to audio file, e.g. /path/to/audio.raw';
+  // const encoding = 'Encoding of the audio file, e.g. LINEAR16';
   // const sampleRateHertz = 16000;
-
-  // The BCP-47 language code to use, e.g. 'en-US'
-  // const languageCode = 'en-US';
+  // const languageCode = 'BCP-47 language code, e.g. en-US';
 
   const config = {
     encoding: encoding,
@@ -59,7 +55,7 @@ function syncRecognize(filename, encoding, sampleRateHertz, languageCode) {
   };
 
   // Detects speech in the audio file
-  speech
+  client
     .recognize(request)
     .then(data => {
       const response = data[0];
@@ -77,22 +73,18 @@ function syncRecognize(filename, encoding, sampleRateHertz, languageCode) {
 function syncRecognizeGCS(gcsUri, encoding, sampleRateHertz, languageCode) {
   // [START speech_sync_recognize_gcs]
   // Imports the Google Cloud client library
-  const Speech = require('@google-cloud/speech');
+  const speech = require('@google-cloud/speech');
 
-  // Instantiates a client
-  const speech = Speech();
+  // Creates a client
+  const client = new speech.SpeechClient();
 
-  // The Google Cloud Storage URI of the file on which to perform speech recognition, e.g. gs://my-bucket/audio.raw
+  /**
+   * TODO(developer): Uncomment the following lines before running the sample.
+   */
   // const gcsUri = 'gs://my-bucket/audio.raw';
-
-  // The encoding of the audio file, e.g. 'LINEAR16'
-  // const encoding = 'LINEAR16';
-
-  // The sample rate of the audio file in hertz, e.g. 16000
+  // const encoding = 'Eencoding of the audio file, e.g. LINEAR16';
   // const sampleRateHertz = 16000;
-
-  // The BCP-47 language code to use, e.g. 'en-US'
-  // const languageCode = 'en-US';
+  // const languageCode = 'BCP-47 language code, e.g. en-US';
 
   const config = {
     encoding: encoding,
@@ -109,7 +101,7 @@ function syncRecognizeGCS(gcsUri, encoding, sampleRateHertz, languageCode) {
   };
 
   // Detects speech in the audio file
-  speech
+  client
     .recognize(request)
     .then(data => {
       const response = data[0];
@@ -128,22 +120,18 @@ function syncRecognizeWords(filename, encoding, sampleRateHertz, languageCode) {
   // [START speech_sync_recognize_words]
   // Imports the Google Cloud client library
   const fs = require('fs');
-  const Speech = require('@google-cloud/speech');
+  const speech = require('@google-cloud/speech');
 
-  // Instantiates a client
-  const speech = Speech();
+  // Creates a client
+  const client = new speech.SpeechClient();
 
-  // The path to the local file on which to perform speech recognition, e.g. /path/to/audio.raw
-  // const filename = '/path/to/audio.raw';
-
-  // The encoding of the audio file, e.g. 'LINEAR16'
-  // const encoding = 'LINEAR16';
-
-  // The sample rate of the audio file in hertz, e.g. 16000
+  /**
+   * TODO(developer): Uncomment the following lines before running the sample.
+   */
+  // const filename = 'Local path to audio file, e.g. /path/to/audio.raw';
+  // const encoding = 'Encoding of the audio file, e.g. LINEAR16';
   // const sampleRateHertz = 16000;
-
-  // The BCP-47 language code to use, e.g. 'en-US'
-  // const languageCode = 'en-US';
+  // const languageCode = 'BCP-47 language code, e.g. en-US';
 
   const config = {
     enableWordTimeOffsets: true,
@@ -161,7 +149,7 @@ function syncRecognizeWords(filename, encoding, sampleRateHertz, languageCode) {
   };
 
   // Detects speech in the audio file
-  speech
+  client
     .recognize(request)
     .then(data => {
       const response = data[0];
@@ -192,23 +180,19 @@ function syncRecognizeWords(filename, encoding, sampleRateHertz, languageCode) {
 function asyncRecognize(filename, encoding, sampleRateHertz, languageCode) {
   // [START speech_async_recognize]
   // Imports the Google Cloud client library
-  const Speech = require('@google-cloud/speech');
+  const speech = require('@google-cloud/speech');
   const fs = require('fs');
 
-  // Instantiates a client
-  const speech = Speech();
+  // Creates a client
+  const client = new speech.SpeechClient();
 
-  // The path to the local file on which to perform speech recognition, e.g. /path/to/audio.raw
-  // const filename = '/path/to/audio.raw';
-
-  // The encoding of the audio file, e.g. 'LINEAR16'
-  // const encoding = 'LINEAR16';
-
-  // The sample rate of the audio file in hertz, e.g. 16000
+  /**
+   * TODO(developer): Uncomment the following lines before running the sample.
+   */
+  // const filename = 'Local path to audio file, e.g. /path/to/audio.raw';
+  // const encoding = 'Encoding of the audio file, e.g. LINEAR16';
   // const sampleRateHertz = 16000;
-
-  // The BCP-47 language code to use, e.g. 'en-US'
-  // const languageCode = 'en-US';
+  // const languageCode = 'BCP-47 language code, e.g. en-US';
 
   const config = {
     encoding: encoding,
@@ -226,7 +210,7 @@ function asyncRecognize(filename, encoding, sampleRateHertz, languageCode) {
 
   // Detects speech in the audio file. This creates a recognition job that you
   // can wait for now, or get its result later.
-  speech
+  client
     .longRunningRecognize(request)
     .then(data => {
       const response = data[0];
@@ -250,22 +234,18 @@ function asyncRecognize(filename, encoding, sampleRateHertz, languageCode) {
 function asyncRecognizeGCS(gcsUri, encoding, sampleRateHertz, languageCode) {
   // [START speech_async_recognize_gcs]
   // Imports the Google Cloud client library
-  const Speech = require('@google-cloud/speech');
+  const speech = require('@google-cloud/speech');
 
-  // Instantiates a client
-  const speech = Speech();
+  // Creates a client
+  const client = new speech.SpeechClient();
 
-  // The Google Cloud Storage URI of the file on which to perform speech recognition, e.g. gs://my-bucket/audio.raw
+  /**
+   * TODO(developer): Uncomment the following lines before running the sample.
+   */
   // const gcsUri = 'gs://my-bucket/audio.raw';
-
-  // The encoding of the audio file, e.g. 'LINEAR16'
-  // const encoding = 'LINEAR16';
-
-  // The sample rate of the audio file in hertz, e.g. 16000
+  // const encoding = 'Eencoding of the audio file, e.g. LINEAR16';
   // const sampleRateHertz = 16000;
-
-  // The BCP-47 language code to use, e.g. 'en-US'
-  // const languageCode = 'en-US';
+  // const languageCode = 'BCP-47 language code, e.g. en-US';
 
   const config = {
     encoding: encoding,
@@ -284,7 +264,7 @@ function asyncRecognizeGCS(gcsUri, encoding, sampleRateHertz, languageCode) {
 
   // Detects speech in the audio file. This creates a recognition job that you
   // can wait for now, or get its result later.
-  speech
+  client
     .longRunningRecognize(request)
     .then(data => {
       const operation = data[0];
@@ -312,22 +292,18 @@ function asyncRecognizeGCSWords(
 ) {
   // [START speech_async_recognize_gcs_words]
   // Imports the Google Cloud client library
-  const Speech = require('@google-cloud/speech');
+  const speech = require('@google-cloud/speech');
 
-  // Instantiates a client
-  const speech = Speech();
+  // Creates a client
+  const client = new speech.SpeechClient();
 
-  // The Google Cloud Storage URI of the file on which to perform speech recognition, e.g. gs://my-bucket/audio.raw
+  /**
+   * TODO(developer): Uncomment the following lines before running the sample.
+   */
   // const gcsUri = 'gs://my-bucket/audio.raw';
-
-  // The encoding of the audio file, e.g. 'LINEAR16'
-  // const encoding = 'LINEAR16';
-
-  // The sample rate of the audio file in hertz, e.g. 16000
+  // const encoding = 'Eencoding of the audio file, e.g. LINEAR16';
   // const sampleRateHertz = 16000;
-
-  // The BCP-47 language code to use, e.g. 'en-US'
-  // const languageCode = 'en-US';
+  // const languageCode = 'BCP-47 language code, e.g. en-US';
 
   const config = {
     enableWordTimeOffsets: true,
@@ -347,7 +323,7 @@ function asyncRecognizeGCSWords(
 
   // Detects speech in the audio file. This creates a recognition job that you
   // can wait for now, or get its result later.
-  speech
+  client
     .longRunningRecognize(request)
     .then(data => {
       const operation = data[0];
@@ -385,22 +361,18 @@ function streamingRecognize(filename, encoding, sampleRateHertz, languageCode) {
   const fs = require('fs');
 
   // Imports the Google Cloud client library
-  const Speech = require('@google-cloud/speech');
+  const speech = require('@google-cloud/speech');
 
-  // Instantiates a client
-  const speech = Speech();
+  // Creates a client
+  const client = new speech.SpeechClient();
 
-  // The path to the local file on which to perform speech recognition, e.g. /path/to/audio.raw
-  // const filename = '/path/to/audio.raw';
-
-  // The encoding of the audio file, e.g. 'LINEAR16'
-  // const encoding = 'LINEAR16';
-
-  // The sample rate of the audio file in hertz, e.g. 16000
+  /**
+   * TODO(developer): Uncomment the following lines before running the sample.
+   */
+  // const filename = 'Local path to audio file, e.g. /path/to/audio.raw';
+  // const encoding = 'Encoding of the audio file, e.g. LINEAR16';
   // const sampleRateHertz = 16000;
-
-  // The BCP-47 language code to use, e.g. 'en-US'
-  // const languageCode = 'en-US';
+  // const languageCode = 'BCP-47 language code, e.g. en-US';
 
   const request = {
     config: {
@@ -412,7 +384,7 @@ function streamingRecognize(filename, encoding, sampleRateHertz, languageCode) {
   };
 
   // Stream the audio to the Google Cloud Speech API
-  const recognizeStream = speech
+  const recognizeStream = client
     .streamingRecognize(request)
     .on('error', console.error)
     .on('data', data => {
@@ -431,19 +403,17 @@ function streamingMicRecognize(encoding, sampleRateHertz, languageCode) {
   const record = require('node-record-lpcm16');
 
   // Imports the Google Cloud client library
-  const Speech = require('@google-cloud/speech');
+  const speech = require('@google-cloud/speech');
 
-  // Instantiates a client
-  const speech = Speech();
+  // Creates a client
+  const client = new speech.SpeechClient();
 
-  // The encoding of the audio file, e.g. 'LINEAR16'
-  // const encoding = 'LINEAR16';
-
-  // The sample rate of the audio file in hertz, e.g. 16000
+  /**
+   * TODO(developer): Uncomment the following lines before running the sample.
+   */
+  // const encoding = 'Encoding of the audio file, e.g. LINEAR16';
   // const sampleRateHertz = 16000;
-
-  // The BCP-47 language code to use, e.g. 'en-US'
-  // const languageCode = 'en-US';
+  // const languageCode = 'BCP-47 language code, e.g. en-US';
 
   const request = {
     config: {
@@ -455,7 +425,7 @@ function streamingMicRecognize(encoding, sampleRateHertz, languageCode) {
   };
 
   // Create a recognize stream
-  const recognizeStream = speech
+  const recognizeStream = client
     .streamingRecognize(request)
     .on('error', console.error)
     .on('data', data =>
@@ -483,7 +453,7 @@ function streamingMicRecognize(encoding, sampleRateHertz, languageCode) {
   // [END speech_streaming_mic_recognize]
 }
 
-const cli = require(`yargs`)
+require(`yargs`)
   .demand(1)
   .command(
     `sync <filename>`,
@@ -611,8 +581,4 @@ const cli = require(`yargs`)
   .recommendCommands()
   .epilogue(`For more information, see https://cloud.google.com/speech/docs`)
   .help()
-  .strict();
-
-if (module === require.main) {
-  cli.parse(process.argv.slice(2));
-}
+  .strict().argv;

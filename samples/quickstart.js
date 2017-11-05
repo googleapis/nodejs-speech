@@ -17,14 +17,14 @@
 
 // [START speech_quickstart]
 // Imports the Google Cloud client library
-const Speech = require('@google-cloud/speech');
+const speech = require('@google-cloud/speech');
 const fs = require('fs');
 
 // Your Google Cloud Platform project ID
 const projectId = 'your-project-id';
 
-// Instantiates a client
-const speechClient = Speech({
+// Creates a client
+const client = new speech.SpeechClient({
   projectId: projectId,
 });
 
@@ -50,7 +50,7 @@ const request = {
 };
 
 // Detects speech in the audio file
-speechClient
+client
   .recognize(request)
   .then(data => {
     const response = data[0];
