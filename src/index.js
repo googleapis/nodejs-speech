@@ -75,11 +75,6 @@ for (let gapicVersion of Object.keys(gapic)) {
  *   keyFilename: '/path/to/keyfile.json',
  * });
  */
-
-/**
- * @type {object}
- * @property {constructor} SpeechClient Reference to {@link v1.SpeechClient}.
- */
 module.exports = gapic.v1;
 
 /**
