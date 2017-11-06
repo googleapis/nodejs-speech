@@ -1,11 +1,11 @@
 <img src="https://avatars2.githubusercontent.com/u/2810941?v=3&s=96" alt="Google Cloud Platform logo" title="Google Cloud Platform" align="right" height="96" width="96"/>
 
-# [Google Cloud Speech API: Node.js Client](https://github.com/GoogleCloudPlatform/google-cloud-node)
+# [Google Cloud Speech API: Node.js Client](https://github.com/googleapis/nodejs-speech)
 
 [![release level](https://img.shields.io/badge/release%20level-beta-yellow.svg?style&#x3D;flat)](https://cloud.google.com/terms/launch-stages)
-[![CircleCI](https://img.shields.io/circleci/project/github/GoogleCloudPlatform/google-cloud-node.svg?style=flat)](https://circleci.com/gh/GoogleCloudPlatform/google-cloud-node)
-[![AppVeyor](https://ci.appveyor.com/api/projects/status/github/GoogleCloudPlatform/google-cloud-node?branch=master&svg=true)](https://ci.appveyor.com/project/GoogleCloudPlatform/google-cloud-node)
-[![codecov](https://img.shields.io/codecov/c/github/GoogleCloudPlatform/google-cloud-node/master.svg?style=flat)](https://codecov.io/gh/GoogleCloudPlatform/google-cloud-node)
+[![CircleCI](https://img.shields.io/circleci/project/github/googleapis/nodejs-speech.svg?style=flat)](https://circleci.com/gh/googleapis/nodejs-speech)
+[![AppVeyor](https://ci.appveyor.com/api/projects/status/github/googleapis/nodejs-speech?branch=master&svg=true)](https://ci.appveyor.com/project/googleapis/nodejs-speech)
+[![codecov](https://img.shields.io/codecov/c/github/googleapis/nodejs-speech/master.svg?style=flat)](https://codecov.io/gh/googleapis/nodejs-speech)
 
 > Node.js idiomatic client for [Speech API][product-docs].
 
@@ -13,7 +13,7 @@ The [Cloud Speech API](https://cloud.google.com/speech/docs) enables easy integr
 
 
 * [Speech API Node.js Client API Reference][client-docs]
-* [github.com/GoogleCloudPlatform/google-cloud-node](https://github.com/GoogleCloudPlatform/google-cloud-node)
+* [github.com/googleapis/nodejs-speech](https://github.com/googleapis/nodejs-speech)
 * [Speech API Documentation][product-docs]
 
 Read more about the client libraries for Cloud APIs, including the older
@@ -113,12 +113,12 @@ client
 
 ## Samples
 
-Samples are in the [`samples/`](https://github.com/GoogleCloudPlatform/google-cloud-node/tree/master/samples) directory. The samples' `README.md`
+Samples are in the [`samples/`](https://github.com/googleapis/nodejs-speech/tree/master/samples) directory. The samples' `README.md`
 has instructions for running the samples.
 
 | Sample                      | Source Code                       | Try it |
 | --------------------------- | --------------------------------- | ------ |
-| Speech Recognition | [source code](https://github.com/GoogleCloudPlatform/google-cloud-node/blob/master/samples/recognize.js) | [![Open in Cloud Shell][shell_img]](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/GoogleCloudPlatform/google-cloud-node&page=editor&open_in_editor=samples/recognize.js,samples/README.md) |
+| Speech Recognition | [source code](https://github.com/googleapis/nodejs-speech/blob/master/samples/recognize.js) | [![Open in Cloud Shell][shell_img]](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/googleapis/nodejs-speech&page=editor&open_in_editor=samples/recognize.js,samples/README.md) |
 
 The [Speech API Node.js Client API Reference][client-docs] documentation
 also contains samples.
@@ -138,13 +138,13 @@ More Information: [Google Cloud Platform Launch Stages][launch_stages]
 
 ## Contributing
 
-Contributions welcome! See the [Contributing Guide](https://github.com/GoogleCloudPlatform/google-cloud-node/blob/master/.github/CONTRIBUTING.md).
+Contributions welcome! See the [Contributing Guide](https://github.com/googleapis/nodejs-speech/blob/master/.github/CONTRIBUTING.md).
 
 ## License
 
 Apache Version 2.0
 
-See [LICENSE](https://github.com/GoogleCloudPlatform/google-cloud-node/blob/master/LICENSE)
+See [LICENSE](https://github.com/googleapis/nodejs-speech/blob/master/LICENSE)
 
 [client-docs]: https://cloud.google.com/nodejs/docs/reference/speech/latest/
 [product-docs]: https://cloud.google.com/speech/docs
