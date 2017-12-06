@@ -2,8 +2,6 @@
 
 # [Google Cloud Speech API: Node.js Client](https://github.com/googleapis/nodejs-speech)
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/googleapis/nodejs-speech.svg)](https://greenkeeper.io/)
-
 [![release level](https://img.shields.io/badge/release%20level-beta-yellow.svg?style&#x3D;flat)](https://cloud.google.com/terms/launch-stages)
 [![CircleCI](https://img.shields.io/circleci/project/github/googleapis/nodejs-speech.svg?style=flat)](https://circleci.com/gh/googleapis/nodejs-speech)
 [![AppVeyor](https://ci.appveyor.com/api/projects/status/github/googleapis/nodejs-speech?branch=master&svg=true)](https://ci.appveyor.com/project/googleapis/nodejs-speech)
