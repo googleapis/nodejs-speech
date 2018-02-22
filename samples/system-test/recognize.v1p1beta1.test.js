@@ -42,14 +42,14 @@ test.after.always(async () => {
 });
 
 test(`should run sync recognize with model selection`, async t => {
-	const model = `video`;
+  const model = `video`;
   const output = await runAsync(`${cmd} sync-model ${filepath} ${model}`, cwd);
   t.true(output.includes(`Transcription:`));
   t.true(output.includes(text));
 });
 
 test(`should run sync recognize on a GCS file with model selection`, async t => {
-	const model = `video`;
+  const model = `video`;
   const output = await runAsync(
     `${cmd} sync-model-gcs gs://${bucketName}/${filename} ${model}`,
     cwd

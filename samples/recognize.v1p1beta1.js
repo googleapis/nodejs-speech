@@ -45,7 +45,7 @@ function syncRecognizeModelSelection(filename, model, encoding, sampleRateHertz,
     encoding: encoding,
     sampleRateHertz: sampleRateHertz,
     languageCode: languageCode,
-		model: model
+    model: model
   };
   const audio = {
     content: fs.readFileSync(filename).toString('base64'),
@@ -93,7 +93,7 @@ function syncRecognizeModelSelectionGCS(gcsUri, model, encoding, sampleRateHertz
     encoding: encoding,
     sampleRateHertz: sampleRateHertz,
     languageCode: languageCode,
-		model: model
+    model: model
   };
   const audio = {
     uri: gcsUri,
