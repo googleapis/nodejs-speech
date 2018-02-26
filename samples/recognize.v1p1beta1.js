@@ -23,7 +23,13 @@
 
 'use strict';
 
-function syncRecognizeModelSelection(filename, model, encoding, sampleRateHertz, languageCode) {
+function syncRecognizeModelSelection(
+  filename,
+  model,
+  encoding,
+  sampleRateHertz,
+  languageCode
+) {
   // [START speech_transcribe_model_selection]
   // Imports the Google Cloud client library
   const fs = require('fs');
@@ -45,7 +51,7 @@ function syncRecognizeModelSelection(filename, model, encoding, sampleRateHertz,
     encoding: encoding,
     sampleRateHertz: sampleRateHertz,
     languageCode: languageCode,
-    model: model
+    model: model,
   };
   const audio = {
     content: fs.readFileSync(filename).toString('base64'),
@@ -72,7 +78,13 @@ function syncRecognizeModelSelection(filename, model, encoding, sampleRateHertz,
   // [END speech_transcribe_model_selection]
 }
 
-function syncRecognizeModelSelectionGCS(gcsUri, model, encoding, sampleRateHertz, languageCode) {
+function syncRecognizeModelSelectionGCS(
+  gcsUri,
+  model,
+  encoding,
+  sampleRateHertz,
+  languageCode
+) {
   // [START speech_transcribe_model_selection_gcs]
   // Imports the Google Cloud client library
   const speech = require('@google-cloud/speech').v1p1beta1;
@@ -93,7 +105,7 @@ function syncRecognizeModelSelectionGCS(gcsUri, model, encoding, sampleRateHertz
     encoding: encoding,
     sampleRateHertz: sampleRateHertz,
     languageCode: languageCode,
-    model: model
+    model: model,
   };
   const audio = {
     uri: gcsUri,
@@ -171,8 +183,12 @@ require(`yargs`)
       type: 'string',
     },
   })
-  .example(`node $0 sync-model ./resources/Google_Gnome.wav video -e LINEAR16 -r 16000`)
-  .example(`node $0 sync-model-gcs gs://gcs-test-data/Google_Gnome.wav phone_call -e FLAC -r 16000`)
+  .example(
+    `node $0 sync-model ./resources/Google_Gnome.wav video -e LINEAR16 -r 16000`
+  )
+  .example(
+    `node $0 sync-model-gcs gs://gcs-test-data/Google_Gnome.wav phone_call -e FLAC -r 16000`
+  )
   .wrap(120)
   .recommendCommands()
   .epilogue(`For more information, see https://cloud.google.com/speech/docs`)
