@@ -134,16 +134,20 @@ var StreamingRecognitionConfig = {
  * request.
  *
  * @property {number} encoding
- *   *Required* Encoding of audio data sent in all `RecognitionAudio` messages.
+ *   Encoding of audio data sent in all `RecognitionAudio` messages.
+ *   This field is optional for `FLAC` and `WAV` audio files and required
+ *   for all other audio formats. For details, see AudioEncoding.
  *
  *   The number should be among the values of [AudioEncoding]{@link google.cloud.speech.v1p1beta1.AudioEncoding}
  *
  * @property {number} sampleRateHertz
- *   *Required* Sample rate in Hertz of the audio data sent in all
+ *   Sample rate in Hertz of the audio data sent in all
  *   `RecognitionAudio` messages. Valid values are: 8000-48000.
  *   16000 is optimal. For best results, set the sampling rate of the audio
  *   source to 16000 Hz. If that's not possible, use the native sample rate of
  *   the audio source (instead of re-sampling).
+ *   This field is optional for `FLAC` and `WAV` audio files and required
+ *   for all other audio formats. For details, see AudioEncoding.
  *
  * @property {string} languageCode
  *   *Required* The language of the supplied audio as a
@@ -182,6 +186,57 @@ var StreamingRecognitionConfig = {
  *   best suited to your domain to get best results. If a model is not
  *   explicitly specified, then we auto-select a model based on the parameters
  *   in the RecognitionConfig.
+ *   <table>
+ *     <tr>
+ *       <td><b>Model</b></td>
+ *       <td><b>Description</b></td>
+ *     </tr>
+ *     <tr>
+ *       <td><code>command_and_search</code></td>
+ *       <td>Best for short queries such as voice commands or voice search.</td>
+ *     </tr>
+ *     <tr>
+ *       <td><code>phone_call</code></td>
+ *       <td>Best for audio that originated from a phone call (typically
+ *       recorded at an 8khz sampling rate).</td>
+ *     </tr>
+ *     <tr>
+ *       <td><code>video</code></td>
+ *       <td>Best for audio that originated from from video or includes multiple
+ *           speakers. Ideally the audio is recorded at a 16khz or greater
+ *           sampling rate. This is a premium model that costs more than the
+ *           standard rate.</td>
+ *     </tr>
+ *     <tr>
+ *       <td><code>default</code></td>
+ *       <td>Best for audio that is not one of the specific audio models.
+ *           For example, long-form audio. Ideally the audio is high-fidelity,
+ *           recorded at a 16khz or greater sampling rate.</td>
+ *     </tr>
+ *   </table>
+ *
+ * @property {boolean} useEnhanced
+ *   *Optional* Set to true to use an enhanced model for speech recognition.
+ *   You must also set the `model` field to a valid, enhanced model. If
+ *   `use_enhanced` is set to true and the `model` field is not set, then
+ *   `use_enhanced` is ignored. If `use_enhanced` is true and an enhanced
+ *   version of the specified model does not exist, then the speech is
+ *   recognized using the standard version of the specified model.
+ *
+ *   Enhanced speech models require that you enable audio logging for
+ *   your request. To enable audio logging, set the `loggingConsentState` field
+ *   to ENABLED in the GoogleDataCollectionConfig section of your request.
+ *   You must also opt-in to the audio logging alpha using the instructions in
+ *   the [alpha documentation](https://cloud.google.com/speech/data-sharing). If you set `use_enhanced`
+ *   to true and you have not enabled audio logging, then you will receive
+ *   an error.
+ *
+ * @property {Object} googleDataCollectionOptIn
+ *   *Optional* Contains settings to opt-in to allow Google to
+ *   collect and use data from this request to improve Google's products and
+ *   services.
+ *
+ *   This object should have the same structure as [GoogleDataCollectionConfig]{@link google.cloud.speech.v1p1beta1.GoogleDataCollectionConfig}
  *
  * @typedef RecognitionConfig
  * @memberof google.cloud.speech.v1p1beta1
@@ -195,21 +250,22 @@ var RecognitionConfig = {
    *
    * All encodings support only 1 channel (mono) audio.
    *
-   * If you send a `FLAC` or `WAV` audio file format in the request,
-   * then if you specify an encoding in `AudioEncoding`, it must match the
-   * encoding described in the audio header. If it does not match, then the
-   * request returns an
-   * google.rpc.Code.INVALID_ARGUMENT error code. You can request
-   * recognition for `WAV` files that contain either `LINEAR16` or `MULAW`
-   * encoded audio.
-   * For audio file formats other than `FLAC` or `WAV`, you must
-   * specify the audio encoding in your `RecognitionConfig`.
-   *
    * For best results, the audio source should be captured and transmitted using
    * a lossless encoding (`FLAC` or `LINEAR16`). The accuracy of the speech
-   * recognition can be reduced if lossy codecs, which include the other codecs
-   * listed in this section, are used to capture or transmit the audio,
-   * particularly if background noise is present.
+   * recognition can be reduced if lossy codecs are used to capture or transmit
+   * audio, particularly if background noise is present. Lossy codecs include
+   * `MULAW`, `AMR`, `AMR_WB`, `OGG_OPUS`, and `SPEEX_WITH_HEADER_BYTE`.
+   *
+   * The `FLAC` and `WAV` audio file formats include a header that describes the
+   * included audio content. You can request recognition for `WAV` files that
+   * contain either `LINEAR16` or `MULAW` encoded audio.
+   * If you send `FLAC` or `WAV` audio file format in
+   * your request, you do not need to specify an `AudioEncoding`; the audio
+   * encoding format is determined from the file header. If you specify
+   * an `AudioEncoding` when you send  send `FLAC` or `WAV` audio, the
+   * encoding configuration must match the encoding described in the audio
+   * header; otherwise the request returns an
+   * google.rpc.Code.INVALID_ARGUMENT error code.
    *
    * @enum {number}
    * @memberof google.cloud.speech.v1p1beta1
@@ -227,7 +283,7 @@ var RecognitionConfig = {
     LINEAR16: 1,
 
     /**
-     * [`FLAC`](https://xiph.org/flac/documentation.html) (Free Lossless Audio
+     * `FLAC` (Free Lossless Audio
      * Codec) is the recommended encoding because it is
      * lossless--therefore recognition is not compromised--and
      * requires only about half the bandwidth of `LINEAR16`. `FLAC` stream
@@ -274,6 +330,33 @@ var RecognitionConfig = {
      * wideband is supported. `sample_rate_hertz` must be 16000.
      */
     SPEEX_WITH_HEADER_BYTE: 7
+  }
+};
+
+/**
+ * Google data collection opt-in settings.
+ *
+ * @property {number} loggingConsentState
+ *   The number should be among the values of [LoggingConsentState]{@link google.cloud.speech.v1p1beta1.LoggingConsentState}
+ *
+ * @typedef GoogleDataCollectionConfig
+ * @memberof google.cloud.speech.v1p1beta1
+ * @see [google.cloud.speech.v1p1beta1.GoogleDataCollectionConfig definition in proto format]{@link https://github.com/googleapis/googleapis/blob/master/google/cloud/speech/v1p1beta1/cloud_speech.proto}
+ */
+var GoogleDataCollectionConfig = {
+  // This is for documentation. Actual contents will be loaded by gRPC.
+
+  /**
+   * Speech content will not be logged until authorized consent is opted in.
+   * Once it is opted in, this flag enables/disables logging to override that
+   * consent.  default = ENABLED (logging due to consent).
+   *
+   * @enum {number}
+   * @memberof google.cloud.speech.v1p1beta1
+   */
+  LoggingConsentState: {
+    ENABLED: 0,
+    DISABLED: 1
   }
 };
 
