@@ -62,6 +62,9 @@ test(`should run sync recognize on a GCS file with model selection`, async t => 
 });
 
 test(`should run sync recognize with auto punctuation`, async t => {
-  const output = await runAsync(`${cmd} sync-auto-punctuation ${filepath2}`, cwd);
+  const output = await runAsync(
+    `${cmd} sync-auto-punctuation ${filepath2}`,
+    cwd
+  );
   t.true(output.includes(text2));
 });

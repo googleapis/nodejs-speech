@@ -132,7 +132,12 @@ function syncRecognizeModelSelectionGCS(
   // [END speech_transcribe_model_selection_gcs]
 }
 
-function syncRecognizeWithAutoPunctuation(filename, encoding, sampleRateHertz, languageCode) {
+function syncRecognizeWithAutoPunctuation(
+  filename,
+  encoding,
+  sampleRateHertz,
+  languageCode
+) {
   // [START speech_transcribe_file_with_auto_punctuation]
   // Imports the Google Cloud client library
   const fs = require('fs');
