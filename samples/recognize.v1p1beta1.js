@@ -174,11 +174,10 @@ function syncRecognizeWithEnhancedModel(
     .recognize(request)
     .then(data => {
       const response = data[0];
-      console.log(response);
-      //const transcription = response.results
-      //  .map(result => result.alternatives[0].transcript)
-      //  .join('\n');
-      //console.log(`Transcription: `, transcription);
+      response.results.forEach(result => {
+        const alternative = result.alternatives[0];
+        console.log(alternative.transcript);
+      });
     })
     .catch(err => {
       console.error('ERROR:', err);
