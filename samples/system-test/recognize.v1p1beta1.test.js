@@ -70,9 +70,9 @@ test(`should run sync recognize with auto punctuation`, async t => {
   t.true(output.includes(text2));
 });
 
-test(`should run sync recognize with enhanced model`, async t => {
+test(`should run sync recognize with metadata`, async t => {
   const output = await runAsync(
-    `${cmd} sync-enhanced-model ${filepath2}`,
+    `${cmd} sync-metadata ${filepath2}`,
     cwd
   );
   t.true(output.includes(text3));
