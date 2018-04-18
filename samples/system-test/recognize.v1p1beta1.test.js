@@ -71,9 +71,6 @@ test(`should run sync recognize with auto punctuation`, async t => {
 });
 
 test(`should run sync recognize with metadata`, async t => {
-  const output = await runAsync(
-    `${cmd} sync-metadata ${filepath2}`,
-    cwd
-  );
+  const output = await runAsync(`${cmd} sync-metadata ${filepath2}`, cwd);
   t.true(output.includes(text3));
 });

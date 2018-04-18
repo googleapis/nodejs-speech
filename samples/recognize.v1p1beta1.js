@@ -207,10 +207,10 @@ function syncRecognizeWithMetaData(
   // const languageCode = 'BCP-47 language code, e.g. en-US';
 
   const recognitionMetadata = {
-    interactionType: "DISCUSSION",
-    microphoneDistance: "NEARFIELD",
-    recordingDeviceType: "SMARTPHONE",
-    recordingDeviceName: "Pixel 2 XL",
+    interactionType: 'DISCUSSION',
+    microphoneDistance: 'NEARFIELD',
+    recordingDeviceType: 'SMARTPHONE',
+    recordingDeviceName: 'Pixel 2 XL',
     industryNaicsCodeOfAudio: 519190,
   };
 
@@ -296,7 +296,8 @@ require(`yargs`)
         opts.sampleRateHertz,
         opts.languageCode
       )
-  ).options({
+  )
+  .options({
     encoding: {
       alias: 'e',
       default: 'LINEAR16',
