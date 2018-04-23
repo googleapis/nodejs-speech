@@ -257,9 +257,9 @@ function syncRecognizeWithEnhancedModel(
 
   // Imports the Google Cloud client library for Beta API
   /**
-  * TODO(developer): Update client library import to use new
-  * version of API when desired features become available
-  */
+   * TODO(developer): Update client library import to use new
+   * version of API when desired features become available
+   */
   const speech = require('@google-cloud/speech').v1p1beta1;
 
   // Creates a client
