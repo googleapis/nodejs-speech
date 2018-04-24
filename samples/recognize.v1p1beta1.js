@@ -33,6 +33,11 @@ function syncRecognizeModelSelection(
   // [START speech_transcribe_model_selection]
   // Imports the Google Cloud client library
   const fs = require('fs');
+  // Imports the Google Cloud client library for Beta API
+  /**
+   * TODO(developer): Update client library import to use new
+   * version of API when desired features become available
+   */
   const speech = require('@google-cloud/speech').v1p1beta1;
 
   // Creates a client
@@ -86,7 +91,11 @@ function syncRecognizeModelSelectionGCS(
   languageCode
 ) {
   // [START speech_transcribe_model_selection_gcs]
-  // Imports the Google Cloud client library
+  // Imports the Google Cloud client library for Beta API
+  /**
+   * TODO(developer): Update client library import to use new
+   * version of API when desired features become available
+   */
   const speech = require('@google-cloud/speech').v1p1beta1;
 
   // Creates a client
@@ -141,6 +150,11 @@ function syncRecognizeWithAutoPunctuation(
   // [START speech_transcribe_file_with_auto_punctuation]
   // Imports the Google Cloud client library
   const fs = require('fs');
+  // Imports the Google Cloud client library for Beta API
+  /**
+   * TODO(developer): Update client library import to use new
+   * version of API when desired features become available
+   */
   const speech = require('@google-cloud/speech').v1p1beta1;
 
   // Creates a client
@@ -193,6 +207,11 @@ function syncRecognizeWithMetaData(
   // [START speech_transcribe_file_with_metadata]
   // Imports the Google Cloud client library
   const fs = require('fs');
+  // Imports the Google Cloud client library for Beta API
+  /**
+   * TODO(developer): Update client library import to use new
+   * version of API when desired features become available
+   */
   const speech = require('@google-cloud/speech').v1p1beta1;
 
   // Creates a client
@@ -254,7 +273,6 @@ function syncRecognizeWithEnhancedModel(
   // [START speech_transcribe_file_with_enhanced_model]
   // Imports the Google Cloud client library
   const fs = require('fs');
-
   // Imports the Google Cloud client library for Beta API
   /**
    * TODO(developer): Update client library import to use new
