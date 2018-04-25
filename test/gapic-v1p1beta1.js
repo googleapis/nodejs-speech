@@ -15,6 +15,7 @@
 'use strict';
 
 const assert = require('assert');
+const through2 = require('through2');
 
 const speechModule = require('../src');
 
@@ -215,6 +216,69 @@ describe('SpeechClient', () => {
       );
     });
   });
+
+  describe('streamingRecognize', () => {
+    it('invokes streamingRecognize without error', done => {
+      var client = new speechModule.v1p1beta1.SpeechClient({
+        credentials: {client_email: 'bogus', private_key: 'bogus'},
+        projectId: 'bogus',
+      });
+
+      // Mock request
+      var request = {};
+
+      // Mock response
+      var expectedResponse = {};
+
+      // Mock Grpc layer
+      client._innerApiCalls.streamingRecognize = mockBidiStreamingGrpcMethod(
+        request,
+        expectedResponse
+      );
+
+      var stream = client
+        .streamingRecognize()
+        .on('data', response => {
+          assert.deepStrictEqual(response, expectedResponse);
+          done();
+        })
+        .on('error', err => {
+          done(err);
+        });
+
+      stream.write(request);
+    });
+
+    it('invokes streamingRecognize with error', done => {
+      var client = new speechModule.v1p1beta1.SpeechClient({
+        credentials: {client_email: 'bogus', private_key: 'bogus'},
+        projectId: 'bogus',
+      });
+
+      // Mock request
+      var request = {};
+
+      // Mock Grpc layer
+      client._innerApiCalls.streamingRecognize = mockBidiStreamingGrpcMethod(
+        request,
+        null,
+        error
+      );
+
+      var stream = client
+        .streamingRecognize()
+        .on('data', () => {
+          assert.fail();
+        })
+        .on('error', err => {
+          assert(err instanceof Error);
+          assert.equal(err.code, FAKE_STATUS_CODE);
+          done();
+        });
+
+      stream.write(request);
+    });
+  });
 });
 
 function mockSimpleGrpcMethod(expectedRequest, response, error) {
@@ -227,6 +291,20 @@ function mockSimpleGrpcMethod(expectedRequest, response, error) {
     } else {
       callback(null);
     }
+  };
+}
+
+function mockBidiStreamingGrpcMethod(expectedRequest, response, error) {
+  return () => {
+    var mockStream = through2.obj((chunk, enc, callback) => {
+      assert.deepStrictEqual(chunk, expectedRequest);
+      if (error) {
+        callback(error);
+      } else {
+        callback(null, response);
+      }
+    });
+    return mockStream;
   };
 }
 
