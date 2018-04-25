@@ -31,14 +31,13 @@ function syncRecognizeModelSelection(
   languageCode
 ) {
   // [START speech_transcribe_model_selection]
-  // Imports the Google Cloud client library
-  const fs = require('fs');
   // Imports the Google Cloud client library for Beta API
   /**
    * TODO(developer): Update client library import to use new
    * version of API when desired features become available
    */
   const speech = require('@google-cloud/speech').v1p1beta1;
+  const fs = require('fs');
 
   // Creates a client
   const client = new speech.SpeechClient();
@@ -148,14 +147,13 @@ function syncRecognizeWithAutoPunctuation(
   languageCode
 ) {
   // [START speech_transcribe_file_with_auto_punctuation]
-  // Imports the Google Cloud client library
-  const fs = require('fs');
   // Imports the Google Cloud client library for Beta API
   /**
    * TODO(developer): Update client library import to use new
    * version of API when desired features become available
    */
   const speech = require('@google-cloud/speech').v1p1beta1;
+  const fs = require('fs');
 
   // Creates a client
   const client = new speech.SpeechClient();
@@ -205,14 +203,13 @@ function syncRecognizeWithMetaData(
   languageCode
 ) {
   // [START speech_transcribe_file_with_metadata]
-  // Imports the Google Cloud client library
-  const fs = require('fs');
   // Imports the Google Cloud client library for Beta API
   /**
    * TODO(developer): Update client library import to use new
    * version of API when desired features become available
    */
   const speech = require('@google-cloud/speech').v1p1beta1;
+  const fs = require('fs');
 
   // Creates a client
   const client = new speech.SpeechClient();
@@ -271,14 +268,13 @@ function syncRecognizeWithEnhancedModel(
   languageCode
 ) {
   // [START speech_transcribe_file_with_enhanced_model]
-  // Imports the Google Cloud client library
-  const fs = require('fs');
   // Imports the Google Cloud client library for Beta API
   /**
    * TODO(developer): Update client library import to use new
    * version of API when desired features become available
    */
   const speech = require('@google-cloud/speech').v1p1beta1;
+  const fs = require('fs');
 
   // Creates a client
   const client = new speech.SpeechClient();
