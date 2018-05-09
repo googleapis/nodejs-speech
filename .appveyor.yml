@@ -18,3 +18,5 @@ build: off
 
 matrix:
   fast_finish: true
+
+clone_depth: 5
