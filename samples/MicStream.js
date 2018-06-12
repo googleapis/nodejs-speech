@@ -35,59 +35,57 @@
  * More Info: https://cloud.google.com/speech-to-text/docs/streaming-recognize
  */
 
-const encoding = 'LINEAR16';
-const sampleRateHertz = 16000;
-const languageCode = 'en-US';
+//uncomment below and see Errata at end of file for more configurations
+// const encoding = 'LINEAR16';
+// const sampleRateHertz = 16000;
+// const languageCode = 'en-US';
 
-//Config object for request to speech api.  Additional (unrequired) parameters in comments.
-const config = {
-  encoding: encoding,
-  sampleRateHertz: sampleRateHertz,
-  languageCode: languageCode,
-  //profanity_filter: true, // bool, optional replaces all but first letter of word with '*'
-  //speech_contexts:[], //optional means to assist in recognition
-  //max_alternatives: 5, //This is normally 0 or 1, we've made it 5 to get all the ML guesses
-  //enable_word_time_offset: false, //optional bool
-  //enable_automatic_punctuation: false,
-  //metadata: [] //optional metadata regarding this request
-};
-
-//Note: This example makes use of event design pattern to distinguish each step involved when manually
-//testing the microphone streaming.
 //Event Emitter for Combined Test
 const events = require(`events`);
 const eventEmitter = new events.EventEmitter();
 
 eventEmitter.on(`micStreamRecognize: complete`, () => {
-  console.log(`***EventEmitter reports: micStreamRecognize: complete***`);
+  //console.log(`***EventEmitter reports: micStreamRecognize: complete***`);
 });
 
 eventEmitter.on(`wavFileToText: complete`, () => {
-  console.log(`***EventEmitter reports: wavFileToText: complete***`);
+  //console.log(`***EventEmitter reports: wavFileToText: complete***`);
 });
 
 eventEmitter.on(`micStreamRecognize: Started`, () => {
-  console.log(`***EventEmitter reports: micStreamRecognize: Started***`);
+  //console.log(`***EventEmitter reports: micStreamRecognize: Started***`);
 });
 
 eventEmitter.on(`wavFileToText: Started`, () => {
-  console.log(`***EventEmitter reports: wavFileToText: Started***`);
+  //console.log(`***EventEmitter reports: wavFileToText: Started***`);
 });
 
 eventEmitter.on(`test_1: Started`, () => {
-  console.log(`***EventEmitter reports: test_1: Started***`);
+  //console.log(`***EventEmitter reports: test_1: Started***`);
 });
 
 eventEmitter.on(`test_1: complete`, () => {
-  console.log(`***EventEmitter reports: test_1: complete***`);
+  //console.log(`***EventEmitter reports: test_1: complete***`);
 });
 
-function micStreamRecognize(filename, secondsofRecording, config) {
+function micStreamRecognize(
+  filename,
+  secondsofRecording,
+  encoding,
+  sampleRateHertz,
+  languageCode
+) {
   // [START micStreamRecognize]
   //returns speech-to-text, from streamingRecognize - request object is simplified
   //streams audio from microphone to filename, for secondsofRecording seconds, using simplified request object
   //config is .wav by default, change request object (see above) for more options.
   eventEmitter.emit(`micStreamRecognize: Started`);
+
+  const config = {
+    encoding: encoding,
+    sampleRateHertz: sampleRateHertz,
+    languageCode: languageCode,
+  };
 
   const request = {
     config,
@@ -161,6 +159,7 @@ function micStreamRecognize(filename, secondsofRecording, config) {
     `micStreamRecognize: Listening for ${secondsofRecording} seconds, press Ctrl+C to stop.`
   );
 
+  //CF: records for secondsofRecording seconds.
   setTimeout(function() {
     record.stop();
     console.log(`micStreamRecognize: Recording complete!`);
@@ -182,12 +181,15 @@ function micStreamRecognize(filename, secondsofRecording, config) {
   // [END micStreamRecognize]
 }
 
-function wavFileToText(filename, config) {
+function wavFileToText(filename, encoding, sampleRateHertz, languageCode) {
   // [START wavFileToText]
-  const path = require('path');
-  filename = path.join(__dirname, `resources/${filename}`);
+
+  const config = {
+    encoding: encoding,
+    sampleRateHertz: sampleRateHertz,
+    languageCode: languageCode,
+  };
   eventEmitter.emit(`test_1: Started`);
-  console.log(`file is: ${filename}`);
   eventEmitter.emit(`wavFileToText: Started`);
   // Imports the Google Cloud client library
   const speech = require('@google-cloud/speech');
@@ -198,7 +200,10 @@ function wavFileToText(filename, config) {
   // Creates a client
   const client = new speech.SpeechClient();
 
-  //Consumes audio from local audio file
+  const path = require(`path`);
+
+  filename = path.resolve(filename);
+  console.log(`resolved filename ${filename}`);
   const audio = {
     content: fs.readFileSync(filename).toString('base64'),
   };
@@ -221,7 +226,6 @@ function wavFileToText(filename, config) {
         .map(result => result.alternatives[0].confidence)
         .join('\n');
       console.log(`wavFileToText: Confidence; \n`, confidence);
-      // ResultsArray.push([transcription, confidence]);
       eventEmitter.emit(`wavFileToText: complete`);
     })
     .catch(err => {
@@ -230,8 +234,13 @@ function wavFileToText(filename, config) {
   // [END wavFileToText]
 }
 
-function test_1(recordingtime, targetfile, config) {
-  const path = require('path');
+function test_1(
+  targetfile,
+  recordingtime,
+  encoding,
+  sampleRateHertz,
+  languageCode
+) {
   const fs = require('fs');
   if (targetfile.substr(targetfile.length - 4) !== `.wav`)
     targetfile = targetfile + `.wav`;
@@ -240,13 +249,15 @@ function test_1(recordingtime, targetfile, config) {
     console.log(`${targetfile} ${err ? 'is not writable' : 'is writable'}`);
   });
   var streamRes = micStreamRecognize(
-    path.basename(targetfile),
+    targetfile,
     recordingtime,
-    config
+    encoding,
+    sampleRateHertz,
+    languageCode
   );
   var test1trans = [];
   eventEmitter.on(`micStreamRecognize: complete`, () => {
-    wavFileToText(targetfile, config);
+    wavFileToText(targetfile, encoding, sampleRateHertz, languageCode);
     for (var i in streamRes) {
       if (streamRes[i].length < 3) test1trans.push(`\n` + streamRes[i][0]);
     }
@@ -255,49 +266,61 @@ function test_1(recordingtime, targetfile, config) {
   });
 }
 
-test_1(5, `newertest`, config);
 require(`yargs`)
   .demand(1)
   .command(
-    `run <targetfile>`,
+    `run`,
     `Runs complete streaming test: \n 1. streams from microphone, outputting streamed speech-to-text to console, \n 2. records that streamed sample to resources folder, \n 3. runs speech-to-text on that local file to compare to step 1.`,
     {},
-    opts => test_1(opts.targetfile, opts.recordingtime, opts.config)
+    opts =>
+      test_1(
+        opts.targetfile,
+        opts.recordingtime,
+        opts.encoding,
+        opts.sampleRateHertz,
+        opts.languageCode
+      )
   )
   .command(
-    `wavFileToText <targetfile>`,
+    `wavFileToText`,
     `Runs .wav file to text translation from target file`,
     {},
-    opts => wavFileToText(opts.targetfile, opts.config)
+    opts =>
+      wavFileToText(
+        opts.targetfile,
+        opts.encoding,
+        opts.sampleRateHertz,
+        opts.languageCode
+      )
   )
   .command(
-    `micstream <targetfile>`,
+    `micStreamRecognize`,
     `Streams audio input from microphone, translates to text`,
     {},
-    opts => micStreamRecognize(opts.targetfile, opts.recordingtime, opts.config)
+    opts =>
+      micStreamRecognize(
+        opts.targetfile,
+        opts.recordingtime,
+        opts.encoding,
+        opts.sampleRateHertz,
+        opts.languageCode
+      )
   )
 
   .options({
     recordingtime: {
       alias: 't',
-      default: 10,
+      default: 5,
       global: true,
       requiresArg: true,
       type: 'number',
     },
     targetfile: {
       alias: 'f',
-      default: `./resources/newtest.wav`,
+      default: `./resources/ManualTest.wav`,
       global: true,
       requiresArg: false,
       type: 'string',
-    },
-    config: {
-      alias: 'c',
-      default: ['LINEAR16', 16000, 'en-US'],
-      global: false,
-      requiresArg: true,
-      type: 'array',
     },
     encoding: {
       alias: 'e',
@@ -321,9 +344,9 @@ require(`yargs`)
       type: 'string',
     },
   })
-  .example(`node $0 test -t 5 -f mictest2`)
-  .example(`node $0 wave_to_text ./resources/audio.raw`)
-  .example(`node $0 micstream ./resources/audio.raw  -e LINEAR16 -r 16000`)
+  .example(`node $0 run`)
+  .example(`node $0 wavFileToText`)
+  .example(`node $0 micStreamRecognize`)
   .example(`node $0 listen`)
   .wrap(120)
   .recommendCommands()
