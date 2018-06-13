@@ -130,6 +130,7 @@ function micStreamRecognize(
           `micStreamRecognize: Transcript; 
           ${data.results[0].alternatives[0].transcript} \n`
         );
+      streamtranscription = data.results[0].alternatives[0].transcript;
       var a = [];
       a.push(data.results[0].alternatives[0].transcript);
       a.push(data.results[0].isFinal.toString());
@@ -222,6 +223,7 @@ function wavFileToText(filename, encoding, sampleRateHertz, languageCode) {
         .map(result => result.alternatives[0].transcript)
         .join('\n');
       console.log(`wavFileToText: Transcription; \n`, transcription);
+      wavtranscription = transcription;
       const confidence = response.results
         .map(result => result.alternatives[0].confidence)
         .join('\n');
@@ -264,6 +266,28 @@ function test_1(
     console.log(`test_1: Streaming result(s); ${test1trans}`);
     console.log(`test_1: Complete!  File at: ${targetfile}`);
   });
+  eventEmitter.on(`wavFileToText: complete`, () => {
+    compareLiveStreamtoWavFile(wavtranscription, streamtranscription);
+  });
+}
+
+//globals to assist with compareLiveStreamtoWavFile test (below)
+var wavtranscription;
+var streamtranscription;
+
+//Simple test function that outputs to console results of comparing stream to .wav translation
+function compareLiveStreamtoWavFile(wavtranscription, streamtranscription) {
+  const wav = wavtranscription;
+  const stream = streamtranscription;
+  if (wav !== null && stream !== null) {
+    console.log(
+      `Is .Wav speech to text is same as Streamed speech to text?: ${(
+        wav === stream
+      ).toString()}`
+    );
+  }
+  console.log(`stream speech to text is: ${stream}`);
+  console.log(`   wav speech to text is: ${wav}`);
 }
 
 require(`yargs`)
@@ -347,7 +371,6 @@ require(`yargs`)
   .example(`node $0 run`)
   .example(`node $0 wavFileToText`)
   .example(`node $0 micStreamRecognize`)
-  .example(`node $0 listen`)
   .wrap(120)
   .recommendCommands()
   .epilogue(`For more information, see https://cloud.google.com/speech/docs`)
