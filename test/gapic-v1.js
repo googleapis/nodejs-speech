@@ -26,7 +26,7 @@ error.code = FAKE_STATUS_CODE;
 describe('SpeechClient', () => {
   describe('recognize', () => {
     it('invokes recognize without error', done => {
-      var client = new speechModule.v1p1beta1.SpeechClient({
+      var client = new speechModule.v1.SpeechClient({
         credentials: {client_email: 'bogus', private_key: 'bogus'},
         projectId: 'bogus',
       });
@@ -66,7 +66,7 @@ describe('SpeechClient', () => {
     });
 
     it('invokes recognize with error', done => {
-      var client = new speechModule.v1p1beta1.SpeechClient({
+      var client = new speechModule.v1.SpeechClient({
         credentials: {client_email: 'bogus', private_key: 'bogus'},
         projectId: 'bogus',
       });
@@ -107,7 +107,7 @@ describe('SpeechClient', () => {
 
   describe('longRunningRecognize', function() {
     it('invokes longRunningRecognize without error', done => {
-      var client = new speechModule.v1p1beta1.SpeechClient({
+      var client = new speechModule.v1.SpeechClient({
         credentials: {client_email: 'bogus', private_key: 'bogus'},
         projectId: 'bogus',
       });
@@ -155,7 +155,7 @@ describe('SpeechClient', () => {
     });
 
     it('invokes longRunningRecognize with error', done => {
-      var client = new speechModule.v1p1beta1.SpeechClient({
+      var client = new speechModule.v1.SpeechClient({
         credentials: {client_email: 'bogus', private_key: 'bogus'},
         projectId: 'bogus',
       });
@@ -202,7 +202,7 @@ describe('SpeechClient', () => {
     });
 
     it('has longrunning decoder functions', () => {
-      var client = new speechModule.v1p1beta1.SpeechClient({
+      var client = new speechModule.v1.SpeechClient({
         credentials: {client_email: 'bogus', private_key: 'bogus'},
         projectId: 'bogus',
       });
@@ -219,7 +219,7 @@ describe('SpeechClient', () => {
 
   describe('streamingRecognize', () => {
     it('invokes streamingRecognize without error', done => {
-      var client = new speechModule.v1p1beta1.SpeechClient({
+      var client = new speechModule.v1.SpeechClient({
         credentials: {client_email: 'bogus', private_key: 'bogus'},
         projectId: 'bogus',
       });
@@ -250,7 +250,7 @@ describe('SpeechClient', () => {
     });
 
     it('invokes streamingRecognize with error', done => {
-      var client = new speechModule.v1p1beta1.SpeechClient({
+      var client = new speechModule.v1.SpeechClient({
         credentials: {client_email: 'bogus', private_key: 'bogus'},
         projectId: 'bogus',
       });
