@@ -13,9 +13,12 @@ for version in versions:
     library = gapic.node_library('speech', version)
 
     # skip index, protos, package.json, and README.md
+    # Skip tests as they are handedited until the Generator is fixed.
+    # https://github.com/googleapis/gapic-generator/issues/2129
     s.copy(
         library,
-        excludes=['package.json', 'README.md', 'src/index.js'],
+        excludes=['package.json', 'README.md', 'src/index.js',
+                  'test/gapic-{version}.js']
     )
 
 #
