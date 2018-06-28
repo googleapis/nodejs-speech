@@ -226,21 +226,25 @@ describe('SpeechClient', () => {
 
       // Mock request
       var request = {};
+      var expectedRequests = [{streamingConfig: undefined}, {audioContent: {}}];
 
       // Mock response
       var expectedResponse = {};
 
       // Mock Grpc layer
       client._innerApiCalls.streamingRecognize = mockBidiStreamingGrpcMethod(
-        request,
+        expectedRequests,
         expectedResponse
       );
 
+      let loops = 0;
       var stream = client
         .streamingRecognize()
         .on('data', response => {
           assert.deepStrictEqual(response, expectedResponse);
-          done();
+          if (++loops === expectedRequests.length) {
+            done();
+          }
         })
         .on('error', err => {
           done(err);
@@ -257,10 +261,15 @@ describe('SpeechClient', () => {
 
       // Mock request
       var request = {};
+      var expectedRequests = [
+        {streamingConfig: undefined},
+        {streamingConfig: undefined},
+        {streamingConfig: undefined},
+      ];
 
       // Mock Grpc layer
       client._innerApiCalls.streamingRecognize = mockBidiStreamingGrpcMethod(
-        request,
+        expectedRequests,
         null,
         error
       );
@@ -294,10 +303,11 @@ function mockSimpleGrpcMethod(expectedRequest, response, error) {
   };
 }
 
-function mockBidiStreamingGrpcMethod(expectedRequest, response, error) {
+let callCount = 0;
+function mockBidiStreamingGrpcMethod(expectedRequests, response, error) {
   return () => {
     var mockStream = through2.obj((chunk, enc, callback) => {
-      assert.deepStrictEqual(chunk, expectedRequest);
+      assert.deepStrictEqual(chunk, expectedRequests[callCount++]);
       if (error) {
         callback(error);
       } else {
