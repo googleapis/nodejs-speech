@@ -471,37 +471,37 @@ require(`yargs`)
   )
   .command(
     `multiChannelTranscribe`,
-    `Detects speech in a local audio file with word time offset.`,
+    `Differentiates input by audio channel in local audio file.`,
     {},
     opts => speechTranscribeMultiChannel(opts.speechFileGnome)
   )
   .command(
     `multiChannelTranscribeGCS`,
-    `Creates a job to detect speech in a local audio file, and waits for the job to complete.`,
+    `Differentiates input by audio channel from GCS audio file.`,
     {},
     opts => speechTranscribeMultichannelGCS(opts.gcsUriStereo)
   )
   .command(
     `multiLanguageTranscribe`,
-    `Creates a job to detect speech in an audio file located in a Google Cloud Storage bucket, and waits for the job to complete.`,
+    `Transcribes multiple languages from local audio file.`,
     {},
     opts => speechTranscribeMultilang(opts.multiSpeechFile)
   )
   .command(
     `multiLanguageTranscribeGCS`,
-    `Creates a job to detect speech  with word time offset in an audio file located in a Google Cloud Storage bucket, and waits for the job to complete.`,
+    `Transcribes multiple languages from GCS audio file.`,
     {},
     opts => speechTranscribeMultilangGCS(opts.multiSpeechUri)
   )
   .command(
     `wordLevelConfidence`,
-    `Detects speech in a local audio file by streaming it to the Speech API.`,
+    `Detects word level confidence from local audio file.`,
     {},
     opts => speechTranscribeWordLevelConfidence(opts.brooklynBridgeSpeechFile)
   )
   .command(
     `wordLevelConfidenceGCS`,
-    `Detects speech in a microphone input stream. This command requires that you have SoX installed and available in your $PATH. See https://www.npmjs.com/package/node-record-lpcm16#dependencies`,
+    `Detects word level confidence from GCS audio file.`,
     {},
     opts =>
       speechTranscribeWordLevelConfidenceGCS(opts.brooklynBridgeSpeechFileURI)
