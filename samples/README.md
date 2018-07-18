@@ -132,16 +132,15 @@ Commands:
 
 Options:
   --version                             Show version number             [boolean]
-  --speechFile, -f      [string] [default: "/Users/cfrater/speech7/nodejs-speech/samples/resources/commercial_mono.wav"]
-  --gcsUri, -u                                 [string] [default: "gs://cloud-samples-tests/speech/commercial_mono.wav"]
-  --speechFileGnome, --gf  [string] [default: "/Users/cfrater/SPEECH3/nodejs-speech/samples/resources/Google_Gnome.wav"]
-  --gcsUriStereo, --us                       [string] [default: "gs://cloud-samples-tests/speech/commercial_stereo.wav"]
-  --multiSpeechFile, --ms         [string] [default: "/Users/cfrater/speech7/nodejs-speech/samples/resources/multi.wav"]
-  --multiSpeechUri, --msu                                [string] [default: "gs://cloud-samples-tests/speech/multi.wav"]
-  --speechFileStereo, --fs
-                      [string] [default: "/Users/cfrater/speech7/nodejs-speech/samples/resources/commercial_stereo.wav"]
+  --speechFile, -f                [string] [default: "./resources/commercial_mono.wav"]
+  --gcsUri, -u                    [string] [default: "gs://cloud-samples-tests/speech/commercial_mono.wav"]
+  --speechFileGnome, --gf         [string] [default: "./resources/Google_Gnome.wav"]
+  --gcsUriStereo, --us            [string] [default: "gs://cloud-samples-tests/speech/commercial_stereo.wav"]
+  --multiSpeechFile, --ms         [string] [default: "./resources/multi.wav"]
+  --multiSpeechUri, --msu         [string] [default: "gs://cloud-samples-tests/speech/multi.wav"]
+  --speechFileStereo, --fs        [string] [default: "./samples/resources/commercial_stereo.wav"]
   --brooklynBridgeSpeechFile, --bb
-                              [string] [default: "/Users/cfrater/speech7/nodejs-speech/samples/resources/brooklyn.flac"]
+                              [string] [default: "./resources/brooklyn.flac"]
   --brooklynBridgeSpeechFileURI, --bbu               [string] [default: "gs://cloud-samples-tests/speech/brooklyn.flac"]
   --help                                Show help             [boolean]
 
