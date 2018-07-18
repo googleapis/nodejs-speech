@@ -117,18 +117,12 @@ Commands:
   betaFeatures.js Diarization                 Isolate distinct speakers in an audio file
   betaFeatures.js DiarizationGCS              Isolate distinct speakers in an audio file located in a Google Cloud
                                               Storage bucket.
-  betaFeatures.js multiChannelTranscribe      Detects speech in a local audio file with word timeoffset.
-  betaFeatures.js multiChannelTranscribeGCS   Creates a job to detect speech in a local audio file, and waits for the
-                                              job to complete.
-  betaFeatures.js multiLanguageTranscribe     Creates a job to detect speech in an audio file located in a Google Cloud
-                                              Storage bucket, and waits for the job to complete.
-  betaFeatures.js multiLanguageTranscribeGCS  Creates a job to detect speech  with word time offset in an audio file
-                                              located in a Google Cloud Storage bucket, and waitsfor the job to
-                                              complete.
-  betaFeatures.js wordLevelConfidence         Detects speech in a local audio file by streaming it to the Speech API.
-  betaFeatures.js wordLevelConfidenceGCS      Detects speech in a microphone input stream. This command requires that
-                                              you have SoX installed and available in your $PATH.See
-                                              https://www.npmjs.com/package/node-record-lpcm16#dependencies
+  betaFeatures.js multiChannelTranscribe      Differentiates input by audio channel in local audio file.
+  betaFeatures.js multiChannelTranscribeGCS   Differentiates input by audio channe from GCS audio file.
+  betaFeatures.js multiLanguageTranscribe     Transcribes multiple languages from local audio file.
+  betaFeatures.js multiLanguageTranscribeGCS  Transcribes multiple languages from GCS audio file.
+  betaFeatures.js wordLevelConfidence         Detects word level confidence from local audio file.
+  betaFeatures.js wordLevelConfidenceGCS      Detects word level confidence from GCS audio file. 
 
 Options:
   --version                             Show version number             [boolean]
