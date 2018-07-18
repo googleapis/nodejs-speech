@@ -101,3 +101,65 @@ For more information, see https://cloud.google.com/speech/docs
 
 [shell_img]: //gstatic.com/cloudssh/images/open-btn.png
 [shell_link]: https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/googleapis/nodejs-speech&page=editor&open_in_editor=samples/README.md
+
+### Speech Recognition betaFeatures
+
+View the [source code][betaFeatures_code].
+
+[![Open in Cloud Shell][shell_img]](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/googleapis/nodejs-speech&page=editor&open_in_editor=samples/betaFeatures.js,samples/README.md)
+
+__Usage:__ `node betaFeatures.js --help`
+
+```
+betaFeatures.js <command>
+
+Commands:
+  betaFeatures.js Diarization                 Isolate distinct speakers in an audio file
+  betaFeatures.js DiarizationGCS              Isolate distinct speakers in an audio file located in a Google Cloud
+                                              Storage bucket.
+  betaFeatures.js multiChannelTranscribe      Detects speech in a local audio file with word timeoffset.
+  betaFeatures.js multiChannelTranscribeGCS   Creates a job to detect speech in a local audio file, and waits for the
+                                              job to complete.
+  betaFeatures.js multiLanguageTranscribe     Creates a job to detect speech in an audio file located in a Google Cloud
+                                              Storage bucket, and waits for the job to complete.
+  betaFeatures.js multiLanguageTranscribeGCS  Creates a job to detect speech  with word time offset in an audio file
+                                              located in a Google Cloud Storage bucket, and waitsfor the job to
+                                              complete.
+  betaFeatures.js wordLevelConfidence         Detects speech in a local audio file by streaming it to the Speech API.
+  betaFeatures.js wordLevelConfidenceGCS      Detects speech in a microphone input stream. This command requires that
+                                              you have SoX installed and available in your $PATH.See
+                                              https://www.npmjs.com/package/node-record-lpcm16#dependencies
+
+Options:
+  --version                             Show version number             [boolean]
+  --speechFile, -f      [string] [default: "/Users/cfrater/speech7/nodejs-speech/samples/resources/commercial_mono.wav"]
+  --gcsUri, -u                                 [string] [default: "gs://cloud-samples-tests/speech/commercial_mono.wav"]
+  --speechFileGnome, --gf  [string] [default: "/Users/cfrater/SPEECH3/nodejs-speech/samples/resources/Google_Gnome.wav"]
+  --gcsUriStereo, --us                       [string] [default: "gs://cloud-samples-tests/speech/commercial_stereo.wav"]
+  --multiSpeechFile, --ms         [string] [default: "/Users/cfrater/speech7/nodejs-speech/samples/resources/multi.wav"]
+  --multiSpeechUri, --msu                                [string] [default: "gs://cloud-samples-tests/speech/multi.wav"]
+  --speechFileStereo, --fs
+                      [string] [default: "/Users/cfrater/speech7/nodejs-speech/samples/resources/commercial_stereo.wav"]
+  --brooklynBridgeSpeechFile, --bb
+                              [string] [default: "/Users/cfrater/speech7/nodejs-speech/samples/resources/brooklyn.flac"]
+  --brooklynBridgeSpeechFileURI, --bbu               [string] [default: "gs://cloud-samples-tests/speech/brooklyn.flac"]
+  --help                                Show help             [boolean]
+
+Examples:
+  node betaFeatures.js Diarization
+  node betaFeatures.js DiarizationGCS
+  node betaFeatures.js multiChannelTranscribe
+  node betaFeatures.js multiChannelTranscribeGCS
+  node betaFeatures.js multiLanguageTranscribe
+  node betaFeatures.js multiLanguageTranscribeGCS
+  node betaFeatures.js wordLevelConfidence
+  node betaFeatures.js wordLevelConfidenceGCS
+
+For more information, see https://cloud.google.com/speech/docs
+```
+
+[betaFeatures_docs]: https://cloud.google.com/speech/docs
+[betaFeatures_code]: recognize.v1p1beta1.js
+
+[shell_img]: //gstatic.com/cloudssh/images/open-btn.png
+[shell_link]: https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/googleapis/nodejs-speech&page=editor&open_in_editor=samples/README.md
