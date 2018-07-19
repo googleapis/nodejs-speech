@@ -61,6 +61,24 @@ function speechTranscribeDiarization(speechFile) {
     audio: audio,
   };
 
+  // client
+  //   .recognize(request)
+  //   .then(data => {
+  //     const response = data[0];
+  //     const transcription = response.results
+  //       .map(result => result.alternatives[0].transcript)
+  //       .join('\n');
+  //     console.log(`Transcription: ${transcription}`);
+  //     console.log(`Speaker Diarization:`);
+  //     const words = response.results.map(result => result.alternatives[0]);
+  //     console.log(`WORDS: `);
+  //     //words.forEach(a => console.log(JSON.stringify(a, null, 4)));
+  //     console.log(JSON.stringify(words[-1], null, 4));
+  //   })
+  //   .catch(err => {
+  //     console.error('ERROR:', err);
+  //   });
+
   client
     .recognize(request)
     .then(data => {
@@ -70,9 +88,11 @@ function speechTranscribeDiarization(speechFile) {
         .join('\n');
       console.log(`Transcription: ${transcription}`);
       console.log(`Speaker Diarization:`);
-      const words = response.results.map(result => result.alternatives[0]);
+      const chunks = response.results.map(result => result.alternatives[0]);
       console.log(`WORDS: `);
-      words.forEach(a => console.log(JSON.stringify(a, null, 4)));
+      //words.forEach(a => console.log(JSON.stringify(a, null, 4)));
+      const lastChunk = chunks[chunks.length - 1].words;
+      lastChunk.forEach(a => console.log(JSON.stringify(a, null, 4)));
     })
     .catch(err => {
       console.error('ERROR:', err);
@@ -121,9 +141,11 @@ function asyncSpeechTranscribeDiarizationGCS(gcsUri) {
         .join('\n');
       console.log(`Transcription: ${transcription}`);
       console.log(`Speaker Diarization:`);
-      const words = response.results.map(result => result.alternatives[0]);
+      const chunks = response.results.map(result => result.alternatives[0]);
       console.log(`WORDS: `);
-      words.forEach(a => console.log(JSON.stringify(a, null, 4)));
+      //words.forEach(a => console.log(JSON.stringify(a, null, 4)));
+      const lastChunk = chunks[chunks.length - 1].words;
+      lastChunk.forEach(a => console.log(JSON.stringify(a, null, 4)));
     })
     .catch(err => {
       console.error('ERROR:', err);
