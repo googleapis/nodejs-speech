@@ -168,9 +168,8 @@ function speechTranscribeMultiChannel(speechFile) {
 
   const config = {
     encoding: `LINEAR16`,
-    sampleRateHertz: 16000,
     languageCode: `en-US`,
-    audioChannelCount: 1,
+    audioChannelCount: 2,
     enableSeparateRecognitionPerChannel: true,
   };
 
@@ -217,11 +216,9 @@ function speechTranscribeMultichannelGCS(gcsUri) {
 
   const config = {
     encoding: 'LINEAR16',
-    sampleRateHertz: 44100,
     languageCode: `en-US`,
     audioChannelCount: 2,
     enableSeparateRecognitionperChannel: true,
-    enableAutomaticPunctuation: true,
   };
 
   const audio = {
@@ -469,7 +466,8 @@ const multiLanguageFile = path.join(
 
 // const defaultStereoURI =
 //   'gs://cloud-samples-tests/speech/commercial_stereo.wav';
-const gnome = `/Users/cfrater/SPEECH3/nodejs-speech/samples/resources/Google_Gnome.wav`;
+const gnomef = `Google_Gnome.wav`;
+const gnome = path.join(__dirname, `../samples/resources/${gnomef}`);
 
 const Brooklyn = 'brooklyn.flac';
 const BrooklynFilePath = path.join(
@@ -495,7 +493,7 @@ require(`yargs`)
     `multiChannelTranscribe`,
     `Differentiates input by audio channel in local audio file.`,
     {},
-    opts => speechTranscribeMultiChannel(opts.speechFileGnome)
+    opts => speechTranscribeMultiChannel(opts.speechFileStereo)
   )
   .command(
     `multiChannelTranscribeGCS`,

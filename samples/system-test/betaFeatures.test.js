@@ -43,7 +43,7 @@ test(`should run speech diarization on a GCS file`, async t => {
 
 test(`should run multi channel transcription on a local file`, async t => {
   const output = await runAsync(`${cmd} multiChannelTranscribe`, cwd);
-  t.true(output.includes(`Channel Tag: 0`));
+  t.true(output.includes(`Channel Tag: 2`));
 });
 
 test(`should run multi channel transcription on a GCS bucket`, async t => {
