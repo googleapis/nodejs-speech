@@ -26,7 +26,7 @@
 // # DIARIZATION
 
 function speechTranscribeDiarization(speechFile) {
-  //[START speechTranscribeDiarization]
+  //[START speech_transcribe_diarization]
   const fs = require('fs');
 
   // Imports the Google Cloud client library
@@ -61,24 +61,6 @@ function speechTranscribeDiarization(speechFile) {
     audio: audio,
   };
 
-  // client
-  //   .recognize(request)
-  //   .then(data => {
-  //     const response = data[0];
-  //     const transcription = response.results
-  //       .map(result => result.alternatives[0].transcript)
-  //       .join('\n');
-  //     console.log(`Transcription: ${transcription}`);
-  //     console.log(`Speaker Diarization:`);
-  //     const words = response.results.map(result => result.alternatives[0]);
-  //     console.log(`WORDS: `);
-  //     //words.forEach(a => console.log(JSON.stringify(a, null, 4)));
-  //     console.log(JSON.stringify(words[-1], null, 4));
-  //   })
-  //   .catch(err => {
-  //     console.error('ERROR:', err);
-  //   });
-
   client
     .recognize(request)
     .then(data => {
@@ -97,13 +79,13 @@ function speechTranscribeDiarization(speechFile) {
     .catch(err => {
       console.error('ERROR:', err);
     });
-  //[END speechTranscribeDiarization]
+  //[END speech_transcribe_diarization]
 }
 
 //DIARIZATIONGCS
 
 function asyncSpeechTranscribeDiarizationGCS(gcsUri) {
-  // [START asyncSpeechTranscribeDiarizationGcs]
+  // [START speech_transcribe_diarization_gcs]
   //   """Transcribe the given audio file asynchronously with
   //     the selected model."""
 
@@ -130,8 +112,6 @@ function asyncSpeechTranscribeDiarizationGCS(gcsUri) {
     audio: audio,
   };
 
-  // Detects speech in the audio file. This creates a recognition job that you
-  // can wait for now, or get its result later.
   client
     .recognize(request)
     .then(data => {
@@ -150,13 +130,13 @@ function asyncSpeechTranscribeDiarizationGCS(gcsUri) {
     .catch(err => {
       console.error('ERROR:', err);
     });
-  // [END speech_async_recognize_gcs]
+  // [END speech_transcribe_diarization_gcs]
 }
 
 // MULTI CHANNEL
 
 function speechTranscribeMultiChannel(speechFile) {
-  // [START speechTranscribeMultiChannel]
+  // [START speech_transcribe_multichannel]
   //   """Transcribe the given audio file asynchronously with
   //     the selected model."""
 
@@ -202,11 +182,11 @@ function speechTranscribeMultiChannel(speechFile) {
     .catch(err => {
       console.error('ERROR:', err);
     });
-  // [END speechTranscribeMultiChannel]
+  // [END speech_transcribe_multichannel]
 }
 
 function speechTranscribeMultichannelGCS(gcsUri) {
-  // [START speechTranscribeMultichannelGcs]
+  // [START speech_transcribe_multichannel_gcs]
 
   //const fs = require('fs');
   const speech = require('@google-cloud/speech').v1p1beta1;
@@ -248,7 +228,7 @@ function speechTranscribeMultichannelGCS(gcsUri) {
     .catch(err => {
       console.error('ERROR:', err);
     });
-  // [END speechTranscribeMultichannelGcs]
+  // [END speech_transcribe_multichannel_gcs]
 }
 
 // # MULTI LANGUAGE
@@ -292,11 +272,11 @@ function speechTranscribeMultilang(speechFile) {
       console.error('ERROR:', err);
     });
 
-  //[END speechTranscribeMultilang]
+  //[END speech_transcribe_multilang]
 }
 
 function speechTranscribeMultilangGCS(gcsUri) {
-  // [START speechTranscribeMultilangGCS]
+  // [START speech_transcribe_multilang_gcs]
 
   const speech = require('@google-cloud/speech').v1p1beta1;
 
@@ -337,12 +317,12 @@ function speechTranscribeMultilangGCS(gcsUri) {
     .catch(err => {
       console.error('ERROR:', err);
     });
-  // [END speechTranscribeMultilangGCS]
+  // [END speech_transcribe_multilang_gcs]
 }
 
 // WORD LEVEL CONFIDENCE
 function speechTranscribeWordLevelConfidence(speech_file) {
-  // [START speechTranscribeWordLevelConfidence]
+  // [START speech_transcribe_word_level_confidence]
   const fs = require('fs');
 
   // Imports the Google Cloud client library
@@ -390,7 +370,7 @@ function speechTranscribeWordLevelConfidence(speech_file) {
     .catch(err => {
       console.error('ERROR:', err);
     });
-  // [END speechTranscribeWordLevelConfidence]
+  // [END speech_transcribe_word_level_confidence]
 }
 
 function speechTranscribeWordLevelConfidenceGCS(gcsUri) {
