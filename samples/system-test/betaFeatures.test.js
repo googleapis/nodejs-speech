@@ -13,6 +13,13 @@
 //  * limitations under the License.
 //  */
 
+// {
+//   "node/no-unsupported-features/es-syntax": ["none", {
+//       "version": ">=7.6.0",
+//       "ignores": ["asyncFunctions"]
+//   }]
+// }
+
 'use strict';
 
 const path = require(`path`);
