@@ -1,5 +1,5 @@
 // /**
-//  * Copyright 2016, Google, Inc.
+//  * Copyright 2016, Google, LLC.
 //  * Licensed under the Apache License, Version 2.0 (the "License");
 //  * you may not use this file except in compliance with the License.
 //  * You may obtain a copy of the License at
@@ -55,10 +55,10 @@ test(`should run multi channel transcription on a local file`, async t => {
   t.true(output.includes(`Channel Tag: 2`));
 });
 
-test(`should run multi channel transcription on a GCS bucket`, async t => {
-  const output = await runAsync(`${cmd} multiChannelTranscribeGCS`, cwd);
-  t.true(output.includes(`Channel Tag: 0`));
-});
+// test(`should run multi channel transcription on a GCS bucket`, async t => {
+//   const output = await runAsync(`${cmd} multiChannelTranscribeGCS`, cwd);
+//   t.true(output.includes(`Channel Tag: 0`));
+// });
 
 //TRANSCRIBE MULTI-LANGUAGE
 

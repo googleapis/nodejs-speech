@@ -1,5 +1,5 @@
 /**
- * Copyright 2017, Google, Inc.
+ * Copyright 2017, Google, LLC.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -39,9 +39,6 @@ function speechTranscribeDiarization(speechFile) {
    * TODO(developer): Uncomment the following lines before running the sample.
    */
   // const filename = 'Local path tols -a audio file, e.g. /path/to/audio.raw';
-  // const encoding = 'Encoding of the audio file, e.g. LINEAR16';
-  // const sampleRateHertz = 16000;
-  // const languageCode = 'BCP-47 language code, e.g. en-US';
 
   const config = {
     encoding: `LINEAR16`,
@@ -94,6 +91,11 @@ function asyncSpeechTranscribeDiarizationGCS(gcsUri) {
   // Creates a client
   const client = new speech.SpeechClient();
 
+  /**
+   * TODO(developer): Uncomment the following line before running the sample.
+   */
+  // const uri = path to GCS audio file e.g. `gs:/bucket/audio.wav`;
+
   const config = {
     encoding: `LINEAR16`,
     sampleRateHertz: 8000,
@@ -135,7 +137,7 @@ function asyncSpeechTranscribeDiarizationGCS(gcsUri) {
 
 // MULTI CHANNEL
 
-function speechTranscribeMultiChannel(speechFile) {
+function speechTranscribeMultiChannel(fileName) {
   // [START speech_transcribe_multichannel]
   //   """Transcribe the given audio file asynchronously with
   //     the selected model."""
@@ -146,6 +148,11 @@ function speechTranscribeMultiChannel(speechFile) {
   // Creates a client
   const client = new speech.SpeechClient();
 
+  /**
+   * TODO(developer): Uncomment the following lines before running the sample.
+   */
+  // const fileName = 'Local path tols -a audio file, e.g. /path/to/audio.raw';
+
   const config = {
     encoding: `LINEAR16`,
     languageCode: `en-US`,
@@ -154,7 +161,7 @@ function speechTranscribeMultiChannel(speechFile) {
   };
 
   const audio = {
-    content: fs.readFileSync(speechFile).toString('base64'),
+    content: fs.readFileSync(fileName).toString('base64'),
   };
 
   const request = {
@@ -185,55 +192,55 @@ function speechTranscribeMultiChannel(speechFile) {
   // [END speech_transcribe_multichannel]
 }
 
-function speechTranscribeMultichannelGCS(gcsUri) {
-  // [START speech_transcribe_multichannel_gcs]
+// function speechTranscribeMultichannelGCS(gcsUri) {
+//   // [START speech_transcribe_multichannel_gcs]
 
-  //const fs = require('fs');
-  const speech = require('@google-cloud/speech').v1p1beta1;
+//   //const fs = require('fs');
+//   const speech = require('@google-cloud/speech').v1p1beta1;
 
-  // Creates a client
-  const client = new speech.SpeechClient();
+//   // Creates a client
+//   const client = new speech.SpeechClient();
 
-  const config = {
-    encoding: 'LINEAR16',
-    languageCode: `en-US`,
-    audioChannelCount: 2,
-    enableSeparateRecognitionperChannel: true,
-  };
+//   const config = {
+//     encoding: 'LINEAR16',
+//     languageCode: `en-US`,
+//     audioChannelCount: 2,
+//     enableSeparateRecognitionperChannel: true,
+//   };
 
-  const audio = {
-    uri: gcsUri,
-  };
+//   const audio = {
+//     uri: gcsUri,
+//   };
 
-  const request = {
-    config: config,
-    audio: audio,
-  };
+//   const request = {
+//     config: config,
+//     audio: audio,
+//   };
 
-  client
-    .recognize(request)
-    .then(data => {
-      const response = data[0];
-      const transcription = response.results
-        .map(
-          result =>
-            ` Channel Tag: ` +
-            result.channelTag +
-            ` ` +
-            result.alternatives[0].transcript
-        )
-        .join('\n');
-      console.log(`Transcription: \n${transcription}`);
-    })
-    .catch(err => {
-      console.error('ERROR:', err);
-    });
-  // [END speech_transcribe_multichannel_gcs]
-}
+//   client
+//     .recognize(request)
+//     .then(data => {
+//       const response = data[0];
+//       const transcription = response.results
+//         .map(
+//           result =>
+//             ` Channel Tag: ` +
+//             result.channelTag +
+//             ` ` +
+//             result.alternatives[0].transcript
+//         )
+//         .join('\n');
+//       console.log(`Transcription: \n${transcription}`);
+//     })
+//     .catch(err => {
+//       console.error('ERROR:', err);
+//     });
+//   // [END speech_transcribe_multichannel_gcs]
+// }
 
 // # MULTI LANGUAGE
 
-function speechTranscribeMultilang(speechFile) {
+function speechTranscribeMultilang(fileName) {
   //[START speechTranscribeMultilang]
 
   const fs = require('fs');
@@ -241,6 +248,11 @@ function speechTranscribeMultilang(speechFile) {
 
   // Creates a client
   const client = new speech.SpeechClient();
+
+  /**
+   * TODO(developer): Uncomment the following lines before running the sample.
+   */
+  // const fileName = 'Local path tols -a audio file, e.g. /path/to/audio.raw';
 
   const config = {
     encoding: 'LINEAR16',
@@ -251,7 +263,7 @@ function speechTranscribeMultilang(speechFile) {
   };
 
   const audio = {
-    content: fs.readFileSync(speechFile).toString('base64'),
+    content: fs.readFileSync(fileName).toString('base64'),
   };
 
   const request = {
@@ -282,6 +294,11 @@ function speechTranscribeMultilangGCS(gcsUri) {
 
   // Creates a client
   const client = new speech.SpeechClient();
+
+  /**
+   * TODO(developer): Uncomment the following line before running the sample.
+   */
+  // const uri = path to GCS audio file e.g. `gs:/bucket/audio.wav`;
 
   const config = {
     encoding: 'LINEAR16',
@@ -321,7 +338,7 @@ function speechTranscribeMultilangGCS(gcsUri) {
 }
 
 // WORD LEVEL CONFIDENCE
-function speechTranscribeWordLevelConfidence(speech_file) {
+function speechTranscribeWordLevelConfidence(speechFile) {
   // [START speech_transcribe_word_level_confidence]
   const fs = require('fs');
 
@@ -330,6 +347,11 @@ function speechTranscribeWordLevelConfidence(speech_file) {
 
   // Creates a client
   const client = new speech.SpeechClient();
+
+  /**
+   * TODO(developer): Uncomment the following lines before running the sample.
+   */
+  // const fileName = 'Local path tols -a audio file, e.g. /path/to/audio.raw';
 
   const config = {
     encoding: `FLAC`,
@@ -340,7 +362,7 @@ function speechTranscribeWordLevelConfidence(speech_file) {
   };
 
   const audio = {
-    content: fs.readFileSync(speech_file).toString('base64'),
+    content: fs.readFileSync(speechFile).toString('base64'),
   };
 
   const request = {
@@ -381,6 +403,11 @@ function speechTranscribeWordLevelConfidenceGCS(gcsUri) {
 
   // Creates a client
   const client = new speech.SpeechClient();
+
+  /**
+   * TODO(developer): Uncomment the following line before running the sample.
+   */
+  // const uri = path to GCS audio file e.g. `gs:/bucket/audio.wav`;
 
   const config = {
     encoding: `FLAC`,
@@ -442,10 +469,7 @@ const multiLanguageFile = path.join(
   __dirname,
   `../samples/resources/${multiLanguageFileName}`
 );
-//const multiLangURI = `gs://cloud-samples-tests/speech/multi.wav`;
 
-// const defaultStereoURI =
-//   'gs://cloud-samples-tests/speech/commercial_stereo.wav';
 const gnomef = `Google_Gnome.wav`;
 const gnome = path.join(__dirname, `../samples/resources/${gnomef}`);
 
@@ -475,12 +499,12 @@ require(`yargs`)
     {},
     opts => speechTranscribeMultiChannel(opts.speechFileStereo)
   )
-  .command(
-    `multiChannelTranscribeGCS`,
-    `Differentiates input by audio channel from GCS audio file.`,
-    {},
-    opts => speechTranscribeMultichannelGCS(opts.gcsUriStereo)
-  )
+  // .command(
+  //   `multiChannelTranscribeGCS`,
+  //   `Differentiates input by audio channel from GCS audio file.`,
+  //   {},
+  //   opts => speechTranscribeMultichannelGCS(opts.gcsUriStereo)
+  // )
   .command(
     `multiLanguageTranscribe`,
     `Transcribes multiple languages from local audio file.`,
