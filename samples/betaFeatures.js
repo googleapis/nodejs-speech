@@ -23,8 +23,6 @@
 
 'use strict';
 
-// # DIARIZATION
-
 function speechTranscribeDiarization(speechFile) {
   //[START speech_transcribe_diarization]
   const fs = require('fs');
@@ -78,8 +76,6 @@ function speechTranscribeDiarization(speechFile) {
     });
   //[END speech_transcribe_diarization]
 }
-
-//DIARIZATIONGCS
 
 function asyncSpeechTranscribeDiarizationGCS(gcsUri) {
   // [START speech_transcribe_diarization_gcs]
@@ -135,8 +131,6 @@ function asyncSpeechTranscribeDiarizationGCS(gcsUri) {
   // [END speech_transcribe_diarization_gcs]
 }
 
-// MULTI CHANNEL
-
 function speechTranscribeMultiChannel(fileName) {
   // [START speech_transcribe_multichannel]
   //   """Transcribe the given audio file asynchronously with
@@ -169,8 +163,6 @@ function speechTranscribeMultiChannel(fileName) {
     audio: audio,
   };
 
-  // Detects speech in the audio file. This creates a recognition job that you
-  // can wait for now, or get its result later.
   client
     .recognize(request)
     .then(data => {
@@ -191,54 +183,6 @@ function speechTranscribeMultiChannel(fileName) {
     });
   // [END speech_transcribe_multichannel]
 }
-
-// function speechTranscribeMultichannelGCS(gcsUri) {
-//   // [START speech_transcribe_multichannel_gcs]
-
-//   //const fs = require('fs');
-//   const speech = require('@google-cloud/speech').v1p1beta1;
-
-//   // Creates a client
-//   const client = new speech.SpeechClient();
-
-//   const config = {
-//     encoding: 'LINEAR16',
-//     languageCode: `en-US`,
-//     audioChannelCount: 2,
-//     enableSeparateRecognitionperChannel: true,
-//   };
-
-//   const audio = {
-//     uri: gcsUri,
-//   };
-
-//   const request = {
-//     config: config,
-//     audio: audio,
-//   };
-
-//   client
-//     .recognize(request)
-//     .then(data => {
-//       const response = data[0];
-//       const transcription = response.results
-//         .map(
-//           result =>
-//             ` Channel Tag: ` +
-//             result.channelTag +
-//             ` ` +
-//             result.alternatives[0].transcript
-//         )
-//         .join('\n');
-//       console.log(`Transcription: \n${transcription}`);
-//     })
-//     .catch(err => {
-//       console.error('ERROR:', err);
-//     });
-//   // [END speech_transcribe_multichannel_gcs]
-// }
-
-// # MULTI LANGUAGE
 
 function speechTranscribeMultilang(fileName) {
   //[START speechTranscribeMultilang]
@@ -321,7 +265,6 @@ function speechTranscribeMultilangGCS(gcsUri) {
     .longRunningRecognize(request)
     .then(data => {
       const operation = data[0];
-      // Get a Promise representation of the final result of the job
       return operation.promise();
     })
     .then(data => {
@@ -337,7 +280,6 @@ function speechTranscribeMultilangGCS(gcsUri) {
   // [END speech_transcribe_multilang_gcs]
 }
 
-// WORD LEVEL CONFIDENCE
 function speechTranscribeWordLevelConfidence(speechFile) {
   // [START speech_transcribe_word_level_confidence]
   const fs = require('fs');
@@ -458,7 +400,6 @@ const monoFilePath = path.join(
   __dirname,
   `../samples/resources/${monoFileName}`
 );
-// const defaultURI = 'gs://cloud-samples-tests/speech/commercial_mono.wav';
 const stereoFileName = `commercial_stereo.wav`;
 const stereoFilePath = path.join(
   __dirname,
@@ -499,12 +440,6 @@ require(`yargs`)
     {},
     opts => speechTranscribeMultiChannel(opts.speechFileStereo)
   )
-  // .command(
-  //   `multiChannelTranscribeGCS`,
-  //   `Differentiates input by audio channel from GCS audio file.`,
-  //   {},
-  //   opts => speechTranscribeMultichannelGCS(opts.gcsUriStereo)
-  // )
   .command(
     `multiLanguageTranscribe`,
     `Transcribes multiple languages from local audio file.`,
