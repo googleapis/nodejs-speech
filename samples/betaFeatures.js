@@ -67,7 +67,6 @@ function speechTranscribeDiarization(speechFile) {
       console.log(`Speaker Diarization:`);
       const chunks = response.results.map(result => result.alternatives[0]);
       console.log(`WORDS: `);
-      //words.forEach(a => console.log(JSON.stringify(a, null, 4)));
       const lastChunk = chunks[chunks.length - 1].words;
       lastChunk.forEach(a => console.log(JSON.stringify(a, null, 4)));
     })
@@ -121,7 +120,6 @@ function asyncSpeechTranscribeDiarizationGCS(gcsUri) {
       console.log(`Speaker Diarization:`);
       const chunks = response.results.map(result => result.alternatives[0]);
       console.log(`WORDS: `);
-      //words.forEach(a => console.log(JSON.stringify(a, null, 4)));
       const lastChunk = chunks[chunks.length - 1].words;
       lastChunk.forEach(a => console.log(JSON.stringify(a, null, 4)));
     })
