@@ -249,7 +249,6 @@ function speechTranscribeMultilangGCS(gcsUri) {
     sampleRateHertz: 44100,
     languageCode: `en-US`,
     alternativeLanguageCodes: [`es-ES`, `en-US`],
-    audioChannelCount: 2,
   };
 
   const audio = {
