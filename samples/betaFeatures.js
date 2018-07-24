@@ -296,7 +296,6 @@ function speechTranscribeWordLevelConfidence(fileName) {
     encoding: `FLAC`,
     sampleRateHertz: 16000,
     languageCode: `en-US`,
-    enableWordTimeOffsets: true,
     enableWordConfidence: true,
   };
 
@@ -352,7 +351,6 @@ function speechTranscribeWordLevelConfidenceGCS(gcsUri) {
     encoding: `FLAC`,
     sampleRateHertz: 16000,
     languageCode: `en-US`,
-    enableWordTimeOffsets: true,
     enableWordConfidence: true,
   };
 
