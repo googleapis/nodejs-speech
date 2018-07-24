@@ -13,13 +13,6 @@
 //  * limitations under the License.
 //  */
 
-// {
-//   "node/no-unsupported-features/es-syntax": ["none", {
-//       "version": ">=7.6.0",
-//       "ignores": ["asyncFunctions"]
-//   }]
-// }
-
 /* eslint-disable */
 
 'use strict';
@@ -31,8 +24,6 @@ const {runAsync} = require(`@google-cloud/nodejs-repo-tools`);
 
 const cmd = `node betaFeatures.js`;
 const cwd = path.join(__dirname, `..`);
-
-//DIARIZATION
 
 test(`should run speech diarization`, async t => {
   const output = await runAsync(`${cmd} Diarization`, cwd);
@@ -48,19 +39,10 @@ test(`should run speech diarization on a GCS file`, async t => {
   );
 });
 
-//TRANSCRIBE MULTI CHANNEL
-
 test(`should run multi channel transcription on a local file`, async t => {
   const output = await runAsync(`${cmd} multiChannelTranscribe`, cwd);
   t.true(output.includes(`Channel Tag: 2`));
 });
-
-// test(`should run multi channel transcription on a GCS bucket`, async t => {
-//   const output = await runAsync(`${cmd} multiChannelTranscribeGCS`, cwd);
-//   t.true(output.includes(`Channel Tag: 0`));
-// });
-
-//TRANSCRIBE MULTI-LANGUAGE
 
 test(`should transcribe multi-language on a local file`, async t => {
   const output = await runAsync(`${cmd} multiLanguageTranscribe`, cwd);
@@ -71,8 +53,6 @@ test(`should transcribe multi-language on a GCS bucket`, async t => {
   const output = await runAsync(`${cmd} multiLanguageTranscribeGCS`, cwd);
   t.true(output.includes(`Transcription: how are you doing estoy bien e tu`));
 });
-
-//TRANSCRIBE WORD-LEVEL CONFIDENCE
 
 test(`should run word Level Confience on a file`, async t => {
   const output = await runAsync(`${cmd} wordLevelConfidence`);
