@@ -23,7 +23,7 @@
 
 'use strict';
 
-function speechTranscribeDiarization(speechFile) {
+function speechTranscribeDiarization(fileName) {
   //[START speech_transcribe_diarization]
   const fs = require('fs');
 
@@ -36,7 +36,7 @@ function speechTranscribeDiarization(speechFile) {
   /**
    * TODO(developer): Uncomment the following lines before running the sample.
    */
-  // const filename = 'Local path tols -a audio file, e.g. /path/to/audio.raw';
+  // const fileName = 'Local path to audio file, e.g. /path/to/audio.raw';
 
   const config = {
     encoding: `LINEAR16`,
@@ -48,7 +48,7 @@ function speechTranscribeDiarization(speechFile) {
   };
 
   const audio = {
-    content: fs.readFileSync(speechFile).toString('base64'),
+    content: fs.readFileSync(fileName).toString('base64'),
   };
 
   const request = {
@@ -143,7 +143,7 @@ function speechTranscribeMultiChannel(fileName) {
   /**
    * TODO(developer): Uncomment the following lines before running the sample.
    */
-  // const fileName = 'Local path tols -a audio file, e.g. /path/to/audio.raw';
+  // const fileName = 'Local path to audio file, e.g. /path/to/audio.raw';
 
   const config = {
     encoding: `LINEAR16`,
@@ -194,7 +194,7 @@ function speechTranscribeMultilang(fileName) {
   /**
    * TODO(developer): Uncomment the following lines before running the sample.
    */
-  // const fileName = 'Local path tols -a audio file, e.g. /path/to/audio.raw';
+  // const fileName = 'Local path to audio file, e.g. /path/to/audio.raw';
 
   const config = {
     encoding: 'LINEAR16',
@@ -277,7 +277,7 @@ function speechTranscribeMultilangGCS(gcsUri) {
   // [END speech_transcribe_multilang_gcs]
 }
 
-function speechTranscribeWordLevelConfidence(speechFile) {
+function speechTranscribeWordLevelConfidence(fileName) {
   // [START speech_transcribe_word_level_confidence]
   const fs = require('fs');
 
@@ -290,7 +290,7 @@ function speechTranscribeWordLevelConfidence(speechFile) {
   /**
    * TODO(developer): Uncomment the following lines before running the sample.
    */
-  // const fileName = 'Local path tols -a audio file, e.g. /path/to/audio.raw';
+  // const fileName = 'Local path to audio file, e.g. /path/to/audio.raw';
 
   const config = {
     encoding: `FLAC`,
@@ -301,7 +301,7 @@ function speechTranscribeWordLevelConfidence(speechFile) {
   };
 
   const audio = {
-    content: fs.readFileSync(speechFile).toString('base64'),
+    content: fs.readFileSync(fileName).toString('base64'),
   };
 
   const request = {
