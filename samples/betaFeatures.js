@@ -78,8 +78,8 @@ function speechTranscribeDiarization(fileName) {
 
 function asyncSpeechTranscribeDiarizationGCS(gcsUri) {
   // [START speech_transcribe_diarization_gcs]
-  //   """Transcribe the given audio file asynchronously with
-  //     the selected model."""
+  //   Transcribe the given audio file asynchronously with
+  //     the selected model.
 
   const speech = require('@google-cloud/speech').v1p1beta1;
 
@@ -131,8 +131,8 @@ function asyncSpeechTranscribeDiarizationGCS(gcsUri) {
 
 function speechTranscribeMultiChannel(fileName) {
   // [START speech_transcribe_multichannel]
-  //   """Transcribe the given audio file asynchronously with
-  //     the selected model."""
+  //   Transcribe the given audio file asynchronously with
+  //     the selected model.
 
   const fs = require('fs');
   const speech = require('@google-cloud/speech').v1p1beta1;
