@@ -28,14 +28,14 @@ const cwd = path.join(__dirname, `..`);
 test(`should run speech diarization`, async t => {
   const output = await runAsync(`${cmd} Diarization`, cwd);
   t.true(
-    output.includes(`"speakerTag": 1`) && output.includes(`"speakerTag": 2`)
+    output.includes(`speakerTag: 1`) && output.includes(`speakerTag: 2`)
   );
 });
 
 test(`should run speech diarization on a GCS file`, async t => {
   const output = await runAsync(`${cmd} DiarizationGCS`, cwd);
   t.true(
-    output.includes(`"speakerTag": 1`) && output.includes(`"speakerTag": 2`)
+    output.includes(`speakerTag: 1`) && output.includes(`speakerTag: 2`)
   );
 });
 
@@ -57,15 +57,15 @@ test(`should transcribe multi-language on a GCS bucket`, async t => {
 test(`should run word Level Confience on a file`, async t => {
   const output = await runAsync(`${cmd} wordLevelConfidence`);
   t.true(
-    output.includes(`"transcript": "how old is the Brooklyn Bridge",`) &&
-      output.includes(`"confidence": 0.9836039543151855`)
+    output.includes(`Transcription: how old is the Brooklyn Bridge`) &&
+      output.includes(`Confidence: 0.9836039543151855`)
   );
 });
 
 test(`should run word level confidence on a GCS bucket`, async t => {
   const output = await runAsync(`${cmd} wordLevelConfidenceGCS`, cwd);
   t.true(
-    output.includes(`"transcript": "how old is the Brooklyn Bridge",`) &&
-      output.includes(`"confidence": 0.9836039543151855`)
+    output.includes(`Transcription: how old is the Brooklyn Bridge`) &&
+      output.includes(`Confidence: 0.9836039543151855`)
   );
 });

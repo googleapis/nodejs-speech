@@ -91,7 +91,7 @@ Options:
 
 Examples:
   node recognize.v1p1beta1.js sync-model ./resources/Google_Gnome.wav video -e LINEAR16 -r 16000
-  node recognize.v1p1beta1.js sync-model-gcs gs://gcs-test-data/Google_Gnome.wav phone_call -e FLAC -r 16000
+  node recognize.v1p1beta1.js sync-model-gcs gs://gcs-test-data/Google_Gnome.wav phone_call -e LINEAR16 -r 16000
 
 For more information, see https://cloud.google.com/speech/docs
 ```

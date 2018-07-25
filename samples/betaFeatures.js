@@ -65,21 +65,24 @@ function speechTranscribeDiarization(fileName) {
         .join('\n');
       console.log(`Transcription: ${transcription}`);
       console.log(`Speaker Diarization:`);
-      const chunks = response.results.map(result => result.alternatives[0]);
-      console.log(`WORDS: `);
-      const lastChunk = chunks[chunks.length - 1].words;
-      lastChunk.forEach(a => console.log(JSON.stringify(a, null, 4)));
+      const result = response.results[response.results.length - 1];
+      const wordsInfo = result.alternatives[0].words;
+      // Note: The transcript within each result is separate and sequential per result.
+      // However, the words list within an alternative includes all the words
+      // from all the results thus far. Thus, to get all the words with speaker
+      // tags, you only have to take the words list from the last result:
+      wordsInfo.forEach(a =>
+        console.log(` word: ${a.word}, speakerTag: ${a.speakerTag}`)
+      );
     })
     .catch(err => {
       console.error('ERROR:', err);
     });
-  //[END speech_transcribe_diarization]
+  // [END speech_transcribe_diarization]
 }
 
 function asyncSpeechTranscribeDiarizationGCS(gcsUri) {
   // [START speech_transcribe_diarization_gcs]
-  //   Transcribe the given audio file asynchronously with
-  //     the selected model.
 
   const speech = require('@google-cloud/speech').v1p1beta1;
 
@@ -118,10 +121,15 @@ function asyncSpeechTranscribeDiarizationGCS(gcsUri) {
         .join('\n');
       console.log(`Transcription: ${transcription}`);
       console.log(`Speaker Diarization:`);
-      const chunks = response.results.map(result => result.alternatives[0]);
-      console.log(`WORDS: `);
-      const lastChunk = chunks[chunks.length - 1].words;
-      lastChunk.forEach(a => console.log(JSON.stringify(a, null, 4)));
+      const result = response.results[response.results.length - 1];
+      const wordsInfo = result.alternatives[0].words;
+      // Note: The transcript within each result is separate and sequential per result.
+      // However, the words list within an alternative includes all the words
+      // from all the results thus far. Thus, to get all the words with speaker
+      // tags, you only have to take the words list from the last result:
+      wordsInfo.forEach(a =>
+        console.log(` word: ${a.word}, speakerTag: ${a.speakerTag}`)
+      );
     })
     .catch(err => {
       console.error('ERROR:', err);
@@ -183,7 +191,7 @@ function speechTranscribeMultiChannel(fileName) {
 }
 
 function speechTranscribeMultilang(fileName) {
-  //[START speechTranscribeMultilang]
+  //[START speech_transcribe_multilanguage]
 
   const fs = require('fs');
   const speech = require('@google-cloud/speech').v1p1beta1;
@@ -201,7 +209,6 @@ function speechTranscribeMultilang(fileName) {
     sampleRateHertz: 44100,
     languageCode: `en-US`,
     alternativeLanguageCodes: [`es-ES`, `en-US`],
-    audioChannelCount: 2,
   };
 
   const audio = {
@@ -226,7 +233,7 @@ function speechTranscribeMultilang(fileName) {
       console.error('ERROR:', err);
     });
 
-  //[END speech_transcribe_multilang]
+  // [END speech_transcribe_multilang]
 }
 
 function speechTranscribeMultilangGCS(gcsUri) {
@@ -319,13 +326,14 @@ function speechTranscribeWordLevelConfidence(fileName) {
         .map(result => result.alternatives[0].confidence)
         .join(`\n`);
       console.log(
-        ` Transcription: ${transcription} \n Confidence: ${confidence}`
+        `Transcription: ${transcription} \n Confidence: ${confidence}`
       );
 
-      console.log(` Word-Level-Confidence:`);
+      console.log(`Word-Level-Confidence:`);
       const words = response.results.map(result => result.alternatives[0]);
-      console.log(`WORDS: `);
-      words.forEach(a => console.log(JSON.stringify(a, null, 4)));
+      words[0].words.forEach(a => {
+        console.log(` word: ${a.word}, confidence: ${a.confidence}`);
+      });
     })
     .catch(err => {
       console.error('ERROR:', err);
@@ -374,13 +382,14 @@ function speechTranscribeWordLevelConfidenceGCS(gcsUri) {
         .map(result => result.alternatives[0].confidence)
         .join(`\n`);
       console.log(
-        ` Transcription: ${transcription} \n Confidence: ${confidence}`
+        `Transcription: ${transcription} \n Confidence: ${confidence}`
       );
 
-      console.log(` Word-Level-Confidence:`);
+      console.log(`Word-Level-Confidence:`);
       const words = response.results.map(result => result.alternatives[0]);
-      console.log(`WORDS: `);
-      words.forEach(a => console.log(JSON.stringify(a, null, 4)));
+      words[0].words.forEach(a => {
+        console.log(` word: ${a.word}, confidence: ${a.confidence}`);
+      });
     })
     .catch(err => {
       console.error('ERROR:', err);
@@ -498,7 +507,7 @@ require(`yargs`)
     },
     multiSpeechUri: {
       alias: 'msu',
-      default: `gs://cloud-samples-tests/speech/multi.wav`,
+      default: `gs://nodejs-docs-samples/multi_mono.wav`,
       global: true,
       requiresArg: true,
       type: 'string',
