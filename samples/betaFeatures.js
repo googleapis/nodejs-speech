@@ -24,7 +24,7 @@
 'use strict';
 
 function speechTranscribeDiarization(fileName) {
-  //[START speech_transcribe_diarization]
+  // [START speech_transcribe_diarization]
   const fs = require('fs');
 
   // Imports the Google Cloud client library
@@ -139,8 +139,6 @@ function asyncSpeechTranscribeDiarizationGCS(gcsUri) {
 
 function speechTranscribeMultiChannel(fileName) {
   // [START speech_transcribe_multichannel]
-  //   Transcribe the given audio file asynchronously with
-  //     the selected model.
 
   const fs = require('fs');
   const speech = require('@google-cloud/speech').v1p1beta1;
@@ -191,7 +189,7 @@ function speechTranscribeMultiChannel(fileName) {
 }
 
 function speechTranscribeMultilang(fileName) {
-  //[START speech_transcribe_multilanguage]
+  // [START speech_transcribe_multilanguage]
 
   const fs = require('fs');
   const speech = require('@google-cloud/speech').v1p1beta1;
