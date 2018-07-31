@@ -189,51 +189,49 @@ function speechTranscribeMultiChannel(fileName) {
   // [END speech_transcribe_multichannel]
 }
 
-// function speechTranscribeMultichannelGCS(gcsUri) {
-//   // [START speech_transcribe_multichannel_gcs]
-//   const speech = require('@google-cloud/speech').v1p1beta1;
+function speechTranscribeMultichannelGCS(gcsUri) {
+  // [START speech_transcribe_multichannel_gcs]
+  const speech = require('@google-cloud/speech').v1p1beta1;
 
-//   // Creates a client
-//   const client = new speech.SpeechClient();
+  // Creates a client
+  const client = new speech.SpeechClient();
 
-//   const config = {
-//     encoding: 'LINEAR16',
-//     //sampleRateHertz: 44100,
-//     languageCode: `en-US`,
-//     audioChannelCount: 2,
-//     enableSeparateRecognitionperChannel: true,
-//     //enableAutomaticPunctuation: true,
-//   };
+  const config = {
+    encoding: 'LINEAR16',
+    languageCode: `en-US`,
+    audioChannelCount: 2,
+    enableSeparateRecognitionPerChannel: true,
+  };
 
-//   const audio = {
-//     uri: gcsUri,
-//   };
+  const audio = {
+    uri: gcsUri,
+  };
 
-//   const request = {
-//     config: config,
-//     audio: audio,
-//   };
+  const request = {
+    config: config,
+    audio: audio,
+  };
 
-//   client
-//     .longRunningRecognize(request)
-//     .then(data => {
-//       const response = data[0];
-//       const transcription = response.results
-//         .map(
-//           result =>
-//             ` Channel Tag: ` +
-//             result.channelTag +
-//             ` ` +
-//             result.alternatives[0].transcript
-//         )
-//         .join('\n');
-//       console.log(`Transcription: \n${transcription}`);
-//     })
-//     .catch(err => {
-//       console.error('ERROR:', err);
-//     });
-//   // [END speech_transcribe_multichannel_gcs]
-// }
+  client
+    .recognize(request)
+    .then(data => {
+      const response = data[0];
+      const transcription = response.results
+        .map(
+          result =>
+            ` Channel Tag: ` +
+            result.channelTag +
+            ` ` +
+            result.alternatives[0].transcript
+        )
+        .join('\n');
+      console.log(`Transcription: \n${transcription}`);
+    })
+    .catch(err => {
+      console.error('ERROR:', err);
+    });
+  // [END speech_transcribe_multichannel_gcs]
+}
 
 function speechTranscribeMultilang(fileName) {
   // [START speech_transcribe_multilanguage]
@@ -461,12 +459,12 @@ require(`yargs`)
     {},
     opts => speechTranscribeMultiChannel(opts.speechFile)
   )
-  // .command(
-  //   `multiChannelTranscribeGCS`,
-  //   `Differentiates input by audio channel in an audio file located in a Google Cloud Storage bucket.`,
-  //   {},
-  //   opts => speechTranscribeMultichannelGCS(opts.gcsUri)
-  // )
+  .command(
+    `multiChannelTranscribeGCS`,
+    `Differentiates input by audio channel in an audio file located in a Google Cloud Storage bucket.`,
+    {},
+    opts => speechTranscribeMultichannelGCS(opts.gcsUri)
+  )
   .command(
     `multiLanguageTranscribe`,
     `Transcribes multiple languages from local audio file.`,
@@ -512,9 +510,9 @@ require(`yargs`)
   .example(
     `node $0 multiChannelTranscribe -f ./resources/commercial_stereo.wav`
   )
-  // .example(
-  //   `node $0 multiChannelTranscribeGCS -u gs://cloud-samples-tests/speech/commercial_stereo.wav`
-  // )
+  .example(
+    `node $0 multiChannelTranscribeGCS -u gs://cloud-samples-tests/speech/commercial_stereo.wav`
+  )
   .example(`node $0 multiLanguageTranscribe -f ./resources/multi.wav`)
   .example(
     `node $0 multiLanguageTranscribeGCS -u gs://nodejs-docs-samples/multi_mono.wav`
