@@ -56,6 +56,7 @@ const BrooklynFilePath = path.join(
 const monoUri = `gs://cloud-samples-tests/speech/commercial_mono.wav`;
 const multiUri = `gs://nodejs-docs-samples/multi_mono.wav`;
 const brooklynUri = `gs://cloud-samples-tests/speech/brooklyn.flac`;
+const stereoUri = `gs://cloud-samples-tests/speech/commercial_stereo.wav`;
 
 test(`should run speech diarization on a local file`, async t => {
   const output = await runAsync(`${cmd} Diarization -f ${monoFilePath}`, cwd);
@@ -73,6 +74,11 @@ test(`should run speech diarization on a GCS file`, async t => {
 
 test(`should run multi channel transcription on a local file`, async t => {
   const output = await runAsync(`${cmd} multiChannelTranscribe -f ${stereoFilePath}`, cwd);
+  t.true(output.includes(`Channel Tag: 2`));
+});
+
+test(`should run multi channel transcription on GCS file`, async t => {
+  const output = await runAsync(`${cmd} multiChannelTranscribeGCS -u ${stereoUri}`, cwd);
   t.true(output.includes(`Channel Tag: 2`));
 });
 
