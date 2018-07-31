@@ -83,7 +83,7 @@ function speechTranscribeDiarization(fileName) {
 
 function asyncSpeechTranscribeDiarizationGCS(gcsUri) {
   // [START speech_transcribe_diarization_gcs]
-
+  // Imports the Google Cloud client library
   const speech = require('@google-cloud/speech').v1p1beta1;
 
   // Creates a client
@@ -139,8 +139,9 @@ function asyncSpeechTranscribeDiarizationGCS(gcsUri) {
 
 function speechTranscribeMultiChannel(fileName) {
   // [START speech_transcribe_multichannel]
-
   const fs = require('fs');
+
+  // Imports the Google Cloud client library
   const speech = require('@google-cloud/speech').v1p1beta1;
 
   // Creates a client
@@ -188,10 +189,57 @@ function speechTranscribeMultiChannel(fileName) {
   // [END speech_transcribe_multichannel]
 }
 
+// function speechTranscribeMultichannelGCS(gcsUri) {
+//   // [START speech_transcribe_multichannel_gcs]
+//   const speech = require('@google-cloud/speech').v1p1beta1;
+
+//   // Creates a client
+//   const client = new speech.SpeechClient();
+
+//   const config = {
+//     encoding: 'LINEAR16',
+//     //sampleRateHertz: 44100,
+//     languageCode: `en-US`,
+//     audioChannelCount: 2,
+//     enableSeparateRecognitionperChannel: true,
+//     //enableAutomaticPunctuation: true,
+//   };
+
+//   const audio = {
+//     uri: gcsUri,
+//   };
+
+//   const request = {
+//     config: config,
+//     audio: audio,
+//   };
+
+//   client
+//     .longRunningRecognize(request)
+//     .then(data => {
+//       const response = data[0];
+//       const transcription = response.results
+//         .map(
+//           result =>
+//             ` Channel Tag: ` +
+//             result.channelTag +
+//             ` ` +
+//             result.alternatives[0].transcript
+//         )
+//         .join('\n');
+//       console.log(`Transcription: \n${transcription}`);
+//     })
+//     .catch(err => {
+//       console.error('ERROR:', err);
+//     });
+//   // [END speech_transcribe_multichannel_gcs]
+// }
+
 function speechTranscribeMultilang(fileName) {
   // [START speech_transcribe_multilanguage]
-
   const fs = require('fs');
+
+  // Imports the Google Cloud client library
   const speech = require('@google-cloud/speech').v1p1beta1;
 
   // Creates a client
@@ -230,13 +278,12 @@ function speechTranscribeMultilang(fileName) {
     .catch(err => {
       console.error('ERROR:', err);
     });
-
   // [END speech_transcribe_multilang]
 }
 
 function speechTranscribeMultilangGCS(gcsUri) {
   // [START speech_transcribe_multilang_gcs]
-
+  // Imports the Google Cloud client library
   const speech = require('@google-cloud/speech').v1p1beta1;
 
   // Creates a client
@@ -341,7 +388,6 @@ function speechTranscribeWordLevelConfidence(fileName) {
 
 function speechTranscribeWordLevelConfidenceGCS(gcsUri) {
   // [START speech_transcribe_word_level_confidence_gcs]
-
   // Imports the Google Cloud client library
   const speech = require('@google-cloud/speech').v1p1beta1;
 
@@ -395,33 +441,6 @@ function speechTranscribeWordLevelConfidenceGCS(gcsUri) {
   // [END speech_transcribe_word_level_confidence_gcs]
 }
 
-//audio file paths for Defaults
-const path = require(`path`);
-const monoFileName = `commercial_mono.wav`;
-const monoFilePath = path.join(
-  __dirname,
-  `../samples/resources/${monoFileName}`
-);
-const stereoFileName = `commercial_stereo.wav`;
-const stereoFilePath = path.join(
-  __dirname,
-  `../samples/resources/${stereoFileName}`
-);
-const multiLanguageFileName = `multi.wav`;
-const multiLanguageFile = path.join(
-  __dirname,
-  `../samples/resources/${multiLanguageFileName}`
-);
-
-const gnomef = `Google_Gnome.wav`;
-const gnome = path.join(__dirname, `../samples/resources/${gnomef}`);
-
-const Brooklyn = 'brooklyn.flac';
-const BrooklynFilePath = path.join(
-  __dirname,
-  `../samples/resources/${Brooklyn}`
-);
-
 require(`yargs`)
   .demand(1)
   .command(
@@ -440,106 +459,61 @@ require(`yargs`)
     `multiChannelTranscribe`,
     `Differentiates input by audio channel in local audio file.`,
     {},
-    opts => speechTranscribeMultiChannel(opts.speechFileStereo)
+    opts => speechTranscribeMultiChannel(opts.speechFile)
+  )
+  .command(
+    `multiChannelTranscribeGCS`,
+    `Differentiates input by audio channel in an audio file located in a Google Cloud Storage bucket.`,
+    {},
+    opts => speechTranscribeMultichannelGCS(opts.gcsUri)
   )
   .command(
     `multiLanguageTranscribe`,
     `Transcribes multiple languages from local audio file.`,
     {},
-    opts => speechTranscribeMultilang(opts.multiSpeechFile)
+    opts => speechTranscribeMultilang(opts.speechFile)
   )
   .command(
     `multiLanguageTranscribeGCS`,
     `Transcribes multiple languages from GCS audio file.`,
     {},
-    opts => speechTranscribeMultilangGCS(opts.multiSpeechUri)
+    opts => speechTranscribeMultilangGCS(opts.gcsUri)
   )
   .command(
     `wordLevelConfidence`,
     `Detects word level confidence from local audio file.`,
     {},
-    opts => speechTranscribeWordLevelConfidence(opts.brooklynBridgeSpeechFile)
+    opts => speechTranscribeWordLevelConfidence(opts.speechFile)
   )
   .command(
     `wordLevelConfidenceGCS`,
     `Detects word level confidence from GCS audio file.`,
     {},
     opts =>
-      speechTranscribeWordLevelConfidenceGCS(opts.brooklynBridgeSpeechFileURI)
+      speechTranscribeWordLevelConfidenceGCS(opts.gcsUri)
   )
   .options({
     speechFile: {
       alias: 'f',
-      default: monoFilePath,
       global: true,
       requiresArg: false,
       type: 'string',
     },
     gcsUri: {
       alias: 'u',
-      default: 'gs://cloud-samples-tests/speech/commercial_mono.wav',
-      global: true,
-      requiresArg: true,
-      type: 'string',
-    },
-    speechFileGnome: {
-      alias: 'gf',
-      default: gnome,
-      global: true,
-      requiresArg: true,
-      type: 'string',
-    },
-    gcsUriStereo: {
-      alias: 'us',
-      default: 'gs://cloud-samples-tests/speech/commercial_stereo.wav',
-      global: true,
-      requiresArg: true,
-      type: 'string',
-    },
-    multiSpeechFile: {
-      alias: 'ms',
-      default: multiLanguageFile,
-      global: true,
-      requiresArg: true,
-      type: 'string',
-    },
-    multiSpeechUri: {
-      alias: 'msu',
-      default: `gs://nodejs-docs-samples/multi_mono.wav`,
-      global: true,
-      requiresArg: true,
-      type: 'string',
-    },
-    speechFileStereo: {
-      alias: 'fs',
-      default: stereoFilePath,
-      global: true,
-      requiresArg: true,
-      type: 'string',
-    },
-    brooklynBridgeSpeechFile: {
-      alias: 'bb',
-      default: BrooklynFilePath,
-      global: true,
-      requiresArg: true,
-      type: 'string',
-    },
-    brooklynBridgeSpeechFileURI: {
-      alias: 'bbu',
-      default: 'gs://cloud-samples-tests/speech/brooklyn.flac',
       global: true,
       requiresArg: true,
       type: 'string',
     },
   })
-  .example(`node $0 Diarization`)
-  .example(`node $0 DiarizationGCS`)
-  .example(`node $0 multiChannelTranscribe`)
-  .example(`node $0 multiChannelTranscribeGCS`)
-  .example(`node $0 multiLanguageTranscribe`)
-  .example(`node $0 multiLanguageTranscribeGCS`)
-  .example(`node $0 wordLevelConfidence`)
-  .example(`node $0 wordLevelConfidenceGCS`)
+  .example(`node $0 Diarization -f ./resources/commercial_mono.wav`)
+  .example(`node $0 DiarizationGCS -u gs://cloud-samples-tests/speech/commercial_mono.wav`)
+  .example(`node $0 multiChannelTranscribe -f ./resources/commercial_stereo.wav`)
+  //.example(`node $0 multiChannelTranscribeGCS -u gs://cloud-samples-tests/speech/commercial_stereo.wav`)
+  .example(`node $0 multiLanguageTranscribe -f ./resources/multi.wav`)
+  .example(`node $0 multiLanguageTranscribeGCS -u gs://nodejs-docs-samples/multi_mono.wav`)
+  .example(`node $0 wordLevelConfidence -f ./resources/brooklyn.flac`)
+  .example(`node $0 wordLevelConfidenceGCS -u gs://cloud-samples-tests/speech/brooklyn.flac`)
   .wrap(120)
   .recommendCommands()
   .epilogue(`For more information, see https://cloud.google.com/speech/docs`)
