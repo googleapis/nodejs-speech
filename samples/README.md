@@ -108,4 +108,52 @@ For more information, see https://cloud.google.com/speech/docs
 [recognize.v1p1beta1_1_code]: recognize.v1p1beta1.js
 
 [shell_img]: https://gstatic.com/cloudssh/images/open-btn.png
+[shell_img]: //gstatic.com/cloudssh/images/open-btn.png
+[shell_link]: https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/googleapis/nodejs-speech&page=editor&open_in_editor=samples/README.md
+
+### Speech Recognition betaFeatures
+
+View the [source code][betaFeatures_code].
+
+[![Open in Cloud Shell][shell_img]](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/googleapis/nodejs-speech&page=editor&open_in_editor=samples/betaFeatures.js,samples/README.md)
+
+__Usage:__ `node betaFeatures.js --help`
+
+```
+betaFeatures.js <command>
+
+Commands:
+  betaFeatures.js Diarization                 Isolate distinct speakers in an audio file
+  betaFeatures.js DiarizationGCS              Isolate distinct speakers in an audio file located in a Google Cloud
+                                              Storage bucket.
+  betaFeatures.js multiChannelTranscribe      Differentiates input by audio channel in local audio file.
+  betaFeatures.js multiChannelTranscribeGCS   Differentiates input by audio channe from GCS audio file.
+  betaFeatures.js multiLanguageTranscribe     Transcribes multiple languages from local audio file.
+  betaFeatures.js multiLanguageTranscribeGCS  Transcribes multiple languages from GCS audio file.
+  betaFeatures.js wordLevelConfidence         Detects word level confidence from local audio file.
+  betaFeatures.js wordLevelConfidenceGCS      Detects word level confidence from GCS audio file. 
+
+Options:
+   --version         Show version number     [boolean]
+  --speechFile, -f                           [string]
+  --gcsUri, -u                               [string]
+  --help            Show help                [boolean]
+
+Examples:
+  node betaFeatures.js Diarization -f ./resources/commercial_mono.wav
+  node betaFeatures.js DiarizationGCS -u gs://cloud-samples-tests/speech/commercial_mono.wav
+  node betaFeatures.js multiChannelTranscribe -f ./resources/commercial_stereo.wav
+  node betaFeatures.js multiChannelTranscribeGCS -u gs://cloud-samples-tests/speech/commercial_stereo.wav
+  node betaFeatures.js multiLanguageTranscribe -f ./resources/multi.wav
+  node betaFeatures.js multiLanguageTranscribeGCS -u gs://nodejs-docs-samples/multi_mono.wav
+  node betaFeatures.js wordLevelConfidence -f ./resources/brooklyn.flac
+  node betaFeatures.js wordLevelConfidenceGCS -u gs://cloud-samples-tests/speech/brooklyn.flac
+
+For more information, see https://cloud.google.com/speech/docs
+```
+
+[betaFeatures_docs]: https://cloud.google.com/speech/docs
+[betaFeatures_code]: recognize.v1p1beta1.js
+
+[shell_img]: //gstatic.com/cloudssh/images/open-btn.png
 [shell_link]: https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/googleapis/nodejs-speech&page=editor&open_in_editor=samples/README.md
