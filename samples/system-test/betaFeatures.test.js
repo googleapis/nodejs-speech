@@ -90,7 +90,7 @@ test(`should run word Level Confience on a local file`, async t => {
   const output = await runAsync(`${cmd} wordLevelConfidence -f ${BrooklynFilePath}`);
   t.true(
     output.includes(`Transcription: how old is the Brooklyn Bridge`) &&
-      output.includes(`Confidence: 0.9836039543151855`)
+      output.includes(`Confidence: \d\.\d`)
   );
 });
 
@@ -98,6 +98,6 @@ test(`should run word level confidence on a GCS bucket`, async t => {
   const output = await runAsync(`${cmd} wordLevelConfidenceGCS -u ${brooklynUri}`, cwd);
   t.true(
     output.includes(`Transcription: how old is the Brooklyn Bridge`) &&
-      output.includes(`Confidence: 0.9836039543151855`)
+      output.includes(`Confidence: \d\.\d`)
   );
 });
