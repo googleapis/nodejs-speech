@@ -461,12 +461,12 @@ require(`yargs`)
     {},
     opts => speechTranscribeMultiChannel(opts.speechFile)
   )
-  .command(
-    `multiChannelTranscribeGCS`,
-    `Differentiates input by audio channel in an audio file located in a Google Cloud Storage bucket.`,
-    {},
-    opts => speechTranscribeMultichannelGCS(opts.gcsUri)
-  )
+  // .command(
+  //   `multiChannelTranscribeGCS`,
+  //   `Differentiates input by audio channel in an audio file located in a Google Cloud Storage bucket.`,
+  //   {},
+  //   opts => speechTranscribeMultichannelGCS(opts.gcsUri)
+  // )
   .command(
     `multiLanguageTranscribe`,
     `Transcribes multiple languages from local audio file.`,
@@ -489,8 +489,7 @@ require(`yargs`)
     `wordLevelConfidenceGCS`,
     `Detects word level confidence from GCS audio file.`,
     {},
-    opts =>
-      speechTranscribeWordLevelConfidenceGCS(opts.gcsUri)
+    opts => speechTranscribeWordLevelConfidenceGCS(opts.gcsUri)
   )
   .options({
     speechFile: {
@@ -507,13 +506,21 @@ require(`yargs`)
     },
   })
   .example(`node $0 Diarization -f ./resources/commercial_mono.wav`)
-  .example(`node $0 DiarizationGCS -u gs://cloud-samples-tests/speech/commercial_mono.wav`)
+  .example(
+    `node $0 DiarizationGCS -u gs://cloud-samples-tests/speech/commercial_mono.wav`
+  )
   .example(`node $0 multiChannelTranscribe -f ./resources/commercial_stereo.wav`)
-  //.example(`node $0 multiChannelTranscribeGCS -u gs://cloud-samples-tests/speech/commercial_stereo.wav`)
+  // .example(
+  //   `node $0 multiChannelTranscribeGCS -u gs://cloud-samples-tests/speech/commercial_stereo.wav`
+  // )
   .example(`node $0 multiLanguageTranscribe -f ./resources/multi.wav`)
-  .example(`node $0 multiLanguageTranscribeGCS -u gs://nodejs-docs-samples/multi_mono.wav`)
+  .example(
+    `node $0 multiLanguageTranscribeGCS -u gs://nodejs-docs-samples/multi_mono.wav`
+  )
   .example(`node $0 wordLevelConfidence -f ./resources/brooklyn.flac`)
-  .example(`node $0 wordLevelConfidenceGCS -u gs://cloud-samples-tests/speech/brooklyn.flac`)
+  .example(
+    `node $0 wordLevelConfidenceGCS -u gs://cloud-samples-tests/speech/brooklyn.flac`
+  )
   .wrap(120)
   .recommendCommands()
   .epilogue(`For more information, see https://cloud.google.com/speech/docs`)
