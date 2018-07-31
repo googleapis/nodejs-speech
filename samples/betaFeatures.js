@@ -509,7 +509,9 @@ require(`yargs`)
   .example(
     `node $0 DiarizationGCS -u gs://cloud-samples-tests/speech/commercial_mono.wav`
   )
-  .example(`node $0 multiChannelTranscribe -f ./resources/commercial_stereo.wav`)
+  .example(
+    `node $0 multiChannelTranscribe -f ./resources/commercial_stereo.wav`
+  )
   // .example(
   //   `node $0 multiChannelTranscribeGCS -u gs://cloud-samples-tests/speech/commercial_stereo.wav`
   // )
