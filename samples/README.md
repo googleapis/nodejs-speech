@@ -125,28 +125,20 @@ Commands:
   betaFeatures.js wordLevelConfidenceGCS      Detects word level confidence from GCS audio file. 
 
 Options:
-  --version                             Show version number             [boolean]
-  --speechFile, -f                [string] [default: "./resources/commercial_mono.wav"]
-  --gcsUri, -u                    [string] [default: "gs://cloud-samples-tests/speech/commercial_mono.wav"]
-  --speechFileGnome, --gf         [string] [default: "./resources/Google_Gnome.wav"]
-  --gcsUriStereo, --us            [string] [default: "gs://cloud-samples-tests/speech/commercial_stereo.wav"]
-  --multiSpeechFile, --ms         [string] [default: "./resources/multi.wav"]
-  --multiSpeechUri, --msu         [string] [default: "gs://cloud-samples-tests/speech/multi.wav"]
-  --speechFileStereo, --fs        [string] [default: "./samples/resources/commercial_stereo.wav"]
-  --brooklynBridgeSpeechFile, --bb
-                              [string] [default: "./resources/brooklyn.flac"]
-  --brooklynBridgeSpeechFileURI, --bbu               [string] [default: "gs://cloud-samples-tests/speech/brooklyn.flac"]
-  --help                                Show help             [boolean]
+   --version         Show version number     [boolean]
+  --speechFile, -f                           [string]
+  --gcsUri, -u                               [string]
+  --help            Show help                [boolean]
 
 Examples:
-  node betaFeatures.js Diarization
-  node betaFeatures.js DiarizationGCS
-  node betaFeatures.js multiChannelTranscribe
-  node betaFeatures.js multiChannelTranscribeGCS
-  node betaFeatures.js multiLanguageTranscribe
-  node betaFeatures.js multiLanguageTranscribeGCS
-  node betaFeatures.js wordLevelConfidence
-  node betaFeatures.js wordLevelConfidenceGCS
+  node betaFeatures.js Diarization -f ./resources/commercial_mono.wav
+  node betaFeatures.js DiarizationGCS -u gs://cloud-samples-tests/speech/commercial_mono.wav
+  node betaFeatures.js multiChannelTranscribe -f ./resources/commercial_stereo.wav
+  node betaFeatures.js multiChannelTranscribeGCS -u gs://cloud-samples-tests/speech/commercial_stereo.wav
+  node betaFeatures.js multiLanguageTranscribe -f ./resources/multi.wav
+  node betaFeatures.js multiLanguageTranscribeGCS -u gs://nodejs-docs-samples/multi_mono.wav
+  node betaFeatures.js wordLevelConfidence -f ./resources/brooklyn.flac
+  node betaFeatures.js wordLevelConfidenceGCS -u gs://cloud-samples-tests/speech/brooklyn.flac
 
 For more information, see https://cloud.google.com/speech/docs
 ```
