@@ -134,24 +134,17 @@ describe('SpeechClient', () => {
       var expectedResponse = {};
 
       // Mock Grpc layer
-      client._innerApiCalls.longRunningRecognize = mockLongRunningGrpcMethod(
-        request,
-        expectedResponse
-      );
+      client._innerApiCalls.longRunningRecognize = mockLongRunningGrpcMethod(request, expectedResponse);
 
-      client
-        .longRunningRecognize(request)
-        .then(responses => {
-          var operation = responses[0];
-          return operation.promise();
-        })
-        .then(responses => {
-          assert.deepStrictEqual(responses[0], expectedResponse);
-          done();
-        })
-        .catch(err => {
-          done(err);
-        });
+      client.longRunningRecognize(request).then(responses => {
+        var operation = responses[0];
+        return operation.promise();
+      }).then(responses => {
+        assert.deepStrictEqual(responses[0], expectedResponse);
+        done();
+      }).catch(err => {
+        done(err);
+      });
     });
 
     it('invokes longRunningRecognize with error', done => {
@@ -179,26 +172,18 @@ describe('SpeechClient', () => {
       };
 
       // Mock Grpc layer
-      client._innerApiCalls.longRunningRecognize = mockLongRunningGrpcMethod(
-        request,
-        null,
-        error
-      );
+      client._innerApiCalls.longRunningRecognize = mockLongRunningGrpcMethod(request, null, error);
 
-      client
-        .longRunningRecognize(request)
-        .then(responses => {
-          var operation = responses[0];
-          return operation.promise();
-        })
-        .then(() => {
-          assert.fail();
-        })
-        .catch(err => {
-          assert(err instanceof Error);
-          assert.strictEqual(err.code, FAKE_STATUS_CODE);
-          done();
-        });
+      client.longRunningRecognize(request).then(responses => {
+        var operation = responses[0];
+        return operation.promise();
+      }).then(() => {
+        assert.fail();
+      }).catch(err => {
+        assert(err instanceof Error);
+        assert.strictEqual(err.code, FAKE_STATUS_CODE);
+        done();
+      });
     });
 
     it('has longrunning decoder functions', () => {
@@ -206,14 +191,8 @@ describe('SpeechClient', () => {
         credentials: {client_email: 'bogus', private_key: 'bogus'},
         projectId: 'bogus',
       });
-      assert(
-        client._descriptors.longrunning.longRunningRecognize
-          .responseDecoder instanceof Function
-      );
-      assert(
-        client._descriptors.longrunning.longRunningRecognize
-          .metadataDecoder instanceof Function
-      );
+      assert(client._descriptors.longrunning.longRunningRecognize.responseDecoder instanceof Function);
+      assert(client._descriptors.longrunning.longRunningRecognize.metadataDecoder instanceof Function);
     });
   });
 
@@ -231,20 +210,14 @@ describe('SpeechClient', () => {
       var expectedResponse = {};
 
       // Mock Grpc layer
-      client._innerApiCalls.streamingRecognize = mockBidiStreamingGrpcMethod(
-        request,
-        expectedResponse
-      );
+      client._innerApiCalls.streamingRecognize = mockBidiStreamingGrpcMethod(request, expectedResponse);
 
-      var stream = client
-        .streamingRecognize()
-        .on('data', response => {
-          assert.deepStrictEqual(response, expectedResponse);
-          done();
-        })
-        .on('error', err => {
-          done(err);
-        });
+      var stream = client.streamingRecognize().on('data', response => {
+        assert.deepStrictEqual(response, expectedResponse);
+        done();
+      }).on('error', err => {
+        done(err);
+      });
 
       stream.write(request);
     });
@@ -259,26 +232,20 @@ describe('SpeechClient', () => {
       var request = {};
 
       // Mock Grpc layer
-      client._innerApiCalls.streamingRecognize = mockBidiStreamingGrpcMethod(
-        request,
-        null,
-        error
-      );
+      client._innerApiCalls.streamingRecognize = mockBidiStreamingGrpcMethod(request, null, error);
 
-      var stream = client
-        .streamingRecognize()
-        .on('data', () => {
-          assert.fail();
-        })
-        .on('error', err => {
-          assert(err instanceof Error);
-          assert.strictEqual(err.code, FAKE_STATUS_CODE);
-          done();
-        });
+      var stream = client.streamingRecognize().on('data', () => {
+        assert.fail();
+      }).on('error', err => {
+        assert(err instanceof Error);
+        assert.strictEqual(err.code, FAKE_STATUS_CODE);
+        done();
+      });
 
       stream.write(request);
     });
   });
+
 });
 
 function mockSimpleGrpcMethod(expectedRequest, response, error) {
@@ -300,12 +267,13 @@ function mockBidiStreamingGrpcMethod(expectedRequest, response, error) {
       assert.deepStrictEqual(chunk, expectedRequest);
       if (error) {
         callback(error);
-      } else {
+      }
+      else {
         callback(null, response);
       }
     });
     return mockStream;
-  };
+  }
 }
 
 function mockLongRunningGrpcMethod(expectedRequest, response, error) {
@@ -316,11 +284,12 @@ function mockLongRunningGrpcMethod(expectedRequest, response, error) {
         return new Promise((resolve, reject) => {
           if (error) {
             reject(error);
-          } else {
+          }
+          else {
             resolve([response]);
           }
         });
-      },
+      }
     };
     return Promise.resolve([mockOperation]);
   };
