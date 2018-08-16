@@ -328,7 +328,7 @@ function speechTranscribeMultilangGCS(gcsUri) {
 }
 
 function speechTranscribeWordLevelConfidence(fileName) {
-  // [START speech_transcribe_word_level_confidence]
+  // [START speech_transcribe_word_level_confidence_beta]
   const fs = require('fs');
 
   // Imports the Google Cloud client library
@@ -381,11 +381,11 @@ function speechTranscribeWordLevelConfidence(fileName) {
     .catch(err => {
       console.error('ERROR:', err);
     });
-  // [END speech_transcribe_word_level_confidence]
+  // [END speech_transcribe_word_level_confidence_beta]
 }
 
 function speechTranscribeWordLevelConfidenceGCS(gcsUri) {
-  // [START speech_transcribe_word_level_confidence_gcs]
+  // [START speech_transcribe_word_level_confidence_gcs_beta]
   // Imports the Google Cloud client library
   const speech = require('@google-cloud/speech').v1p1beta1;
 
@@ -436,7 +436,7 @@ function speechTranscribeWordLevelConfidenceGCS(gcsUri) {
     .catch(err => {
       console.error('ERROR:', err);
     });
-  // [END speech_transcribe_word_level_confidence_gcs]
+  // [END speech_transcribe_word_level_confidence_gcs_beta]
 }
 
 require(`yargs`)
