@@ -202,7 +202,7 @@ function syncRecognizeWithMetaData(
   sampleRateHertz,
   languageCode
 ) {
-  // [START speech_transcribe_file_with_metadata]
+  // [START speech_transcribe_recognition_metadata_beta]
   // Imports the Google Cloud client library for Beta API
   /**
    * TODO(developer): Update client library import to use new
@@ -258,7 +258,7 @@ function syncRecognizeWithMetaData(
     .catch(err => {
       console.error('ERROR:', err);
     });
-  // [END speech_transcribe_file_with_metadata]
+  // [END speech_transcribe_recognition_metadata_beta]
 }
 
 function syncRecognizeWithEnhancedModel(
