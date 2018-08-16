@@ -146,7 +146,7 @@ function syncRecognizeWithAutoPunctuation(
   sampleRateHertz,
   languageCode
 ) {
-  // [START speech_transcribe_file_with_auto_punctuation]
+  // [START speech_transcribe_auto_punctuation_beta]
   // Imports the Google Cloud client library for Beta API
   /**
    * TODO(developer): Update client library import to use new
@@ -193,7 +193,7 @@ function syncRecognizeWithAutoPunctuation(
     .catch(err => {
       console.error('ERROR:', err);
     });
-  // [END speech_transcribe_file_with_auto_punctuation]
+  // [END speech_transcribe_auto_punctuation_beta]
 }
 
 function syncRecognizeWithMetaData(
@@ -267,7 +267,7 @@ function syncRecognizeWithEnhancedModel(
   sampleRateHertz,
   languageCode
 ) {
-  // [START speech_transcribe_file_with_enhanced_model]
+  // [START speech_transcribe_enhanced_model_beta]
   // Imports the Google Cloud client library for Beta API
   /**
    * TODO(developer): Update client library import to use new
@@ -315,7 +315,7 @@ function syncRecognizeWithEnhancedModel(
     .catch(err => {
       console.error('ERROR:', err);
     });
-  // [END speech_transcribe_file_with_enhanced_model]
+  // [END speech_transcribe_enhanced_model_beta]
 }
 
 require(`yargs`)
