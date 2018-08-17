@@ -30,7 +30,7 @@ function syncRecognizeModelSelection(
   sampleRateHertz,
   languageCode
 ) {
-  // [START speech_transcribe_model_selection]
+  // [START speech_transcribe_model_selection_beta]
   // Imports the Google Cloud client library for Beta API
   /**
    * TODO(developer): Update client library import to use new
@@ -79,7 +79,7 @@ function syncRecognizeModelSelection(
     .catch(err => {
       console.error('ERROR:', err);
     });
-  // [END speech_transcribe_model_selection]
+  // [END speech_transcribe_model_selection_beta]
 }
 
 function syncRecognizeModelSelectionGCS(
@@ -89,7 +89,7 @@ function syncRecognizeModelSelectionGCS(
   sampleRateHertz,
   languageCode
 ) {
-  // [START speech_transcribe_model_selection_gcs]
+  // [START speech_transcribe_model_selection_gcs_beta]
   // Imports the Google Cloud client library for Beta API
   /**
    * TODO(developer): Update client library import to use new
@@ -137,7 +137,7 @@ function syncRecognizeModelSelectionGCS(
     .catch(err => {
       console.error('ERROR:', err);
     });
-  // [END speech_transcribe_model_selection_gcs]
+  // [END speech_transcribe_model_selection_gcs_beta]
 }
 
 function syncRecognizeWithAutoPunctuation(
