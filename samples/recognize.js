@@ -232,7 +232,7 @@ function asyncRecognize(filename, encoding, sampleRateHertz, languageCode) {
 }
 
 function asyncRecognizeGCS(gcsUri, encoding, sampleRateHertz, languageCode) {
-  // [START speech_async_recognize_gcs]
+  // [START speech_transcribe_async_gcs]
   // Imports the Google Cloud client library
   const speech = require('@google-cloud/speech');
 
@@ -281,7 +281,7 @@ function asyncRecognizeGCS(gcsUri, encoding, sampleRateHertz, languageCode) {
     .catch(err => {
       console.error('ERROR:', err);
     });
-  // [END speech_async_recognize_gcs]
+  // [END speech_transcribe_async_gcs]
 }
 
 function asyncRecognizeGCSWords(
