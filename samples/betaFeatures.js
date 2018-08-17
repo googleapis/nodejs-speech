@@ -234,7 +234,7 @@ function speechTranscribeMultichannelGCS(gcsUri) {
 }
 
 function speechTranscribeMultilang(fileName) {
-  // [START speech_transcribe_multilanguage]
+  // [START speech_transcribe_multilanguage_beta]
   const fs = require('fs');
 
   // Imports the Google Cloud client library
@@ -276,11 +276,11 @@ function speechTranscribeMultilang(fileName) {
     .catch(err => {
       console.error('ERROR:', err);
     });
-  // [END speech_transcribe_multilang]
+  // [END speech_transcribe_multilanguage_beta]
 }
 
 function speechTranscribeMultilangGCS(gcsUri) {
-  // [START speech_transcribe_multilang_gcs]
+  // [START speech_transcribe_multilanguage_gcs_beta]
   // Imports the Google Cloud client library
   const speech = require('@google-cloud/speech').v1p1beta1;
 
@@ -324,7 +324,7 @@ function speechTranscribeMultilangGCS(gcsUri) {
     .catch(err => {
       console.error('ERROR:', err);
     });
-  // [END speech_transcribe_multilang_gcs]
+  // [END speech_transcribe_multilanguage_gcs_beta]
 }
 
 function speechTranscribeWordLevelConfidence(fileName) {
