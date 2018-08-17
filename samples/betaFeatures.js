@@ -138,7 +138,7 @@ function asyncSpeechTranscribeDiarizationGCS(gcsUri) {
 }
 
 function speechTranscribeMultiChannel(fileName) {
-  // [START speech_transcribe_multichannel]
+  // [START speech_transcribe_multichannel_beta]
   const fs = require('fs');
 
   // Imports the Google Cloud client library
@@ -186,11 +186,11 @@ function speechTranscribeMultiChannel(fileName) {
     .catch(err => {
       console.error('ERROR:', err);
     });
-  // [END speech_transcribe_multichannel]
+  // [END speech_transcribe_multichannel_beta]
 }
 
 function speechTranscribeMultichannelGCS(gcsUri) {
-  // [START speech_transcribe_multichannel_gcs]
+  // [START speech_transcribe_multichannel_gcs_beta]
   const speech = require('@google-cloud/speech').v1p1beta1;
 
   // Creates a client
@@ -230,7 +230,7 @@ function speechTranscribeMultichannelGCS(gcsUri) {
     .catch(err => {
       console.error('ERROR:', err);
     });
-  // [END speech_transcribe_multichannel_gcs]
+  // [END speech_transcribe_multichannel_gcs_beta]
 }
 
 function speechTranscribeMultilang(fileName) {
