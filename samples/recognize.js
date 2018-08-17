@@ -24,7 +24,7 @@
 'use strict';
 
 function syncRecognize(filename, encoding, sampleRateHertz, languageCode) {
-  // [START speech_sync_recognize]
+  // [START speech_transcribe_sync]
   // Imports the Google Cloud client library
   const fs = require('fs');
   const speech = require('@google-cloud/speech');
@@ -67,11 +67,11 @@ function syncRecognize(filename, encoding, sampleRateHertz, languageCode) {
     .catch(err => {
       console.error('ERROR:', err);
     });
-  // [END speech_sync_recognize]
+  // [END speech_transcribe_sync]
 }
 
 function syncRecognizeGCS(gcsUri, encoding, sampleRateHertz, languageCode) {
-  // [START speech_sync_recognize_gcs]
+  // [START speech_transcribe_sync_gcs]
   // Imports the Google Cloud client library
   const speech = require('@google-cloud/speech');
 
@@ -113,7 +113,7 @@ function syncRecognizeGCS(gcsUri, encoding, sampleRateHertz, languageCode) {
     .catch(err => {
       console.error('ERROR:', err);
     });
-  // [END speech_sync_recognize_gcs]
+  // [END speech_transcribe_sync_gcs]
 }
 
 function syncRecognizeWords(filename, encoding, sampleRateHertz, languageCode) {
