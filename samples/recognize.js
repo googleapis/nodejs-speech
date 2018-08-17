@@ -357,7 +357,7 @@ function asyncRecognizeGCSWords(
 }
 
 function streamingRecognize(filename, encoding, sampleRateHertz, languageCode) {
-  // [START speech_streaming_recognize]
+  // [START speech_transcribe_streaming]
   const fs = require('fs');
 
   // Imports the Google Cloud client library
@@ -395,11 +395,11 @@ function streamingRecognize(filename, encoding, sampleRateHertz, languageCode) {
 
   // Stream an audio file from disk to the Speech API, e.g. "./resources/audio.raw"
   fs.createReadStream(filename).pipe(recognizeStream);
-  // [END speech_streaming_recognize]
+  // [END speech_transcribe_streaming]
 }
 
 function streamingMicRecognize(encoding, sampleRateHertz, languageCode) {
-  // [START speech_streaming_mic_recognize]
+  // [START speech_transcribe_streaming_mic]
   const record = require('node-record-lpcm16');
 
   // Imports the Google Cloud client library
@@ -450,7 +450,7 @@ function streamingMicRecognize(encoding, sampleRateHertz, languageCode) {
     .pipe(recognizeStream);
 
   console.log('Listening, press Ctrl+C to stop.');
-  // [END speech_streaming_mic_recognize]
+  // [END speech_transcribe_streaming_mic]
 }
 
 require(`yargs`)
