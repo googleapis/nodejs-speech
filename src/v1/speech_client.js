@@ -100,21 +100,14 @@ class SpeechClient {
     // Some of the methods on this service provide streaming responses.
     // Provide descriptors for these.
     this._descriptors.stream = {
-      streamingRecognize: new gax.StreamDescriptor(
-        gax.StreamType.BIDI_STREAMING
-      ),
+      streamingRecognize: new gax.StreamDescriptor(gax.StreamType.BIDI_STREAMING),
     };
     var protoFilesRoot = new gax.GoogleProtoFilesRoot();
     protoFilesRoot = protobuf.loadSync(
-      path.join(
-        __dirname,
-        '..',
-        '..',
-        'protos',
-        'google/cloud/speech/v1/cloud_speech.proto'
-      ),
+      path.join(__dirname, '..', '..', 'protos', 'google/cloud/speech/v1/cloud_speech.proto'),
       protoFilesRoot
     );
+
 
     // This API contains "long-running operations", which return a
     // an Operation object that allows for tracking of the operation,
@@ -176,8 +169,7 @@ class SpeechClient {
             }
         ),
         defaults[methodName],
-        this._descriptors.stream[methodName] ||
-          this._descriptors.longrunning[methodName]
+        this._descriptors.stream[methodName] || this._descriptors.longrunning[methodName]
       );
     }
   }
@@ -201,7 +193,9 @@ class SpeechClient {
    * in this service.
    */
   static get scopes() {
-    return ['https://www.googleapis.com/auth/cloud-platform'];
+    return [
+      'https://www.googleapis.com/auth/cloud-platform',
+    ];
   }
 
   /**
@@ -449,5 +443,6 @@ class SpeechClient {
     return this._innerApiCalls.streamingRecognize(options);
   }
 }
+
 
 module.exports = SpeechClient;
