@@ -3,32 +3,24 @@ workflows:
   version: 2
   tests:
     jobs: &workflow_jobs
-      - node4:
+      - node6:
           filters: &all_commits
             tags:
               only: /.*/
-      - node6:
-          filters: *all_commits
       - node8:
-          filters: *all_commits
-      - node9:
           filters: *all_commits
       - node10:
           filters: *all_commits
       - lint:
           requires:
-            - node4
             - node6
             - node8
-            - node9
             - node10
           filters: *all_commits
       - docs:
           requires:
-            - node4
             - node6
             - node8
-            - node9
             - node10
           filters: *all_commits
       - system_tests:
@@ -62,52 +54,25 @@ workflows:
               only: master
     jobs: *workflow_jobs
 jobs:
-  node4:
-    docker:
-      - image: 'node:4'
-        user: node
-    steps: &unit_tests_steps
-      - checkout
-      - run: &remove_package_lock
-          name: Remove package-lock.json if needed.
-          command: |
-            WORKFLOW_NAME=`python .circleci/get_workflow_name.py`
-            echo "Workflow name: $WORKFLOW_NAME"
-            if [ "$WORKFLOW_NAME" = "nightly" ]; then
-              echo "Nightly build detected, removing package-lock.json."
-              rm -f package-lock.json samples/package-lock.json
-            else
-              echo "Not a nightly build, skipping this step."
-            fi
-      - run: &npm_install_and_link
-          name: Install and link the module
-          command: |-
-            mkdir -p /home/node/.npm-global
-            npm install
-            npm link
-            chmod +x node_modules/@google-cloud/nodejs-repo-tools/bin/tools
-          environment:
-            NPM_CONFIG_PREFIX: /home/node/.npm-global
-      - run:
-          name: Run unit tests.
-          command: npm test
-      - run:
-          name: Submit coverage data to codecov.
-          command: node_modules/.bin/codecov
-          when: always
   node6:
     docker:
       - image: 'node:6'
         user: node
-    steps: *unit_tests_steps
+    steps: &unit_tests_steps
+      - checkout
+      - run: &npm_install_and_link
+          name: Install and link the module
+          command: |-
+            mkdir -p /home/node/.npm-global
+            ./.circleci/npm-install-retry.js
+          environment:
+            NPM_CONFIG_PREFIX: /home/node/.npm-global
+      - run: npm test
+      - run: node_modules/.bin/codecov
+
   node8:
     docker:
       - image: 'node:8'
-        user: node
-    steps: *unit_tests_steps
-  node9:
-    docker:
-      - image: 'node:9'
         user: node
     steps: *unit_tests_steps
   node10:
@@ -121,15 +86,13 @@ jobs:
         user: node
     steps:
       - checkout
-      - run: *remove_package_lock
       - run: *npm_install_and_link
       - run: &samples_npm_install_and_link
           name: Link the module being tested to the samples.
           command: |
             cd samples/
-            npm link @google-cloud/speech
-            npm install
-            cd ..
+            npm link ../
+            ./../.circleci/npm-install-retry.js
           environment:
             NPM_CONFIG_PREFIX: /home/node/.npm-global
       - run:
@@ -143,24 +106,22 @@ jobs:
         user: node
     steps:
       - checkout
-      - run: *remove_package_lock
       - run: *npm_install_and_link
-      - run:
-          name: Build documentation.
-          command: npm run docs
+      - run: npm run docs
   sample_tests:
     docker:
       - image: 'node:8'
         user: node
     steps:
       - checkout
-      - run: *remove_package_lock
       - run:
           name: Decrypt credentials.
           command: |
-            openssl aes-256-cbc -d -in .circleci/key.json.enc \
+            if ! [[ -z "${SYSTEM_TESTS_ENCRYPTION_KEY}" ]]; then
+              openssl aes-256-cbc -d -in .circleci/key.json.enc \
                 -out .circleci/key.json \
                 -k "${SYSTEM_TESTS_ENCRYPTION_KEY}"
+            fi
       - run: *npm_install_and_link
       - run: *samples_npm_install_and_link
       - run:
@@ -168,35 +129,45 @@ jobs:
           command: npm run samples-test
           environment:
             GCLOUD_PROJECT: long-door-651
-            GOOGLE_APPLICATION_CREDENTIALS: /home/node/speech-samples/.circleci/key.json
+            GOOGLE_APPLICATION_CREDENTIALS: /home/node/samples/.circleci/key.json
             NPM_CONFIG_PREFIX: /home/node/.npm-global
       - run:
           name: Remove unencrypted key.
-          command: rm .circleci/key.json
+          command: |
+            if ! [[ -z "${SYSTEM_TESTS_ENCRYPTION_KEY}" ]]; then
+              rm .circleci/key.json
+            fi
           when: always
-    working_directory: /home/node/speech-samples/
+    working_directory: /home/node/samples/
   system_tests:
     docker:
       - image: 'node:8'
         user: node
     steps:
       - checkout
-      - run: *remove_package_lock
       - run:
           name: Decrypt credentials.
           command: |
-            openssl aes-256-cbc -d -in .circleci/key.json.enc \
-                -out .circleci/key.json \
-                -k "${SYSTEM_TESTS_ENCRYPTION_KEY}"
+            if ! [[ -z "${SYSTEM_TESTS_ENCRYPTION_KEY}" ]]; then
+              for encrypted_key in .circleci/*.json.enc; do
+                openssl aes-256-cbc -d -in $encrypted_key \
+                  -out $(echo $encrypted_key | sed 's/\.enc//') \
+                  -k "${SYSTEM_TESTS_ENCRYPTION_KEY}"
+              done
+            fi
       - run: *npm_install_and_link
       - run:
           name: Run system tests.
           command: npm run system-test
           environment:
+            GCLOUD_PROJECT: long-door-651
             GOOGLE_APPLICATION_CREDENTIALS: .circleci/key.json
       - run:
           name: Remove unencrypted key.
-          command: rm .circleci/key.json
+          command: |
+            if ! [[ -z "${SYSTEM_TESTS_ENCRYPTION_KEY}" ]]; then
+              rm .circleci/*.json
+            fi
           when: always
   publish_npm:
     docker:
@@ -204,9 +175,6 @@ jobs:
         user: node
     steps:
       - checkout
-      - run:
-          name: Set NPM authentication.
-          command: 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc'
-      - run:
-          name: Publish the module to npm.
-          command: npm publish
+      - run: ./.circleci/npm-install-retry.js
+      - run: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+      - run: npm publish --access=public
