@@ -29,7 +29,7 @@ workflows:
             - docs
           filters: &master_and_releases
             branches:
-              only: master
+              only: fix-storage-import-tests
             tags: &releases
               only: '/^v[\d.]+$/'
       - sample_tests:
