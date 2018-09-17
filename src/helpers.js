@@ -63,7 +63,7 @@ module.exports = () => {
    * // Write request objects.
    * stream.write(request);
    */
-  methods.streamingRecognize = function(config, options) {
+  methods.streamingRecognize = function(streamingConfig, options) {
     if (options === undefined) {
       options = {};
     }
@@ -87,7 +87,7 @@ module.exports = () => {
     // config) is delayed until we get the first burst of data.
     recognizeStream.once('writing', () => {
       // The first message should contain the streaming config.
-      const firstMessage = true;
+      requestStream.write({streamingConfig});
 
       // Set up appropriate piping between the stream returned by
       // the underlying API method and the one that we return.
@@ -95,22 +95,7 @@ module.exports = () => {
         // Format the user's input.
         // This entails that the user sends raw audio; it is wrapped in
         // the appropriate request structure.
-        through.obj((obj, _, next) => {
-          const payload = {};
-          if (firstMessage && config !== undefined) {
-            // Write the initial configuration to the stream.
-            payload.streamingConfig = config;
-          }
-
-          let payload = {};
-          if (Object.keys(obj || {}).length) {
-            payload.audioContent = obj;
-          }
-
-          firstMessage = false;
-
-          next(null, payload);
-        }),
+        through.obj((audioContent, _, next) => next(null, {audioContent})),
         requestStream,
         through.obj((response, enc, next) => {
           if (response.error) {
