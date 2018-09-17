@@ -31,6 +31,8 @@ describe('Speech helper methods', () => {
 
   class FakeApiError extends common.util.ApiError {
     constructor(error) {
+      super();
+
       if (FakeApiErrorOverride) {
         return FakeApiErrorOverride(error);
       }
