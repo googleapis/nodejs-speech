@@ -102,9 +102,12 @@ module.exports = () => {
             payload.streamingConfig = config;
           }
 
+          let payload = {};
           if (Object.keys(obj || {}).length) {
             payload.audioContent = obj;
           }
+
+          firstMessage = false;
 
           next(null, payload);
         }),
