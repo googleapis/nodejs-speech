@@ -47,6 +47,11 @@ for version in versions:
         "stream\.write\(request\)",
         "stream.write()")
 
+    s.replace(
+        f"test/gapic-{version}.js",
+        "// Mock request\n\s*const request = {};",
+        "")
+
 templates = common_templates.node_library()
 # TODO: remove excludes once var's are converted to const/let
 s.copy(templates, excludes=['.eslintrc.yml'])
