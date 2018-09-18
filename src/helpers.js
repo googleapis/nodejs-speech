@@ -64,9 +64,8 @@ module.exports = () => {
    * stream.write(request);
    */
   methods.streamingRecognize = function(streamingConfig, options) {
-    if (options === undefined) {
-      options = {};
-    }
+    options = options || {};
+    streamingConfig = streamingConfig || {};
 
     // Format the audio content as input request for pipeline
     const recognizeStream = streamEvents(pumpify.obj());
@@ -95,7 +94,11 @@ module.exports = () => {
         // Format the user's input.
         // This entails that the user sends raw audio; it is wrapped in
         // the appropriate request structure.
-        through.obj((audioContent, _, next) => next(null, {audioContent})),
+        through.obj((audioContent, _, next) => {
+          if (audioContent !== undefined) {
+            next(null, {audioContent});
+          }
+        }),
         requestStream,
         through.obj((response, enc, next) => {
           if (response.error) {
