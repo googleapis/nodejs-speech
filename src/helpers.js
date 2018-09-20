@@ -16,16 +16,17 @@
 
 'use strict';
 
-var pumpify = require('pumpify');
-var streamEvents = require('stream-events');
-var through = require('through2');
+const common = require('@google-cloud/common');
+const pumpify = require('pumpify');
+const streamEvents = require('stream-events');
+const through = require('through2');
 
 /*!
  * Return a dictionary-like object with helpers to augment the Speech
  * GAPIC.
  */
 module.exports = () => {
-  var methods = {};
+  const methods = {};
 
   /**
    * Performs bidirectional streaming speech recognition: receive results while
@@ -67,10 +68,17 @@ module.exports = () => {
       options = {};
     }
 
-    var requestStream = this._innerApiCalls.streamingRecognize(options);
-
     // Format the audio content as input request for pipeline
-    var recognizeStream = streamEvents(pumpify.obj());
+    const recognizeStream = streamEvents(pumpify.obj());
+
+    const requestStream = this._innerApiCalls
+      .streamingRecognize(options)
+      .on('error', err => {
+        recognizeStream.destroy(err);
+      })
+      .on('response', response => {
+        recognizeStream.emit('response', response);
+      });
 
     // Attach the events to the request stream, but only do so
     // when the first write (of data) comes in.
@@ -78,19 +86,8 @@ module.exports = () => {
     // This also means that the sending of the initial request (with the
     // config) is delayed until we get the first burst of data.
     recognizeStream.once('writing', () => {
-      requestStream.on('error', err => {
-        recognizeStream.destroy(err);
-      });
-
-      // Responses must be explicitly forwarded.
-      requestStream.on('response', response => {
-        recognizeStream.emit('response', response);
-      });
-
-      // Write the initial configuration to the stream.
-      requestStream.write({
-        streamingConfig: config,
-      });
+      // The first message should contain the streaming config.
+      const firstMessage = true;
 
       // Set up appropriate piping between the stream returned by
       // the underlying API method and the one that we return.
@@ -99,12 +96,27 @@ module.exports = () => {
         // This entails that the user sends raw audio; it is wrapped in
         // the appropriate request structure.
         through.obj((obj, _, next) => {
-          next(null, {
-            audioContent: obj,
-          });
+          const payload = {};
+          if (firstMessage && config !== undefined) {
+            // Write the initial configuration to the stream.
+            payload.streamingConfig = config;
+          }
+
+          if (Object.keys(obj || {}).length) {
+            payload.audioContent = obj;
+          }
+
+          next(null, payload);
         }),
         requestStream,
-        through.obj(),
+        through.obj((response, enc, next) => {
+          if (response.error) {
+            next(new common.util.ApiError(response.error));
+            return;
+          }
+
+          next(null, response);
+        }),
       ]);
     });
 

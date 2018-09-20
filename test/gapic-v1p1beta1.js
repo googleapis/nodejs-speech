@@ -15,41 +15,42 @@
 'use strict';
 
 const assert = require('assert');
+const through2 = require('through2');
 
 const speechModule = require('../src');
 
-var FAKE_STATUS_CODE = 1;
-var error = new Error();
+const FAKE_STATUS_CODE = 1;
+const error = new Error();
 error.code = FAKE_STATUS_CODE;
 
 describe('SpeechClient', () => {
   describe('recognize', () => {
     it('invokes recognize without error', done => {
-      var client = new speechModule.v1p1beta1.SpeechClient({
+      const client = new speechModule.v1p1beta1.SpeechClient({
         credentials: {client_email: 'bogus', private_key: 'bogus'},
         projectId: 'bogus',
       });
 
       // Mock request
-      var encoding = 'FLAC';
-      var sampleRateHertz = 44100;
-      var languageCode = 'en-US';
-      var config = {
+      const encoding = 'FLAC';
+      const sampleRateHertz = 44100;
+      const languageCode = 'en-US';
+      const config = {
         encoding: encoding,
         sampleRateHertz: sampleRateHertz,
         languageCode: languageCode,
       };
-      var uri = 'gs://bucket_name/file_name.flac';
-      var audio = {
+      const uri = 'gs://bucket_name/file_name.flac';
+      const audio = {
         uri: uri,
       };
-      var request = {
+      const request = {
         config: config,
         audio: audio,
       };
 
       // Mock response
-      var expectedResponse = {};
+      const expectedResponse = {};
 
       // Mock Grpc layer
       client._innerApiCalls.recognize = mockSimpleGrpcMethod(
@@ -65,25 +66,25 @@ describe('SpeechClient', () => {
     });
 
     it('invokes recognize with error', done => {
-      var client = new speechModule.v1p1beta1.SpeechClient({
+      const client = new speechModule.v1p1beta1.SpeechClient({
         credentials: {client_email: 'bogus', private_key: 'bogus'},
         projectId: 'bogus',
       });
 
       // Mock request
-      var encoding = 'FLAC';
-      var sampleRateHertz = 44100;
-      var languageCode = 'en-US';
-      var config = {
+      const encoding = 'FLAC';
+      const sampleRateHertz = 44100;
+      const languageCode = 'en-US';
+      const config = {
         encoding: encoding,
         sampleRateHertz: sampleRateHertz,
         languageCode: languageCode,
       };
-      var uri = 'gs://bucket_name/file_name.flac';
-      var audio = {
+      const uri = 'gs://bucket_name/file_name.flac';
+      const audio = {
         uri: uri,
       };
-      var request = {
+      const request = {
         config: config,
         audio: audio,
       };
@@ -97,7 +98,7 @@ describe('SpeechClient', () => {
 
       client.recognize(request, (err, response) => {
         assert(err instanceof Error);
-        assert.equal(err.code, FAKE_STATUS_CODE);
+        assert.strictEqual(err.code, FAKE_STATUS_CODE);
         assert(typeof response === 'undefined');
         done();
       });
@@ -106,31 +107,31 @@ describe('SpeechClient', () => {
 
   describe('longRunningRecognize', function() {
     it('invokes longRunningRecognize without error', done => {
-      var client = new speechModule.v1p1beta1.SpeechClient({
+      const client = new speechModule.v1p1beta1.SpeechClient({
         credentials: {client_email: 'bogus', private_key: 'bogus'},
         projectId: 'bogus',
       });
 
       // Mock request
-      var encoding = 'FLAC';
-      var sampleRateHertz = 44100;
-      var languageCode = 'en-US';
-      var config = {
+      const encoding = 'FLAC';
+      const sampleRateHertz = 44100;
+      const languageCode = 'en-US';
+      const config = {
         encoding: encoding,
         sampleRateHertz: sampleRateHertz,
         languageCode: languageCode,
       };
-      var uri = 'gs://bucket_name/file_name.flac';
-      var audio = {
+      const uri = 'gs://bucket_name/file_name.flac';
+      const audio = {
         uri: uri,
       };
-      var request = {
+      const request = {
         config: config,
         audio: audio,
       };
 
       // Mock response
-      var expectedResponse = {};
+      const expectedResponse = {};
 
       // Mock Grpc layer
       client._innerApiCalls.longRunningRecognize = mockLongRunningGrpcMethod(
@@ -141,7 +142,7 @@ describe('SpeechClient', () => {
       client
         .longRunningRecognize(request)
         .then(responses => {
-          var operation = responses[0];
+          const operation = responses[0];
           return operation.promise();
         })
         .then(responses => {
@@ -154,25 +155,25 @@ describe('SpeechClient', () => {
     });
 
     it('invokes longRunningRecognize with error', done => {
-      var client = new speechModule.v1p1beta1.SpeechClient({
+      const client = new speechModule.v1p1beta1.SpeechClient({
         credentials: {client_email: 'bogus', private_key: 'bogus'},
         projectId: 'bogus',
       });
 
       // Mock request
-      var encoding = 'FLAC';
-      var sampleRateHertz = 44100;
-      var languageCode = 'en-US';
-      var config = {
+      const encoding = 'FLAC';
+      const sampleRateHertz = 44100;
+      const languageCode = 'en-US';
+      const config = {
         encoding: encoding,
         sampleRateHertz: sampleRateHertz,
         languageCode: languageCode,
       };
-      var uri = 'gs://bucket_name/file_name.flac';
-      var audio = {
+      const uri = 'gs://bucket_name/file_name.flac';
+      const audio = {
         uri: uri,
       };
-      var request = {
+      const request = {
         config: config,
         audio: audio,
       };
@@ -187,7 +188,7 @@ describe('SpeechClient', () => {
       client
         .longRunningRecognize(request)
         .then(responses => {
-          var operation = responses[0];
+          const operation = responses[0];
           return operation.promise();
         })
         .then(() => {
@@ -195,13 +196,13 @@ describe('SpeechClient', () => {
         })
         .catch(err => {
           assert(err instanceof Error);
-          assert.equal(err.code, FAKE_STATUS_CODE);
+          assert.strictEqual(err.code, FAKE_STATUS_CODE);
           done();
         });
     });
 
     it('has longrunning decoder functions', () => {
-      var client = new speechModule.v1p1beta1.SpeechClient({
+      const client = new speechModule.v1p1beta1.SpeechClient({
         credentials: {client_email: 'bogus', private_key: 'bogus'},
         projectId: 'bogus',
       });
@@ -213,6 +214,69 @@ describe('SpeechClient', () => {
         client._descriptors.longrunning.longRunningRecognize
           .metadataDecoder instanceof Function
       );
+    });
+  });
+
+  describe('streamingRecognize', () => {
+    it('invokes streamingRecognize without error', done => {
+      const client = new speechModule.v1p1beta1.SpeechClient({
+        credentials: {client_email: 'bogus', private_key: 'bogus'},
+        projectId: 'bogus',
+      });
+
+      // Mock request
+      const request = {};
+
+      // Mock response
+      const expectedResponse = {};
+
+      // Mock Grpc layer
+      client._innerApiCalls.streamingRecognize = mockBidiStreamingGrpcMethod(
+        request,
+        expectedResponse
+      );
+
+      const stream = client
+        .streamingRecognize()
+        .on('data', response => {
+          assert.deepStrictEqual(response, expectedResponse);
+          done();
+        })
+        .on('error', err => {
+          done(err);
+        });
+
+      stream.write(request);
+    });
+
+    it('invokes streamingRecognize with error', done => {
+      const client = new speechModule.v1p1beta1.SpeechClient({
+        credentials: {client_email: 'bogus', private_key: 'bogus'},
+        projectId: 'bogus',
+      });
+
+      // Mock request
+      const request = {};
+
+      // Mock Grpc layer
+      client._innerApiCalls.streamingRecognize = mockBidiStreamingGrpcMethod(
+        request,
+        null,
+        error
+      );
+
+      const stream = client
+        .streamingRecognize()
+        .on('data', () => {
+          assert.fail();
+        })
+        .on('error', err => {
+          assert(err instanceof Error);
+          assert.strictEqual(err.code, FAKE_STATUS_CODE);
+          done();
+        });
+
+      stream.write(request);
     });
   });
 });
@@ -230,10 +294,24 @@ function mockSimpleGrpcMethod(expectedRequest, response, error) {
   };
 }
 
+function mockBidiStreamingGrpcMethod(expectedRequest, response, error) {
+  return () => {
+    const mockStream = through2.obj((chunk, enc, callback) => {
+      assert.deepStrictEqual(chunk, expectedRequest);
+      if (error) {
+        callback(error);
+      } else {
+        callback(null, response);
+      }
+    });
+    return mockStream;
+  };
+}
+
 function mockLongRunningGrpcMethod(expectedRequest, response, error) {
   return request => {
     assert.deepStrictEqual(request, expectedRequest);
-    var mockOperation = {
+    const mockOperation = {
       promise: function() {
         return new Promise((resolve, reject) => {
           if (error) {
