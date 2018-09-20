@@ -861,7 +861,7 @@ require(`yargs`)  // eslint-disable-line
     `node $0 sync-model ./resources/Google_Gnome.wav video -e LINEAR16 -r 16000`
   )
   .example(
-    `node $0 sync-model-gcs gs://gcs-test-data/Google_Gnome.wav phone_call -e FLAC -r 16000`
+    `node $0 sync-model-gcs gs://gcs-test-data/Google_Gnome.wav phone_call -e LINEAR16 -r 16000`
   )
   .example(`node $0 sync-auto-punctuation ./resources/commercial_mono.wav`)
   .example(`node $0 sync-enhanced-model ./resources/commercial_mono.wav`)

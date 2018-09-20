@@ -40,6 +40,7 @@ const text3 = `Chrome`;
 test.before(async () => {
   const [bucket] = await storage.createBucket(bucketName);
   await bucket.upload(filepath);
+  await bucket.upload(filepath1);
 });
 
 test.after.always(async () => {
