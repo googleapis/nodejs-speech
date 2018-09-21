@@ -166,7 +166,7 @@ class SpeechClient {
       'longRunningRecognize',
       'streamingRecognize',
     ];
-    for (const methodName of speechStubMethods) {
+    for (let methodName of speechStubMethods) {
       this._innerApiCalls[methodName] = gax.createApiCall(
         speechStub.then(
           stub =>
