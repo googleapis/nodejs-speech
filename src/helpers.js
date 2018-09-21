@@ -87,7 +87,9 @@ module.exports = () => {
     // config) is delayed until we get the first burst of data.
     recognizeStream.once('writing', () => {
       // The first message should contain the streaming config.
-      const firstMessage = true;
+      if (config) {
+        requestStream.write({streamingConfig: config});
+      }
 
       // Set up appropriate piping between the stream returned by
       // the underlying API method and the one that we return.
@@ -97,12 +99,8 @@ module.exports = () => {
         // the appropriate request structure.
         through.obj((obj, _, next) => {
           const payload = {};
-          if (firstMessage && config !== undefined) {
-            // Write the initial configuration to the stream.
-            payload.streamingConfig = config;
-          }
 
-          if (Object.keys(obj || {}).length) {
+          if (Buffer.isBuffer(obj)) {
             payload.audioContent = obj;
           }
 
