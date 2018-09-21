@@ -97,7 +97,10 @@ module.exports = () => {
         through.obj((audioContent, _, next) => {
           if (audioContent !== undefined) {
             next(null, {audioContent});
+            return;
           }
+
+          next();
         }),
         requestStream,
         through.obj((response, enc, next) => {
