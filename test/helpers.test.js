@@ -192,7 +192,7 @@ describe('Speech helper methods', () => {
       const userStream = client.streamingRecognize(CONFIG, OPTIONS);
       const audioContent = Buffer.from('audio content');
 
-      var count = 0;
+      let count = 0;
       requestStream._write = (data, enc, next) => {
         if (count === 0)
           assert.deepStrictEqual(data, {

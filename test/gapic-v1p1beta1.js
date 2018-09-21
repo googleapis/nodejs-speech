@@ -224,9 +224,6 @@ describe('SpeechClient', () => {
         projectId: 'bogus',
       });
 
-      // Mock request
-      const request = {};
-
       // Mock response
       const expectedResponse = {};
 
@@ -254,9 +251,6 @@ describe('SpeechClient', () => {
         credentials: {client_email: 'bogus', private_key: 'bogus'},
         projectId: 'bogus',
       });
-
-      // Mock request
-      const request = {};
 
       // Mock Grpc layer
       client._innerApiCalls.streamingRecognize = mockBidiStreamingGrpcMethod(
