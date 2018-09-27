@@ -17,8 +17,6 @@
 cd /d %~dp0
 cd ..
 
-call npm install -g npm@5 || goto :error
-
 call npm install || goto :error
 call npm run test || goto :error
 
