@@ -44,6 +44,7 @@ function syncRecognize(filename, encoding, sampleRateHertz, languageCode) {
     encoding: encoding,
     sampleRateHertz: sampleRateHertz,
     languageCode: languageCode,
+    model: 'default',
   };
   const audio = {
     content: fs.readFileSync(filename).toString('base64'),
