@@ -69,8 +69,11 @@ test(`should run sync recognize with word time offset`, async t => {
   t.true(new RegExp(`\\d+\\.\\d+ secs - \\d+\\.\\d+ secs`).test(output));
 });
 
-test(`should run async recognize on a local file`, async t => {
-  const output = await runAsync(`${cmd} async ${filepath}`, cwd);
+test(`speech_transcribe_async`, async t => {
+  const output = await runAsync(
+    `node speech_transcribe_async.js ${filepath}`,
+    cwd
+  );
   t.true(output.includes(`Transcription: ${text}`));
 });
 

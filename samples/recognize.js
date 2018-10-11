@@ -177,60 +177,6 @@ function syncRecognizeWords(filename, encoding, sampleRateHertz, languageCode) {
   // [END speech_sync_recognize_words]
 }
 
-function asyncRecognize(filename, encoding, sampleRateHertz, languageCode) {
-  // [START speech_transcribe_async]
-  // Imports the Google Cloud client library
-  const speech = require('@google-cloud/speech');
-  const fs = require('fs');
-
-  // Creates a client
-  const client = new speech.SpeechClient();
-
-  /**
-   * TODO(developer): Uncomment the following lines before running the sample.
-   */
-  // const filename = 'Local path to audio file, e.g. /path/to/audio.raw';
-  // const encoding = 'Encoding of the audio file, e.g. LINEAR16';
-  // const sampleRateHertz = 16000;
-  // const languageCode = 'BCP-47 language code, e.g. en-US';
-
-  const config = {
-    encoding: encoding,
-    sampleRateHertz: sampleRateHertz,
-    languageCode: languageCode,
-  };
-  const audio = {
-    content: fs.readFileSync(filename).toString('base64'),
-  };
-
-  const request = {
-    config: config,
-    audio: audio,
-  };
-
-  // Detects speech in the audio file. This creates a recognition job that you
-  // can wait for now, or get its result later.
-  client
-    .longRunningRecognize(request)
-    .then(data => {
-      const response = data[0];
-      const operation = response;
-      // Get a Promise representation of the final result of the job
-      return operation.promise();
-    })
-    .then(data => {
-      const response = data[0];
-      const transcription = response.results
-        .map(result => result.alternatives[0].transcript)
-        .join('\n');
-      console.log(`Transcription: ${transcription}`);
-    })
-    .catch(err => {
-      console.error('ERROR:', err);
-    });
-  // [END speech_transcribe_async]
-}
-
 function asyncRecognizeGCS(gcsUri, encoding, sampleRateHertz, languageCode) {
   // [START speech_transcribe_async_gcs]
   // Imports the Google Cloud client library
@@ -715,18 +661,6 @@ require(`yargs`) // eslint-disable-line
     {},
     opts =>
       syncRecognizeWords(
-        opts.filename,
-        opts.encoding,
-        opts.sampleRateHertz,
-        opts.languageCode
-      )
-  )
-  .command(
-    `async <filename>`,
-    `Creates a job to detect speech in a local audio file, and waits for the job to complete.`,
-    {},
-    opts =>
-      asyncRecognize(
         opts.filename,
         opts.encoding,
         opts.sampleRateHertz,
