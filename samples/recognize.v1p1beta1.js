@@ -23,7 +23,7 @@
 
 'use strict';
 
-function syncRecognizeWithMetaData(
+async function syncRecognizeWithMetaData(
   filename,
   encoding,
   sampleRateHertz,
@@ -72,19 +72,16 @@ function syncRecognizeWithMetaData(
     audio: audio,
   };
 
-  // Detects speech in the audio file
-  client
-    .recognize(request)
-    .then(data => {
-      const response = data[0];
-      response.results.forEach(result => {
-        const alternative = result.alternatives[0];
-        console.log(alternative.transcript);
-      });
-    })
-    .catch(err => {
-      console.error('ERROR:', err);
+  try {
+    // Detects speech in the audio file
+    const [{results}] = await client.recognize(request);
+    results.forEach(result => {
+      const alternative = result.alternatives[0];
+      console.log(alternative.transcript);
     });
+  } catch(err) {
+    console.error('ERROR:', err);
+  }  
   // [END speech_transcribe_recognition_metadata_beta]
 }
 
