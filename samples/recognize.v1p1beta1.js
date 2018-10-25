@@ -72,16 +72,12 @@ async function syncRecognizeWithMetaData(
     audio: audio,
   };
 
-  try {
-    // Detects speech in the audio file
-    const [{results}] = await client.recognize(request);
-    results.forEach(result => {
-      const alternative = result.alternatives[0];
-      console.log(alternative.transcript);
-    });
-  } catch (err) {
-    console.error('ERROR:', err);
-  }
+  // Detects speech in the audio file
+  const [{results}] = await client.recognize(request);
+  results.forEach(result => {
+    const alternative = result.alternatives[0];
+    console.log(alternative.transcript);
+  });
   // [END speech_transcribe_recognition_metadata_beta]
 }
 

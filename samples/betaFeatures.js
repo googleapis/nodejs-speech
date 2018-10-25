@@ -56,25 +56,21 @@ async function speechTranscribeDiarization(fileName) {
     audio: audio,
   };
 
-  try {
-    const [response] = await client.recognize(request);
-    const transcription = response.results
-      .map(result => result.alternatives[0].transcript)
-      .join('\n');
-    console.log(`Transcription: ${transcription}`);
-    console.log(`Speaker Diarization:`);
-    const result = response.results[response.results.length - 1];
-    const wordsInfo = result.alternatives[0].words;
-    // Note: The transcript within each result is separate and sequential per result.
-    // However, the words list within an alternative includes all the words
-    // from all the results thus far. Thus, to get all the words with speaker
-    // tags, you only have to take the words list from the last result:
-    wordsInfo.forEach(a =>
-      console.log(` word: ${a.word}, speakerTag: ${a.speakerTag}`)
-    );
-  } catch (err) {
-    console.error('ERROR:', err);
-  }
+  const [response] = await client.recognize(request);
+  const transcription = response.results
+    .map(result => result.alternatives[0].transcript)
+    .join('\n');
+  console.log(`Transcription: ${transcription}`);
+  console.log(`Speaker Diarization:`);
+  const result = response.results[response.results.length - 1];
+  const wordsInfo = result.alternatives[0].words;
+  // Note: The transcript within each result is separate and sequential per result.
+  // However, the words list within an alternative includes all the words
+  // from all the results thus far. Thus, to get all the words with speaker
+  // tags, you only have to take the words list from the last result:
+  wordsInfo.forEach(a =>
+    console.log(` word: ${a.word}, speakerTag: ${a.speakerTag}`)
+  );
   // [END speech_transcribe_diarization_beta]
 }
 
@@ -109,25 +105,21 @@ async function asyncSpeechTranscribeDiarizationGCS(gcsUri) {
     audio: audio,
   };
 
-  try {
-    const [response] = await client.recognize(request);
-    const transcription = response.results
-      .map(result => result.alternatives[0].transcript)
-      .join('\n');
-    console.log(`Transcription: ${transcription}`);
-    console.log(`Speaker Diarization:`);
-    const result = response.results[response.results.length - 1];
-    const wordsInfo = result.alternatives[0].words;
-    // Note: The transcript within each result is separate and sequential per result.
-    // However, the words list within an alternative includes all the words
-    // from all the results thus far. Thus, to get all the words with speaker
-    // tags, you only have to take the words list from the last result:
-    wordsInfo.forEach(a =>
-      console.log(` word: ${a.word}, speakerTag: ${a.speakerTag}`)
-    );
-  } catch (err) {
-    console.error('ERROR:', err);
-  }
+  const [response] = await client.recognize(request);
+  const transcription = response.results
+    .map(result => result.alternatives[0].transcript)
+    .join('\n');
+  console.log(`Transcription: ${transcription}`);
+  console.log(`Speaker Diarization:`);
+  const result = response.results[response.results.length - 1];
+  const wordsInfo = result.alternatives[0].words;
+  // Note: The transcript within each result is separate and sequential per result.
+  // However, the words list within an alternative includes all the words
+  // from all the results thus far. Thus, to get all the words with speaker
+  // tags, you only have to take the words list from the last result:
+  wordsInfo.forEach(a =>
+    console.log(` word: ${a.word}, speakerTag: ${a.speakerTag}`)
+  );
   // [END speech_transcribe_diarization_gcs_beta]
 }
 
@@ -162,21 +154,17 @@ async function speechTranscribeMultiChannel(fileName) {
     audio: audio,
   };
 
-  try {
-    const [response] = await client.recognize(request);
-    const transcription = response.results
-      .map(
-        result =>
-          ` Channel Tag: ` +
-          result.channelTag +
-          ` ` +
-          result.alternatives[0].transcript
-      )
-      .join('\n');
-    console.log(`Transcription: \n${transcription}`);
-  } catch (err) {
-    console.error('ERROR:', err);
-  }
+  const [response] = await client.recognize(request);
+  const transcription = response.results
+    .map(
+      result =>
+        ` Channel Tag: ` +
+        result.channelTag +
+        ` ` +
+        result.alternatives[0].transcript
+    )
+    .join('\n');
+  console.log(`Transcription: \n${transcription}`);
   // [END speech_transcribe_multichannel_beta]
 }
 
@@ -203,21 +191,17 @@ async function speechTranscribeMultichannelGCS(gcsUri) {
     audio: audio,
   };
 
-  try {
-    const [response] = await client.recognize(request);
-    const transcription = response.results
-      .map(
-        result =>
-          ` Channel Tag: ` +
-          result.channelTag +
-          ` ` +
-          result.alternatives[0].transcript
-      )
-      .join('\n');
-    console.log(`Transcription: \n${transcription}`);
-  } catch (err) {
-    console.error('ERROR:', err);
-  }
+  const [response] = await client.recognize(request);
+  const transcription = response.results
+    .map(
+      result =>
+        ` Channel Tag: ` +
+        result.channelTag +
+        ` ` +
+        result.alternatives[0].transcript
+    )
+    .join('\n');
+  console.log(`Transcription: \n${transcription}`);
   // [END speech_transcribe_multichannel_gcs_beta]
 }
 
@@ -252,15 +236,11 @@ async function speechTranscribeMultilang(fileName) {
     audio: audio,
   };
 
-  try {
-    const [response] = await client.recognize(request);
-    const transcription = response.results
-      .map(result => result.alternatives[0].transcript)
-      .join('\n');
-    console.log(`Transcription: ${transcription}`);
-  } catch (err) {
-    console.error('ERROR:', err);
-  }
+  const [response] = await client.recognize(request);
+  const transcription = response.results
+    .map(result => result.alternatives[0].transcript)
+    .join('\n');
+  console.log(`Transcription: ${transcription}`);
   // [END speech_transcribe_multilanguage_beta]
 }
 
@@ -293,16 +273,12 @@ async function speechTranscribeMultilangGCS(gcsUri) {
     audio: audio,
   };
 
-  try {
-    const [operation] = await client.longRunningRecognize(request);
-    const [response] = await operation.promise();
-    const transcription = response.results
-      .map(result => result.alternatives[0].transcript)
-      .join('\n');
-    console.log(`Transcription: ${transcription}`);
-  } catch (err) {
-    console.error('ERROR:', err);
-  }
+  const [operation] = await client.longRunningRecognize(request);
+  const [response] = await operation.promise();
+  const transcription = response.results
+    .map(result => result.alternatives[0].transcript)
+    .join('\n');
+  console.log(`Transcription: ${transcription}`);
   // [END speech_transcribe_multilanguage_gcs_beta]
 }
 
@@ -337,24 +313,20 @@ async function speechTranscribeWordLevelConfidence(fileName) {
     audio: audio,
   };
 
-  try {
-    const [response] = await client.recognize(request);
-    const transcription = response.results
-      .map(result => result.alternatives[0].transcript)
-      .join('\n');
-    const confidence = response.results
-      .map(result => result.alternatives[0].confidence)
-      .join(`\n`);
-    console.log(`Transcription: ${transcription} \n Confidence: ${confidence}`);
+  const [response] = await client.recognize(request);
+  const transcription = response.results
+    .map(result => result.alternatives[0].transcript)
+    .join('\n');
+  const confidence = response.results
+    .map(result => result.alternatives[0].confidence)
+    .join(`\n`);
+  console.log(`Transcription: ${transcription} \n Confidence: ${confidence}`);
 
-    console.log(`Word-Level-Confidence:`);
-    const words = response.results.map(result => result.alternatives[0]);
-    words[0].words.forEach(a => {
-      console.log(` word: ${a.word}, confidence: ${a.confidence}`);
-    });
-  } catch (err) {
-    console.error('ERROR:', err);
-  }
+  console.log(`Word-Level-Confidence:`);
+  const words = response.results.map(result => result.alternatives[0]);
+  words[0].words.forEach(a => {
+    console.log(` word: ${a.word}, confidence: ${a.confidence}`);
+  });
   // [END speech_transcribe_word_level_confidence_beta]
 }
 
@@ -387,24 +359,20 @@ async function speechTranscribeWordLevelConfidenceGCS(gcsUri) {
     audio: audio,
   };
 
-  try {
-    const [response] = await client.recognize(request);
-    const transcription = response.results
-      .map(result => result.alternatives[0].transcript)
-      .join('\n');
-    const confidence = response.results
-      .map(result => result.alternatives[0].confidence)
-      .join(`\n`);
-    console.log(`Transcription: ${transcription} \n Confidence: ${confidence}`);
+  const [response] = await client.recognize(request);
+  const transcription = response.results
+    .map(result => result.alternatives[0].transcript)
+    .join('\n');
+  const confidence = response.results
+    .map(result => result.alternatives[0].confidence)
+    .join(`\n`);
+  console.log(`Transcription: ${transcription} \n Confidence: ${confidence}`);
 
-    console.log(`Word-Level-Confidence:`);
-    const words = response.results.map(result => result.alternatives[0]);
-    words[0].words.forEach(a => {
-      console.log(` word: ${a.word}, confidence: ${a.confidence}`);
-    });
-  } catch (err) {
-    console.error('ERROR:', err);
-  }
+  console.log(`Word-Level-Confidence:`);
+  const words = response.results.map(result => result.alternatives[0]);
+  words[0].words.forEach(a => {
+    console.log(` word: ${a.word}, confidence: ${a.confidence}`);
+  });
   // [END speech_transcribe_word_level_confidence_gcs_beta]
 }
 
