@@ -79,9 +79,9 @@ async function syncRecognizeWithMetaData(
       const alternative = result.alternatives[0];
       console.log(alternative.transcript);
     });
-  } catch(err) {
+  } catch (err) {
     console.error('ERROR:', err);
-  }  
+  }
   // [END speech_transcribe_recognition_metadata_beta]
 }
 

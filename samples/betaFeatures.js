@@ -72,9 +72,9 @@ async function speechTranscribeDiarization(fileName) {
     wordsInfo.forEach(a =>
       console.log(` word: ${a.word}, speakerTag: ${a.speakerTag}`)
     );
-  } catch(err) {
+  } catch (err) {
     console.error('ERROR:', err);
-  }  
+  }
   // [END speech_transcribe_diarization_beta]
 }
 
@@ -125,9 +125,9 @@ async function asyncSpeechTranscribeDiarizationGCS(gcsUri) {
     wordsInfo.forEach(a =>
       console.log(` word: ${a.word}, speakerTag: ${a.speakerTag}`)
     );
-  } catch(err) {
+  } catch (err) {
     console.error('ERROR:', err);
-  }  
+  }
   // [END speech_transcribe_diarization_gcs_beta]
 }
 
@@ -174,9 +174,9 @@ async function speechTranscribeMultiChannel(fileName) {
       )
       .join('\n');
     console.log(`Transcription: \n${transcription}`);
-  } catch(err) {
+  } catch (err) {
     console.error('ERROR:', err);
-  }  
+  }
   // [END speech_transcribe_multichannel_beta]
 }
 
@@ -215,9 +215,9 @@ async function speechTranscribeMultichannelGCS(gcsUri) {
       )
       .join('\n');
     console.log(`Transcription: \n${transcription}`);
-  } catch(err) {
+  } catch (err) {
     console.error('ERROR:', err);
-  }  
+  }
   // [END speech_transcribe_multichannel_gcs_beta]
 }
 
@@ -258,9 +258,9 @@ async function speechTranscribeMultilang(fileName) {
       .map(result => result.alternatives[0].transcript)
       .join('\n');
     console.log(`Transcription: ${transcription}`);
-  } catch(err) {
+  } catch (err) {
     console.error('ERROR:', err);
-  }  
+  }
   // [END speech_transcribe_multilanguage_beta]
 }
 
@@ -300,9 +300,9 @@ async function speechTranscribeMultilangGCS(gcsUri) {
       .map(result => result.alternatives[0].transcript)
       .join('\n');
     console.log(`Transcription: ${transcription}`);
-  } catch(err) {
+  } catch (err) {
     console.error('ERROR:', err);
-  }  
+  }
   // [END speech_transcribe_multilanguage_gcs_beta]
 }
 
@@ -352,7 +352,7 @@ async function speechTranscribeWordLevelConfidence(fileName) {
     words[0].words.forEach(a => {
       console.log(` word: ${a.word}, confidence: ${a.confidence}`);
     });
-  } catch(err) {
+  } catch (err) {
     console.error('ERROR:', err);
   }
   // [END speech_transcribe_word_level_confidence_beta]
@@ -402,9 +402,9 @@ async function speechTranscribeWordLevelConfidenceGCS(gcsUri) {
     words[0].words.forEach(a => {
       console.log(` word: ${a.word}, confidence: ${a.confidence}`);
     });
-  } catch(err) {
+  } catch (err) {
     console.error('ERROR:', err);
-  }  
+  }
   // [END speech_transcribe_word_level_confidence_gcs_beta]
 }
 

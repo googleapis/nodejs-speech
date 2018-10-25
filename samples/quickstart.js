@@ -52,8 +52,8 @@
       .map(result => result.alternatives[0].transcript)
       .join('\n');
     console.log(`Transcription: ${transcription}`);
-  } catch(err) {
+  } catch (err) {
     console.error('ERROR:', err);
-  }  
+  }
 })();
 // [END speech_quickstart]

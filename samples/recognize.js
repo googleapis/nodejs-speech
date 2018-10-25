@@ -104,15 +104,15 @@ async function syncRecognizeGCS(
   };
 
   try {
-  // Detects speech in the audio file
+    // Detects speech in the audio file
     const [response] = await client.recognize(request);
     const transcription = response.results
       .map(result => result.alternatives[0].transcript)
       .join('\n');
     console.log(`Transcription: `, transcription);
-  } catch(err) {
-      console.error('ERROR:', err);
-  }     
+  } catch (err) {
+    console.error('ERROR:', err);
+  }
   // [END speech_transcribe_sync_gcs]
 }
 
@@ -173,9 +173,9 @@ async function syncRecognizeWords(
         console.log(`\t ${startSecs} secs - ${endSecs} secs`);
       });
     });
-  } catch(err) {
+  } catch (err) {
     console.error('ERROR:', err);
-  }  
+  }
   // [END speech_sync_recognize_words]
 }
 
@@ -220,15 +220,15 @@ async function asyncRecognize(
     // can wait for now, or get its result later.
     const [operation] = await client.longRunningRecognize(request);
 
-      // Get a Promise representation of the final result of the job
+    // Get a Promise representation of the final result of the job
     const [response] = await operation.promise();
     const transcription = response.results
       .map(result => result.alternatives[0].transcript)
       .join('\n');
     console.log(`Transcription: ${transcription}`);
-  } catch(err) {
+  } catch (err) {
     console.error('ERROR:', err);
-  }  
+  }
   // [END speech_transcribe_async]
 }
 
@@ -278,9 +278,9 @@ async function asyncRecognizeGCS(
       .map(result => result.alternatives[0].transcript)
       .join('\n');
     console.log(`Transcription: ${transcription}`);
-  } catch(err) {
+  } catch (err) {
     console.error('ERROR:', err);
-  }  
+  }
   // [END speech_transcribe_async_gcs]
 }
 
@@ -322,11 +322,11 @@ async function asyncRecognizeGCSWords(
   };
 
   try {
-  // Detects speech in the audio file. This creates a recognition job that you
-  // can wait for now, or get its result later.
+    // Detects speech in the audio file. This creates a recognition job that you
+    // can wait for now, or get its result later.
     const [operation] = await client.longRunningRecognize(request);
 
-      // Get a Promise representation of the final result of the job
+    // Get a Promise representation of the final result of the job
     const [{results}] = await operation.promise();
     results.forEach(result => {
       console.log(`Transcription: ${result.alternatives[0].transcript}`);
@@ -345,9 +345,9 @@ async function asyncRecognizeGCSWords(
         console.log(`\t ${startSecs} secs - ${endSecs} secs`);
       });
     });
-  } catch(err) {
+  } catch (err) {
     console.error('ERROR:', err);
-  }  
+  }
   // [END speech_transcribe_async_word_time_offsets_gcs]
 }
 
@@ -503,9 +503,9 @@ async function syncRecognizeModelSelection(
       .map(result => result.alternatives[0].transcript)
       .join('\n');
     console.log(`Transcription: `, transcription);
-  } catch(err) {
+  } catch (err) {
     console.error('ERROR:', err);
-  }  
+  }
   // [END speech_transcribe_model_selection]
 }
 
@@ -558,9 +558,9 @@ async function syncRecognizeModelSelectionGCS(
       .map(result => result.alternatives[0].transcript)
       .join('\n');
     console.log(`Transcription: `, transcription);
-  } catch(err) {
+  } catch (err) {
     console.error('ERROR:', err);
-  }  
+  }
   // [END speech_transcribe_model_selection_gcs]
 }
 
@@ -611,9 +611,9 @@ async function syncRecognizeWithAutoPunctuation(
       .map(result => result.alternatives[0].transcript)
       .join('\n');
     console.log(`Transcription: `, transcription);
-  } catch(err) {
+  } catch (err) {
     console.error('ERROR:', err);
-  }  
+  }
   // [END speech_transcribe_auto_punctuation]
 }
 
@@ -665,9 +665,9 @@ async function syncRecognizeWithEnhancedModel(
       const alternative = result.alternatives[0];
       console.log(alternative.transcript);
     });
-  } catch(err) {
+  } catch (err) {
     console.error('ERROR:', err);
-  }  
+  }
   // [END speech_transcribe_enhanced_model]
 }
 
