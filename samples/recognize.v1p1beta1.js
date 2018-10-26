@@ -73,8 +73,8 @@ async function syncRecognizeWithMetaData(
   };
 
   // Detects speech in the audio file
-  const [{results}] = await client.recognize(request);
-  results.forEach(result => {
+  const [response] = await client.recognize(request);
+  response.results.forEach(result => {
     const alternative = result.alternatives[0];
     console.log(alternative.transcript);
   });

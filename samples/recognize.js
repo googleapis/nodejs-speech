@@ -103,16 +103,12 @@ async function syncRecognizeGCS(
     audio: audio,
   };
 
-  try {
-    // Detects speech in the audio file
-    const [response] = await client.recognize(request);
-    const transcription = response.results
-      .map(result => result.alternatives[0].transcript)
-      .join('\n');
-    console.log(`Transcription: `, transcription);
-  } catch (err) {
-    console.error('ERROR:', err);
-  }
+  // Detects speech in the audio file
+  const [response] = await client.recognize(request);
+  const transcription = response.results
+    .map(result => result.alternatives[0].transcript)
+    .join('\n');
+  console.log(`Transcription: `, transcription);
   // [END speech_transcribe_sync_gcs]
 }
 
@@ -153,29 +149,25 @@ async function syncRecognizeWords(
     audio: audio,
   };
 
-  try {
-    // Detects speech in the audio file
-    const [{results}] = await client.recognize(request);
-    results.forEach(result => {
-      console.log(`Transcription: `, result.alternatives[0].transcript);
-      result.alternatives[0].words.forEach(wordInfo => {
-        // NOTE: If you have a time offset exceeding 2^32 seconds, use the
-        // wordInfo.{x}Time.seconds.high to calculate seconds.
-        const startSecs =
-          `${wordInfo.startTime.seconds}` +
-          `.` +
-          wordInfo.startTime.nanos / 100000000;
-        const endSecs =
-          `${wordInfo.endTime.seconds}` +
-          `.` +
-          wordInfo.endTime.nanos / 100000000;
-        console.log(`Word: ${wordInfo.word}`);
-        console.log(`\t ${startSecs} secs - ${endSecs} secs`);
-      });
+  // Detects speech in the audio file
+  const [response] = await client.recognize(request);
+  response.results.forEach(result => {
+    console.log(`Transcription: `, result.alternatives[0].transcript);
+    result.alternatives[0].words.forEach(wordInfo => {
+      // NOTE: If you have a time offset exceeding 2^32 seconds, use the
+      // wordInfo.{x}Time.seconds.high to calculate seconds.
+      const startSecs =
+        `${wordInfo.startTime.seconds}` +
+        `.` +
+        wordInfo.startTime.nanos / 100000000;
+      const endSecs =
+        `${wordInfo.endTime.seconds}` +
+        `.` +
+        wordInfo.endTime.nanos / 100000000;
+      console.log(`Word: ${wordInfo.word}`);
+      console.log(`\t ${startSecs} secs - ${endSecs} secs`);
     });
-  } catch (err) {
-    console.error('ERROR:', err);
-  }
+  });
   // [END speech_sync_recognize_words]
 }
 
@@ -215,20 +207,16 @@ async function asyncRecognize(
     audio: audio,
   };
 
-  try {
-    // Detects speech in the audio file. This creates a recognition job that you
-    // can wait for now, or get its result later.
-    const [operation] = await client.longRunningRecognize(request);
+  // Detects speech in the audio file. This creates a recognition job that you
+  // can wait for now, or get its result later.
+  const [operation] = await client.longRunningRecognize(request);
 
-    // Get a Promise representation of the final result of the job
-    const [response] = await operation.promise();
-    const transcription = response.results
-      .map(result => result.alternatives[0].transcript)
-      .join('\n');
-    console.log(`Transcription: ${transcription}`);
-  } catch (err) {
-    console.error('ERROR:', err);
-  }
+  // Get a Promise representation of the final result of the job
+  const [response] = await operation.promise();
+  const transcription = response.results
+    .map(result => result.alternatives[0].transcript)
+    .join('\n');
+  console.log(`Transcription: ${transcription}`);
   // [END speech_transcribe_async]
 }
 
@@ -268,19 +256,15 @@ async function asyncRecognizeGCS(
     audio: audio,
   };
 
-  try {
-    // Detects speech in the audio file. This creates a recognition job that you
-    // can wait for now, or get its result later.
-    const [operation] = await client.longRunningRecognize(request);
-    // Get a Promise representation of the final result of the job
-    const [response] = await operation.promise();
-    const transcription = response.results
-      .map(result => result.alternatives[0].transcript)
-      .join('\n');
-    console.log(`Transcription: ${transcription}`);
-  } catch (err) {
-    console.error('ERROR:', err);
-  }
+  // Detects speech in the audio file. This creates a recognition job that you
+  // can wait for now, or get its result later.
+  const [operation] = await client.longRunningRecognize(request);
+  // Get a Promise representation of the final result of the job
+  const [response] = await operation.promise();
+  const transcription = response.results
+    .map(result => result.alternatives[0].transcript)
+    .join('\n');
+  console.log(`Transcription: ${transcription}`);
   // [END speech_transcribe_async_gcs]
 }
 
@@ -326,8 +310,8 @@ async function asyncRecognizeGCSWords(
   const [operation] = await client.longRunningRecognize(request);
 
   // Get a Promise representation of the final result of the job
-  const [{results}] = await operation.promise();
-  results.forEach(result => {
+  const [response] = await operation.promise();
+  response.results.forEach(result => {
     console.log(`Transcription: ${result.alternatives[0].transcript}`);
     result.alternatives[0].words.forEach(wordInfo => {
       // NOTE: If you have a time offset exceeding 2^32 seconds, use the
@@ -643,8 +627,8 @@ async function syncRecognizeWithEnhancedModel(
   };
 
   // Detects speech in the audio file
-  const [{results}] = await client.recognize(request);
-  results.forEach(result => {
+  const [response] = await client.recognize(request);
+  response.results.forEach(result => {
     const alternative = result.alternatives[0];
     console.log(alternative.transcript);
   });
