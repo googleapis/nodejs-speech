@@ -76,7 +76,7 @@
     "test": "npm run cover"
   },
   "dependencies": {
-    "@google-cloud/common": "^0.25.0",
+    "@google-cloud/common": "^0.26.0",
     "google-gax": "^0.20.0",
     "lodash.merge": "^4.6.1",
     "protobufjs": "^6.8.6",
