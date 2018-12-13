@@ -14,7 +14,7 @@ The [Cloud Speech API](https://cloud.google.com/speech/docs) enables easy integr
 * [Samples](#samples)
   * [Speech Recognition](#speech-recognition)
   * [Speech Recognition v1p1beta1](#speech-recognition-v1p1beta1)
-  * [Speech to Text to DLP](#speech-to-text-to-DLP)
+  * [Speech To Text To DLP](#speech-to-text-to-dlp)
 
 ## Before you begin
 
@@ -110,53 +110,25 @@ For more information, see https://cloud.google.com/speech/docs
 [recognize.v1p1beta1_1_docs]: https://cloud.google.com/speech/docs
 [recognize.v1p1beta1_1_code]: recognize.v1p1beta1.js
 
+### Speech To Text To DLP
+
+View the [source code][speech-to-text-to-dlp_2_code].
+
+[![Open in Cloud Shell][shell_img]](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/googleapis/nodejs-speech&page=editor&open_in_editor=samples/speech-to-text-to-dlp.js,samples/README.md)
+
+__Usage:__ `node speech-to-text-to-dlp.js --help`
+
+```
+Original Transcription: hi my name is Sally Brown my email address is s Brown at gmail.com my home phone number is 415-532-5545
+ my Social Security number is 333-224-4445 a Visa credit card and that number is +462-443-211-2433 452 it expires on January 20-22 and the code on the back is 353
+Updated Email Transcription: hi my name is Sally Brown my email address is s Brown@gmail.com my home phone number is 415-532-5545
+ my Social Security number is 333-224-4445 a Visa credit card and that number is +462-443-211-2433 452 it expires on January 20-22 and the code on the back is 353
+hi my name is Sally Brown my email address is s *************** my home phone number is ************
+ my Social Security number is ************ a Visa credit card and that number is ***************** 452 it expires on January 20-22 and the code on the back is 353
+```
+
+[speech-to-text-to-dlp_2_docs]: https://cloud.google.com/speech/docs
+[speech-to-text-to-dlp_2_code]: speech-to-text-to-dlp.js
+
 [shell_img]: https://gstatic.com/cloudssh/images/open-btn.png
-[shell_img]: //gstatic.com/cloudssh/images/open-btn.png
-[shell_link]: https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/googleapis/nodejs-speech&page=editor&open_in_editor=samples/README.md
-
-### Speech Recognition betaFeatures
-
-View the [source code][betaFeatures_code].
-
-[![Open in Cloud Shell][shell_img]](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/googleapis/nodejs-speech&page=editor&open_in_editor=samples/betaFeatures.js,samples/README.md)
-
-__Usage:__ `node betaFeatures.js --help`
-
-```
-betaFeatures.js <command>
-
-Commands:
-  betaFeatures.js Diarization                 Isolate distinct speakers in an audio file
-  betaFeatures.js DiarizationGCS              Isolate distinct speakers in an audio file located in a Google Cloud
-                                              Storage bucket.
-  betaFeatures.js multiChannelTranscribe      Differentiates input by audio channel in local audio file.
-  betaFeatures.js multiChannelTranscribeGCS   Differentiates input by audio channe from GCS audio file.
-  betaFeatures.js multiLanguageTranscribe     Transcribes multiple languages from local audio file.
-  betaFeatures.js multiLanguageTranscribeGCS  Transcribes multiple languages from GCS audio file.
-  betaFeatures.js wordLevelConfidence         Detects word level confidence from local audio file.
-  betaFeatures.js wordLevelConfidenceGCS      Detects word level confidence from GCS audio file.
-
-Options:
-   --version         Show version number     [boolean]
-  --speechFile, -f                           [string]
-  --gcsUri, -u                               [string]
-  --help            Show help                [boolean]
-
-Examples:
-  node betaFeatures.js Diarization -f ./resources/commercial_mono.wav
-  node betaFeatures.js DiarizationGCS -u gs://cloud-samples-tests/speech/commercial_mono.wav
-  node betaFeatures.js multiChannelTranscribe -f ./resources/commercial_stereo.wav
-  node betaFeatures.js multiChannelTranscribeGCS -u gs://cloud-samples-tests/speech/commercial_stereo.wav
-  node betaFeatures.js multiLanguageTranscribe -f ./resources/multi.wav
-  node betaFeatures.js multiLanguageTranscribeGCS -u gs://nodejs-docs-samples/multi_mono.wav
-  node betaFeatures.js wordLevelConfidence -f ./resources/brooklyn.flac
-  node betaFeatures.js wordLevelConfidenceGCS -u gs://cloud-samples-tests/speech/brooklyn.flac
-
-For more information, see https://cloud.google.com/speech/docs
-```
-
-[betaFeatures_docs]: https://cloud.google.com/speech/docs
-[betaFeatures_code]: recognize.v1p1beta1.js
-
-[shell_img]: //gstatic.com/cloudssh/images/open-btn.png
 [shell_link]: https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/googleapis/nodejs-speech&page=editor&open_in_editor=samples/README.md

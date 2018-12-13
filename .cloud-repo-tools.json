@@ -18,6 +18,13 @@
       "file": "recognize.v1p1beta1.js",
       "docs_link": "https://cloud.google.com/speech/docs",
       "usage": "node recognize.v1p1beta1.js --help"
+    },
+    {
+      "id": "speech-to-text-to-dlp",
+      "name": "Speech To Text To DLP",
+      "file": "speech-to-text-to-dlp.js",
+      "docs_link": "https://cloud.google.com/speech/docs",
+      "usage": "node speech-to-text-to-dlp.js --help"
     }
   ]
 }
