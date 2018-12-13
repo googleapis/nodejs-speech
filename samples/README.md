@@ -14,6 +14,7 @@ The [Cloud Speech API](https://cloud.google.com/speech/docs) enables easy integr
 * [Samples](#samples)
   * [Speech Recognition](#speech-recognition)
   * [Speech Recognition v1p1beta1](#speech-recognition-v1p1beta1)
+  * [Speech to Text to DLP](#speech-to-text-to-DLP)
 
 ## Before you begin
 
@@ -133,7 +134,7 @@ Commands:
   betaFeatures.js multiLanguageTranscribe     Transcribes multiple languages from local audio file.
   betaFeatures.js multiLanguageTranscribeGCS  Transcribes multiple languages from GCS audio file.
   betaFeatures.js wordLevelConfidence         Detects word level confidence from local audio file.
-  betaFeatures.js wordLevelConfidenceGCS      Detects word level confidence from GCS audio file. 
+  betaFeatures.js wordLevelConfidenceGCS      Detects word level confidence from GCS audio file.
 
 Options:
    --version         Show version number     [boolean]
