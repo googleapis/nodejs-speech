@@ -15,7 +15,7 @@
 
 'use strict';
 //customize for each project name
-const callingProjectId = "speech-to-text-to-dlp-api";
+const callingProjectId = "replace with PROJECT_ID";
 
 // Imports the Google Cloud client library and the Google Cloud Data Loss Prevention Library
 const speech = require('@google-cloud/speech');
@@ -26,12 +26,7 @@ const fs = require('fs');
 async function transcribeSpeech() {
 
   // Creates a client
-  const speechClient = new speech.SpeechClient(
-    //comment out these details when deploying on cloud
-    {
-      keyFilename: '/Users/galvink/Downloads/speech-to-text-to-dlp-api-d471af4c0943.json',
-    }
-	);
+  const speechClient = new speech.SpeechClient();
 
   // The name of the audio file to transcribe
   const fileName = './resources/sallybrown.flac';
@@ -50,6 +45,7 @@ async function transcribeSpeech() {
     encoding: encoding,
     sampleRateHertz: sampleRateHertz,
     languageCode: languageCode,
+    enableAutomaticPunctuation: true,
   };
   const speechRequest = {
     audio: audio,
@@ -63,13 +59,13 @@ async function transcribeSpeech() {
     .join('\n');
   console.log(`Original Transcription: ${transcription}`);
   // Check transcription for email address, format manually before sending to DLP api
+  // Currently social security numbers and credit card numbers are interpreted as phone numbers
   const updatedTranscription = updateEmail(transcription);
   deidentifyText(updatedTranscription);
 }
 
 function updateEmail(transcription) {
-
-  //regex string replacement for catching *some* email addresses, and formatting them for DLP
+  //regex string replacement for catching *some* email addresses using " at " instead of "@", and then formatting them for the DLP API
   let emailRegex = /([A-Za-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[A-Za-z0-9!#$%&'*+\/=?^_`{|}~-]+)*)(\sat\s+)((?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9]))/g;
   transcription = transcription.replace(emailRegex, "$1@$3");
   console.log(`Updated Email Transcription: ${transcription}`);
@@ -78,12 +74,7 @@ function updateEmail(transcription) {
 
 async function deidentifyText(transcription) {
   // Creates a DLP Service Client
-  const dlpClient = new DLP.DlpServiceClient(
-    //comment out these details when deploying on cloud
-    {
-      keyFilename: '/Users/galvink/Downloads/speech-to-text-to-dlp-api-d471af4c0943.json',
-    }
-  );
+  const dlpClient = new DLP.DlpServiceClient();
 
   // Construct DLP request
   const item = { value: transcription };
