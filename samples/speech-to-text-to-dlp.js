@@ -15,7 +15,7 @@
 
 'use strict';
 //customize for each project name
-const callingProjectId = "speech-samples-galvink";
+const callingProjectId = 'speech-samples-galvink';
 
 // Imports the Google Cloud client library and the Google Cloud Data Loss Prevention Library
 const speech = require('@google-cloud/speech');
@@ -24,7 +24,6 @@ const DLP = require('@google-cloud/dlp');
 const fs = require('fs');
 
 async function transcribeSpeech() {
-
   // Creates a client
   const speechClient = new speech.SpeechClient();
 
@@ -67,8 +66,8 @@ async function transcribeSpeech() {
 
 function updateEmail(transcription) {
   //regex string replacement for catching *some* email addresses using " at " instead of "@", and then formatting them for the DLP API
-  let emailRegex = /([A-Za-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[A-Za-z0-9!#$%&'*+\/=?^_`{|}~-]+)*)(\sat\s+)((?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9]))/g;
-  transcription = transcription.replace(emailRegex, "$1@$3");
+  const emailRegex = /([A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+)*)(\sat\s+)((?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9]))/g;
+  transcription = transcription.replace(emailRegex, '$1@$3');
   console.log(`Email addresses reformatted: ${transcription}`);
   return transcription;
 }
@@ -78,45 +77,47 @@ async function deidentifyText(transcription) {
   const dlpClient = new DLP.DlpServiceClient();
 
   // Construct DLP request
-  const item = { value: transcription };
+  const item = {value: transcription};
 
   const infoTypes = [
-    { name: 'PHONE_NUMBER' },
-    { name: 'EMAIL_ADDRESS' },
-    { name: 'CREDIT_CARD_NUMBER' },
-    { name: 'US_SOCIAL_SECURITY_NUMBER'},
+    {name: 'PHONE_NUMBER'},
+    {name: 'EMAIL_ADDRESS'},
+    {name: 'CREDIT_CARD_NUMBER'},
+    {name: 'US_SOCIAL_SECURITY_NUMBER'},
   ];
 
   const primitiveTransformation = {
     characterMaskConfig: {
-      maskingCharacter: '*'
-    }
+      maskingCharacter: '*',
+    },
   };
 
   const transformations = [
     {
       infoTypes: infoTypes,
       primitiveTransformation: primitiveTransformation,
-    }
+    },
   ];
 
-  const infoTypeTransformations = { transformations: transformations };
+  const infoTypeTransformations = {transformations: transformations};
 
-  const dlpConfig = { infoTypeTransformations: infoTypeTransformations };
+  const dlpConfig = {infoTypeTransformations: infoTypeTransformations};
 
-  const inspectConfig = { infoTypes: infoTypes };
+  const inspectConfig = {infoTypes: infoTypes};
 
   const dlpRequest = {
     parent: dlpClient.projectPath(callingProjectId),
     deidentifyConfig: dlpConfig,
     inspectConfig: inspectConfig,
-    item: item
+    item: item,
   };
 
   try {
     const [response] = await dlpClient.deidentifyContent(dlpRequest);
     const deidentifiedItem = response.item;
-    console.log(`Final Result with sensitive content redacted: ${deidentifiedItem.value}`);
+    console.log(
+      `Final Result with sensitive content redacted: ${deidentifiedItem.value}`
+    );
   } catch (err) {
     console.log(`Error in deidentifyWithMask: ${err.message || err}`);
   }
