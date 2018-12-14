@@ -57,7 +57,7 @@ async function transcribeSpeech() {
   const transcription = speechResponse.results
     .map(result => result.alternatives[0].transcript)
     .join('\n');
-  console.log(`Original Transcription: ${transcription}`);
+  console.log(`Original transcript: ${transcription}`);
   // Check transcription for email address, format manually before sending to DLP api
   // Currently social security numbers and credit card numbers are interpreted as phone numbers
   const updatedTranscription = updateEmail(transcription);
@@ -68,7 +68,7 @@ function updateEmail(transcription) {
   //regex string replacement for catching *some* email addresses using " at " instead of "@", and then formatting them for the DLP API
   let emailRegex = /([A-Za-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[A-Za-z0-9!#$%&'*+\/=?^_`{|}~-]+)*)(\sat\s+)((?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9]))/g;
   transcription = transcription.replace(emailRegex, "$1@$3");
-  console.log(`Updated Email Transcription: ${transcription}`);
+  console.log(`Email addresses reformatted: ${transcription}`);
   return transcription;
 }
 
@@ -115,7 +115,7 @@ async function deidentifyText(transcription) {
   try {
     const [response] = await dlpClient.deidentifyContent(dlpRequest);
     const deidentifiedItem = response.item;
-    console.log(deidentifiedItem.value);
+    console.log(`Final Result with sensitive content redacted: ${deidentifiedItem.value}`);
   } catch (err) {
     console.log(`Error in deidentifyWithMask: ${err.message || err}`);
   }

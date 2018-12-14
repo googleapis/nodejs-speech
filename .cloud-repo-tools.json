@@ -25,6 +25,13 @@
       "file": "speech-to-text-to-dlp.js",
       "docs_link": "https://cloud.google.com/speech/docs",
       "usage": "node speech-to-text-to-dlp.js --help"
+    },
+    {
+      "id": "betaFeatures",
+      "name": "Beta Features",
+      "file": "betaFeatures.js",
+      "docs_link": "https://cloud.google.com/speech/docs",
+      "usage": "node betaFeatures.js --help"
     }
   ]
 }
