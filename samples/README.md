@@ -120,12 +120,11 @@ View the [source code][speech-to-text-to-dlp_2_code].
 __Usage:__ `node speech-to-text-to-dlp.js --help`
 
 ```
-Original Transcription: hi my name is Sally Brown my email address is s Brown at gmail.com my home phone number is 415-532-5545
- my Social Security number is 333-224-4445 a Visa credit card and that number is +462-443-211-2433 452 it expires on January 20-22 and the code on the back is 353
-Updated Email Transcription: hi my name is Sally Brown my email address is s Brown@gmail.com my home phone number is 415-532-5545
- my Social Security number is 333-224-4445 a Visa credit card and that number is +462-443-211-2433 452 it expires on January 20-22 and the code on the back is 353
-hi my name is Sally Brown my email address is s *************** my home phone number is ************
- my Social Security number is ************ a Visa credit card and that number is ***************** 452 it expires on January 20-22 and the code on the back is 353
+Original transcript: Hi, my name is Sally Brown. My email address is s Brown at gmail.com. My home phone number is 415-532-5545.
+ My social security number is 333-224-4445 a Visa credit card. And that number is +462-443-211-2433. 452 it expires on January 20-22. And the code on the back is 353.
+Email addresses reformatted: Hi, my name is Sally Brown. My email address is s Brown@gmail.com. My home phone number is 415-532-5545.
+ My social security number is 333-224-4445 a Visa credit card. And that number is +462-443-211-2433. 452 it expires on January 20-22. And the code on the back is 353.
+Error in deidentifyWithMask: 3 INVALID_ARGUMENT: Request did not contain project id. Parent should be set in the format of `projects/[YOUR_PROJECT_ID]` but we got `projects/replace with PROJECT_ID`.
 ```
 
 [speech-to-text-to-dlp_2_docs]: https://cloud.google.com/speech/docs

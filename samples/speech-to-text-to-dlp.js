@@ -58,7 +58,8 @@ async function transcribeSpeech() {
     .map(result => result.alternatives[0].transcript)
     .join('\n');
   console.log(`Original transcript: ${transcription}`);
-  // Check transcription for email address, format manually before sending to DLP api
+  // Check transcription for email address, since speech-to-text returns " at " instead of "@"
+  // Format manually before sending to DLP api
   // Currently social security numbers and credit card numbers are interpreted as phone numbers
   const updatedTranscription = updateEmail(transcription);
   deidentifyText(updatedTranscription);
