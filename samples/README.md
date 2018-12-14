@@ -14,7 +14,8 @@ The [Cloud Speech API](https://cloud.google.com/speech/docs) enables easy integr
 * [Samples](#samples)
   * [Speech Recognition](#speech-recognition)
   * [Speech Recognition v1p1beta1](#speech-recognition-v1p1beta1)
-  * [Speech to Text to DLP](#speech-to-text-to-DLP)
+  * [Speech To Text To DLP](#speech-to-text-to-dlp)
+  * [Beta Features](#beta-features)
 
 ## Before you begin
 
@@ -110,70 +111,29 @@ For more information, see https://cloud.google.com/speech/docs
 [recognize.v1p1beta1_1_docs]: https://cloud.google.com/speech/docs
 [recognize.v1p1beta1_1_code]: recognize.v1p1beta1.js
 
-[shell_img]: https://gstatic.com/cloudssh/images/open-btn.png
-[shell_img]: //gstatic.com/cloudssh/images/open-btn.png
-[shell_link]: https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/googleapis/nodejs-speech&page=editor&open_in_editor=samples/README.md
-
 ### Speech To Text To DLP
 
-View the [source code][recognize_0_code].
+View the [source code][speech-to-text-to-dlp_2_code].
 
-[![Open in Cloud Shell][shell_img]](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/googleapis/nodejs-speech&page=editor&open_in_editor=samples/recognize.js,samples/README.md)
+[![Open in Cloud Shell][shell_img]](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/googleapis/nodejs-speech&page=editor&open_in_editor=samples/speech-to-text-to-dlp.js,samples/README.md)
 
-__Usage:__ `node recognize.js --help`
+__Usage:__ `node speech-to-text-to-dlp.js --help`
 
 ```
-recognize.js <command>
-
-Commands:
-  recognize.js sync <filename>                   Detects speech in a local audio file.
-  recognize.js sync-gcs <gcsUri>                 Detects speech in an audio file located in a Google Cloud Storage
-                                                 bucket.
-  recognize.js sync-words <filename>             Detects speech in a local audio file with word time offset.
-  recognize.js async <filename>                  Creates a job to detect speech in a local audio file, and waits for the
-                                                 job to complete.
-  recognize.js async-gcs <gcsUri>                Creates a job to detect speech in an audio file located in a Google
-                                                 Cloud Storage bucket, and waits for the job to complete.
-  recognize.js async-gcs-words <gcsUri>          Creates a job to detect speech  with word time offset in an audio file
-                                                 located in a Google Cloud Storage bucket, and waits for the job to
-                                                 complete.
-  recognize.js stream <filename>                 Detects speech in a local audio file by streaming it to the Speech API.
-  recognize.js listen                            Detects speech in a microphone input stream. This command requires that
-                                                 you have SoX installed and available in your $PATH. See
-                                                 https://www.npmjs.com/package/node-record-lpcm16#dependencies
-  recognize.js sync-model <filename> <model>     Detects speech in a local audio file using provided model.
-  recognize.js sync-model-gcs <gcsUri> <model>   Detects speech in an audio file located in a Google Cloud Storage
-                                                 bucket using provided model.
-  recognize.js sync-auto-punctuation <filename>  Detects speech in a local audio file with auto punctuation.
-  recognize.js sync-enhanced-model <filename>    Detects speech in a local audio file using an enhanced model.
-
-Options:
-  --version              Show version number                                                                   [boolean]
-  --encoding, -e                                                                          [string] [default: "LINEAR16"]
-  --sampleRateHertz, -r                                                                        [number] [default: 16000]
-  --languageCode, -l                                                                         [string] [default: "en-US"]
-  --help                 Show help                                                                             [boolean]
-
-Examples:
-  node recognize.js sync ./resources/audio.raw -e LINEAR16 -r 16000
-  node recognize.js async-gcs gs://gcs-test-data/vr.flac -e FLAC -r 16000
-  node recognize.js stream ./resources/audio.raw  -e LINEAR16 -r 16000
-  node recognize.js listen
-  node recognize.js sync-model ./resources/Google_Gnome.wav video -e LINEAR16 -r 16000
-  node recognize.js sync-model-gcs gs://gcs-test-data/Google_Gnome.wav phone_call -e LINEAR16 -r 16000
-  node recognize.js sync-auto-punctuation ./resources/commercial_mono.wav
-  node recognize.js sync-enhanced-model ./resources/commercial_mono.wav
-
-For more information, see https://cloud.google.com/speech/docs
+Original transcript: Hi, my name is Sally Brown. My email address is s Brown at gmail.com. My home phone number is 415-532-5545.
+ My social security number is 333-224-4445 a Visa credit card. And that number is +462-443-211-2433. 452 it expires on January 20-22. And the code on the back is 353.
+Email addresses reformatted: Hi, my name is Sally Brown. My email address is s Brown@gmail.com. My home phone number is 415-532-5545.
+ My social security number is 333-224-4445 a Visa credit card. And that number is +462-443-211-2433. 452 it expires on January 20-22. And the code on the back is 353.
+Final Result with sensitive content redacted: Hi, my name is Sally Brown. My email address is s ***************. My home phone number is ************.
+ My social security number is ************ a Visa credit card. And that number is *****************. 452 it expires on January 20-22. And the code on the back is 353.
 ```
 
-[recognize_0_docs]: https://cloud.google.com/speech/docs
-[recognize_0_code]: recognize.js
+[speech-to-text-to-dlp_2_docs]: https://cloud.google.com/speech/docs
+[speech-to-text-to-dlp_2_code]: speech-to-text-to-dlp.js
 
+### Beta Features
 
-### Speech Recognition betaFeatures
-
-View the [source code][betaFeatures_code].
+View the [source code][betaFeatures_3_code].
 
 [![Open in Cloud Shell][shell_img]](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/googleapis/nodejs-speech&page=editor&open_in_editor=samples/betaFeatures.js,samples/README.md)
 
@@ -187,17 +147,18 @@ Commands:
   betaFeatures.js DiarizationGCS              Isolate distinct speakers in an audio file located in a Google Cloud
                                               Storage bucket.
   betaFeatures.js multiChannelTranscribe      Differentiates input by audio channel in local audio file.
-  betaFeatures.js multiChannelTranscribeGCS   Differentiates input by audio channe from GCS audio file.
+  betaFeatures.js multiChannelTranscribeGCS   Differentiates input by audio channel in an audio file located in a Google
+                                              Cloud Storage bucket.
   betaFeatures.js multiLanguageTranscribe     Transcribes multiple languages from local audio file.
   betaFeatures.js multiLanguageTranscribeGCS  Transcribes multiple languages from GCS audio file.
   betaFeatures.js wordLevelConfidence         Detects word level confidence from local audio file.
   betaFeatures.js wordLevelConfidenceGCS      Detects word level confidence from GCS audio file.
 
 Options:
-   --version         Show version number     [boolean]
-  --speechFile, -f                           [string]
-  --gcsUri, -u                               [string]
-  --help            Show help                [boolean]
+  --version         Show version number                                                                        [boolean]
+  --speechFile, -f                                                                                              [string]
+  --gcsUri, -u                                                                                                  [string]
+  --help            Show help                                                                                  [boolean]
 
 Examples:
   node betaFeatures.js Diarization -f ./resources/commercial_mono.wav
@@ -212,8 +173,8 @@ Examples:
 For more information, see https://cloud.google.com/speech/docs
 ```
 
-[betaFeatures_docs]: https://cloud.google.com/speech/docs
-[betaFeatures_code]: recognize.v1p1beta1.js
+[betaFeatures_3_docs]: https://cloud.google.com/speech/docs
+[betaFeatures_3_code]: betaFeatures.js
 
-[shell_img]: //gstatic.com/cloudssh/images/open-btn.png
+[shell_img]: https://gstatic.com/cloudssh/images/open-btn.png
 [shell_link]: https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/googleapis/nodejs-speech&page=editor&open_in_editor=samples/README.md
