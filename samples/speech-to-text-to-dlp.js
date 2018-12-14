@@ -15,7 +15,7 @@
 
 'use strict';
 //customize for each project name
-const callingProjectId = "replace with PROJECT_ID";
+const callingProjectId = "speech-samples-galvink";
 
 // Imports the Google Cloud client library and the Google Cloud Data Loss Prevention Library
 const speech = require('@google-cloud/speech');
