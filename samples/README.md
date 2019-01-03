@@ -123,18 +123,21 @@ __Usage:__ `node speech-to-text-to-dlp.js --help`
 speech-to-text-to-dlp.js <command>
 
 Commands:
-  speech-to-text-to-dlp.js deidentify <projectID> <filename>  Replaces sensitive information detected in local audio
-                                                              file. Replaces with asterisks.
+  speech-to-text-to-dlp.js deidentify  Replaces sensitive information detected in local audio file. Replaces with
+                                       asterisks.
 
 Options:
   --version              Show version number                                                                   [boolean]
+  --filename, -f                                                       [string] [default: "./resources/sallybrown.flac"]
+  --projectID, -p                                                                                               [string]
   --encoding, -e                                                                              [string] [default: "FLAC"]
   --sampleRateHertz, -r                                                                        [number] [default: 16000]
   --languageCode, -l                                                                         [string] [default: "en-US"]
   --help                 Show help                                                                             [boolean]
 
 Examples:
-  node speech-to-text-to-dlp.js deidentify speech-samples-galvink ./resources/sallybrown.flac
+  node speech-to-text-to-dlp.js deidentify -p <ProjectID>
+  node speech-to-text-to-dlp.js deidentify -p <ProjectID> -f ./resources/sallybrown.flac
 
 For more information, see https://cloud.google.com/speech/docs
 ```
