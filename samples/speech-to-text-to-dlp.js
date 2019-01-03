@@ -96,7 +96,7 @@ function deidentify(
     ];
 
     const primitiveTransformation = {
-      "replaceWithInfoTypeConfig":{
+      replaceWithInfoTypeConfig:{
       }
     };
 
