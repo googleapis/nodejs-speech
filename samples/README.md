@@ -123,8 +123,7 @@ __Usage:__ `node speech-to-text-to-dlp.js --help`
 speech-to-text-to-dlp.js <command>
 
 Commands:
-  speech-to-text-to-dlp.js deidentify  Replaces sensitive information detected in local audio file. Replaces with
-                                       asterisks.
+  speech-to-text-to-dlp.js deidentify  Replaces sensitive information transcribed in local speech file with [INFO TYPE].
 
 Options:
   --version              Show version number                                                                   [boolean]

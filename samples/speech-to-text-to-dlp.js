@@ -139,7 +139,7 @@ require(`yargs`) // eslint-disable-line
   .demand(1)
   .command(
     `deidentify`,
-    `Replaces sensitive information detected in local audio file. Replaces with asterisks.`,
+    `Replaces sensitive information transcribed in local speech file with [INFO TYPE].`,
     {},
     opts =>
       deidentify(
