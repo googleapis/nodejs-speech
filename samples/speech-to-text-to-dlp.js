@@ -138,7 +138,7 @@ function deidentify(
 require(`yargs`) // eslint-disable-line
   .demand(1)
   .command(
-    `deidentify <projectID> <filename>`,
+    `deidentify`,
     `Replaces sensitive information detected in local audio file. Replaces with asterisks.`,
     {},
     opts =>
@@ -151,6 +151,19 @@ require(`yargs`) // eslint-disable-line
       )
   )
   .options({
+    filename: {
+      alias: 'f',
+      default: './resources/sallybrown.flac',
+      global: true,
+      requiresArg: true,
+      type: 'string',
+    },
+    projectID: {
+      alias: 'p',
+      global: true,
+      requiresArg: true,
+      type: 'string',
+    },
     encoding: {
       alias: 'e',
       default: 'FLAC',
@@ -173,7 +186,8 @@ require(`yargs`) // eslint-disable-line
       type: 'string',
     },
   })
-  .example(`node $0 deidentify <ProjectID> ./resources/sallybrown.flac`)
+  .example(`node $0 deidentify -p <ProjectID>`)
+  .example(`node $0 deidentify -p <ProjectID> -f ./resources/sallybrown.flac`)
   .wrap(120)
   .recommendCommands()
   .epilogue(`For more information, see https://cloud.google.com/speech/docs`)
