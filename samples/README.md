@@ -120,12 +120,23 @@ View the [source code][speech-to-text-to-dlp_2_code].
 __Usage:__ `node speech-to-text-to-dlp.js --help`
 
 ```
-Original transcript: Hi, my name is Sally Brown. My email address is s Brown at gmail.com. My home phone number is 415-532-5545.
- My social security number is 333-224-4445 a Visa credit card. And that number is +462-443-211-2433. 452 it expires on January 20-22. And the code on the back is 353.
-Email addresses reformatted: Hi, my name is Sally Brown. My email address is s Brown@gmail.com. My home phone number is 415-532-5545.
- My social security number is 333-224-4445 a Visa credit card. And that number is +462-443-211-2433. 452 it expires on January 20-22. And the code on the back is 353.
-Final Result with sensitive content redacted: Hi, my name is Sally Brown. My email address is s ***************. My home phone number is ************.
- My social security number is ************ a Visa credit card. And that number is *****************. 452 it expires on January 20-22. And the code on the back is 353.
+speech-to-text-to-dlp.js <command>
+
+Commands:
+  speech-to-text-to-dlp.js deidentify <projectID> <filename>  Replaces sensitive information detected in local audio
+                                                              file. Replaces with asterisks.
+
+Options:
+  --version              Show version number                                                                   [boolean]
+  --encoding, -e                                                                              [string] [default: "FLAC"]
+  --sampleRateHertz, -r                                                                        [number] [default: 16000]
+  --languageCode, -l                                                                         [string] [default: "en-US"]
+  --help                 Show help                                                                             [boolean]
+
+Examples:
+  node speech-to-text-to-dlp.js deidentify speech-samples-galvink ./resources/sallybrown.flac
+
+For more information, see https://cloud.google.com/speech/docs
 ```
 
 [speech-to-text-to-dlp_2_docs]: https://cloud.google.com/speech/docs
