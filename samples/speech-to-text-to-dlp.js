@@ -14,8 +14,6 @@
  */
 
 'use strict';
-//customize for each project name
-//const projectID = 'speech-samples-galvink';
 
 function deidentify(
   projectID,
@@ -35,8 +33,9 @@ function deidentify(
     const speechClient = new speech.SpeechClient();
 
     /**
-    * TODO(developer): Uncomment the following lines before running the sample.
-    */
+     *  TODO(developer): Uncomment the following lines before running the sample.
+     */
+
     //const filename = './resources/sallybrown.flac';
     //const encoding = 'FLAC';
     //const sampleRateHertz = 16000;
@@ -96,8 +95,7 @@ function deidentify(
     ];
 
     const primitiveTransformation = {
-      replaceWithInfoTypeConfig:{
-      }
+      replaceWithInfoTypeConfig: {},
     };
 
     const transformations = [
@@ -123,9 +121,10 @@ function deidentify(
     try {
       const [response] = await dlpClient.deidentifyContent(dlpRequest);
       const deidentifiedItem = response.item;
-      console.log(
-        `Final Result with sensitive content redacted: ${deidentifiedItem.value}`
-      );
+      console.log(`Final Result with sensitive content redacted: ${
+        deidentifiedItem.value
+      }
+      `);
     } catch (err) {
       console.log(`Error in deidentifyWithMask: ${err.message || err}`);
     }
