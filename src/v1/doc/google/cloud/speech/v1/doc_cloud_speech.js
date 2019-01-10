@@ -235,7 +235,7 @@ const StreamingRecognitionConfig = {
  *   recognized using the standard version of the specified model.
  *
  *   Enhanced speech models require that you opt-in to data logging using
- *   instructions in the [documentation](https://cloud.google.com/speech-to-text/enable-data-logging).
+ *   instructions in the [documentation](https://cloud.google.com/speech-to-text/docs/enable-data-logging).
  *   If you set `use_enhanced` to true and you have not enabled audio logging,
  *   then you will receive an error.
  *
