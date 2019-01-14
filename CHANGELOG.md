@@ -4,6 +4,16 @@
 
 [1]: https://www.npmjs.com/package/@google-cloud/speech?activeTab=versions
 
+## v2.2.0
+
+01-14-2019 11:07 PST
+
+### New Features
+- feat: Multi-channel recognition
+
+### Documentation
+- docs: check broken links in generated docs ([#268](https://github.com/googleapis/nodejs-speech/pull/268))
+
 ## v2.1.2
 
 01-08-2019 14:18 PST
