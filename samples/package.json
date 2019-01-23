@@ -13,6 +13,8 @@
   "dependencies": {
     "@google-cloud/speech": "^2.2.0",
     "@google-cloud/storage": "^2.0.0",
+    "ffprobe": "^1.1.0",
+    "ffprobe-static": "^3.0.0",
     "node-record-lpcm16": "^0.3.0",
     "yargs": "^12.0.0"
   },
