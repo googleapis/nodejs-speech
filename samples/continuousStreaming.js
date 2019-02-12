@@ -97,7 +97,94 @@ function continuousMicrophoneStream(encoding, sampleRateHertz, languageCode) {
   startStream();
 }
 
-var argv = require(`yargs`)
+function continuousFileStream(
+  filename,
+  encoding,
+  sampleRateHertz,
+  languageCode
+) {
+
+  const fs = require('fs');
+
+  // Imports the Google Cloud client library
+  const speech = require('@google-cloud/speech');
+
+  // Create a client
+  const client = new speech.SpeechClient();
+
+  const request = {
+    config: {
+      encoding: encoding,
+      sampleRateHertz: sampleRateHertz,
+      languageCode: languageCode,
+    },
+    interimResults: false, // If you want interim results, set this to true
+  };
+
+  const STREAMING_LIMIT = 55000;
+
+  var recognizeStream = null;
+
+  function startStream() {
+    // Initiate (Reinitiate) a recognize stream
+    recognizeStream = client
+      .streamingRecognize(request)
+      .on('error', console.error)
+      .on('data', data => {
+        console.log(
+          `${data.results[0].alternatives[0].transcript}`
+        );
+      });
+    var timeoutID;
+    var fileEnd = false;
+    // Stream an audio file from disk to the Speech API, e.g. "./resources/audio.raw"
+    var fileStream = fs.createReadStream(filename).pipe(recognizeStream);
+
+    fileStream.on('end', () => {
+      recognizeStream = null;
+      fileEnd = true;
+      clearTimeout(timeoutID);
+      console.log("Transcription Complete.")
+    })
+
+    if(!fileEnd){
+      //Stop the stream before reinitializing it, after streaming_limit expires
+      timeoutID = setTimeout(stopStream, STREAMING_LIMIT);
+    }
+    console.log('Transcribing...');
+  }
+  function stopStream() {
+    recognizeStream = null;
+    startStream();
+  }
+  startStream();
+}
+
+require(`yargs`)
+  .command(
+    `continuous-mic-stream`,
+    `Continuously stream audio from microphone, by resetting the API request every 55 seconds.`,
+    {},
+    opts =>
+      continuousMicrophoneStream(
+        opts.encoding,
+        opts.sampleRateHertz,
+        opts.languageCode
+    )
+  )
+  .command(
+    `continuous-file-stream <filename>`,
+    `Continuously stream very long audio file, by resetting the API request every 55 seconds.`,
+    {},
+    opts =>
+      continuousFileStream(
+        opts.filename,
+        opts.encoding,
+        opts.sampleRateHertz,
+        opts.languageCode
+    )
+
+  )
   .options({
     encoding: {
       alias: 'e',
@@ -121,10 +208,10 @@ var argv = require(`yargs`)
       type: 'string',
     },
   })
-  .example(`node $0`)
+  .example(`node $0 continuous-mic-stream`)
+  .example(`node $0 continuous-file-stream ./resources/Google_Gnome.wav`)
   .wrap(120)
+  .recommendCommands()
   .epilogue(`For more information, see https://cloud.google.com/speech/docs`)
   .help()
   .strict().argv;
-
-continuousMicrophoneStream(argv.encoding, argv.sampleRateHertz, argv.languageCode);
