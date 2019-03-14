@@ -21,7 +21,8 @@ const execa = require('execa');
 
 const cmd = 'node betaFeatures.js';
 const cwd = path.join(__dirname, `..`);
-const exec = async cmd => (await execa.shell(cmd, {cwd})).stdout;
+const stdio = 'inherit';
+const exec = async cmd => (await execa.shell(cmd, {cwd, stdio})).stdout;
 
 //audio file paths
 const resourcePath = path.join(__dirname, '..', 'resources');
