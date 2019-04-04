@@ -19,14 +19,14 @@
 
 const path = require('path');
 const {assert} = require('chai');
-const execa = require('execa');
+const {execSync} = require('child_process');
 
 const cwd = path.join(__dirname, '..');
 const text = 'how old is the Brooklyn Bridge';
 
 describe('Quickstart', () => {
   it('should run quickstart', async () => {
-    const {stdout} = await execa.shell('node quickstart.js', {cwd});
+    const stdout = execSync('node quickstart.js', {cwd});
     assert.match(stdout, new RegExp(`Transcription: ${text}`));
   });
 });

@@ -19,7 +19,7 @@ const path = require('path');
 const {Storage} = require('@google-cloud/storage');
 const {assert} = require('chai');
 const uuid = require('uuid');
-const execa = require('execa');
+const {execSync} = require('child_process');
 
 const storage = new Storage();
 const bucketName = `nodejs-docs-samples-test-${uuid.v4()}`;
@@ -56,35 +56,35 @@ describe('Recognize', () => {
   });
 
   it('should run sync recognize', async () => {
-    const output = await exec(`${cmd} sync ${filepath}`);
+    const output = execSync(`${cmd} sync ${filepath}`);
     assert.match(output, new RegExp(`Transcription:  ${text}`));
   });
 
   it('should run sync recognize on a GCS file', async () => {
-    const output = await exec(`${cmd} sync-gcs gs://${bucketName}/${filename}`);
+    const output = execSync(`${cmd} sync-gcs gs://${bucketName}/${filename}`);
     assert.match(output, new RegExp(`Transcription:  ${text}`));
   });
 
   it('should run sync recognize with word time offset', async () => {
-    const output = await exec(`${cmd} sync-words ${filepath}`);
+    const output = execSync(`${cmd} sync-words ${filepath}`);
     assert.match(output, new RegExp(`Transcription:  ${text}`));
     assert.match(output, new RegExp('\\d+\\.\\d+ secs - \\d+\\.\\d+ secs'));
   });
 
   it('should run async recognize on a local file', async () => {
-    const output = await exec(`${cmd} async ${filepath}`);
+    const output = execSync(`${cmd} async ${filepath}`);
     assert.match(output, new RegExp(`Transcription: ${text}`));
   });
 
   it('should run async recognize on a GCS file', async () => {
-    const output = await exec(
+    const output = execSync(
       `${cmd} async-gcs gs://${bucketName}/${filename}`
     );
     assert.match(output, new RegExp(`Transcription: ${text}`));
   });
 
   it('should run async recognize on a GCS file with word time offset', async () => {
-    const output = await exec(
+    const output = execSync(
       `${cmd} async-gcs-words gs://${bucketName}/${filename}`
     );
     assert.match(output, new RegExp(`Transcription: ${text}`));
@@ -93,20 +93,20 @@ describe('Recognize', () => {
   });
 
   it('should run streaming recognize', async () => {
-    const output = await exec(`${cmd} stream ${filepath}`);
+    const output = execSync(`${cmd} stream ${filepath}`);
     assert.match(output, new RegExp(`Transcription: ${text}`));
   });
 
   it('should run sync recognize with model selection', async () => {
     const model = 'video';
-    const output = await exec(`${cmd} sync-model ${filepath1} ${model}`);
+    const output = execSync(`${cmd} sync-model ${filepath1} ${model}`);
     assert.match(output, /Transcription:/);
     assert.match(output, new RegExp(text1));
   });
 
   it('should run sync recognize on a GCS file with model selection', async () => {
     const model = 'video';
-    const output = await exec(
+    const output = execSync(
       `${cmd} sync-model-gcs gs://${bucketName}/${filename1} ${model}`
     );
     assert.match(output, /Transcription:/);
@@ -114,22 +114,22 @@ describe('Recognize', () => {
   });
 
   it('should run sync recognize with auto punctuation', async () => {
-    const output = await exec(`${cmd} sync-auto-punctuation ${filepath2}`);
+    const output = execSync(`${cmd} sync-auto-punctuation ${filepath2}`);
     assert.match(output, new RegExp(text2));
   });
 
   it('should run sync recognize with enhanced model', async () => {
-    const output = await exec(`${cmd} sync-enhanced-model ${filepath2}`);
+    const output = execSync(`${cmd} sync-enhanced-model ${filepath2}`);
     assert.match(output, new RegExp(text3));
   });
 
   it('should run multi channel transcription on a local file', async () => {
-    const output = await exec(`${cmd} sync-multi-channel ${filepath3}`);
+    const output = execSync(`${cmd} sync-multi-channel ${filepath3}`);
     assert.match(output, /Channel Tag: 2/);
   });
 
   it('should run multi channel transcription on GCS file', async () => {
-    const output = await exec(
+    const output = execSync(
       `${cmd} sync-multi-channel-gcs gs://${bucketName}/${filename3}`
     );
     assert.match(output, /Channel Tag: 2/);

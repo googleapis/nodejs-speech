@@ -17,7 +17,7 @@
 
 const path = require('path');
 const {assert} = require('chai');
-const execa = require('execa');
+const {execSync} = require('child_process');
 
 const cwd = path.join(__dirname, '..');
 const exec = async cmd => (await execa.shell(cmd, {cwd})).stdout;
@@ -27,7 +27,7 @@ const text = 'how old is the Brooklyn Bridge';
 
 describe('Recognize v1p1beta1', () => {
   it('should run sync recognize with metadata', async () => {
-    const output = await exec(`${cmd} sync-metadata ${filepath}`);
+    const output = execSync(`${cmd} sync-metadata ${filepath}`);
     assert.match(output, new RegExp(text));
   });
 });
