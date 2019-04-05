@@ -23,7 +23,6 @@ const execSync = cmd => cp.execSync(cmd, {encoding: 'utf-8'});
 
 const cmd = 'node betaFeatures.js';
 const cwd = path.join(__dirname, `..`);
-const exec = async cmd => (await execa.shell(cmd, {cwd})).stdout;
 
 //audio file paths
 const resourcePath = path.join(__dirname, '..', 'resources');
@@ -56,9 +55,7 @@ describe(`BetaFeatures`, () => {
   });
 
   it('should run multi channel transcription on GCS file', async () => {
-    const output = execSync(
-      `${cmd} multiChannelTranscribeGCS -u ${stereoUri}`
-    );
+    const output = execSync(`${cmd} multiChannelTranscribeGCS -u ${stereoUri}`);
     assert.match(output, /Channel Tag: 2/);
   });
 
@@ -70,9 +67,7 @@ describe(`BetaFeatures`, () => {
   });
 
   it('should transcribe multi-language on a GCS bucket', async () => {
-    const output = execSync(
-      `${cmd} multiLanguageTranscribeGCS -u ${multiUri}`
-    );
+    const output = execSync(`${cmd} multiLanguageTranscribeGCS -u ${multiUri}`);
     assert.match(output, /Transcription: how are you doing estoy bien e tu/);
   });
 
@@ -85,9 +80,7 @@ describe(`BetaFeatures`, () => {
   });
 
   it('should run word level confidence on a GCS bucket', async () => {
-    const output = execSync(
-      `${cmd} wordLevelConfidenceGCS -u ${brooklynUri}`
-    );
+    const output = execSync(`${cmd} wordLevelConfidenceGCS -u ${brooklynUri}`);
     assert.match(output, /Transcription: how old is the Brooklyn Bridge/);
     assert.match(output, /Confidence: \d\.\d/);
   });

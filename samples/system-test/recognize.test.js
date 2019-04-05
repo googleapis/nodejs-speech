@@ -40,7 +40,6 @@ const text = 'how old is the Brooklyn Bridge';
 const text1 = 'the weather outside is sunny';
 const text2 = `Terrific. It's on the way.`;
 const text3 = 'Chrome';
-const exec = async cmd => (await execa.shell(cmd, {cwd})).stdout;
 
 describe('Recognize', () => {
   before(async () => {
@@ -79,9 +78,7 @@ describe('Recognize', () => {
   });
 
   it('should run async recognize on a GCS file', async () => {
-    const output = execSync(
-      `${cmd} async-gcs gs://${bucketName}/${filename}`
-    );
+    const output = execSync(`${cmd} async-gcs gs://${bucketName}/${filename}`);
     assert.match(output, new RegExp(`Transcription: ${text}`));
   });
 

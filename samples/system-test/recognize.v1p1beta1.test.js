@@ -22,7 +22,6 @@ const cp = require('child_process');
 const execSync = cmd => cp.execSync(cmd, {encoding: 'utf-8'});
 
 const cwd = path.join(__dirname, '..');
-const exec = async cmd => (await execa.shell(cmd, {cwd})).stdout;
 const cmd = 'node recognize.v1p1beta1.js';
 const filepath = path.join(__dirname, '..', 'resources', 'audio.raw');
 const text = 'how old is the Brooklyn Bridge';
