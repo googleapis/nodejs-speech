@@ -26,7 +26,6 @@ const execSync = cmd => cp.execSync(cmd, {encoding: 'utf-8'});
 const storage = new Storage();
 const bucketName = `nodejs-docs-samples-test-${uuid.v4()}`;
 const cmd = 'node recognize.js';
-const cwd = path.join(__dirname, '..');
 const resourcePath = path.join(__dirname, '..', 'resources');
 const filename = `audio.raw`;
 const filename1 = `Google_Gnome.wav`;
