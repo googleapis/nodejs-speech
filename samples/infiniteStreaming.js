@@ -50,11 +50,16 @@
 //const languageCode = 'en-US';
 //const streamingLimit = 10000; //set to low number for demonstration purposes
 
-function infiniteStream(encoding, sampleRateHertz, languageCode, streamingLimit) {
+function infiniteStream(
+  encoding,
+  sampleRateHertz,
+  languageCode,
+  streamingLimit
+) {
   // [START infiniteStream]
 
   const chalk = require('chalk');
-  const { Transform } = require('stream');
+  const {Transform} = require('stream');
 
   // Node-Record-lpcm16
   const record = require('node-record-lpcm16');
@@ -76,60 +81,67 @@ function infiniteStream(encoding, sampleRateHertz, languageCode, streamingLimit)
   };
 
   let recognizeStream = null,
-      restartCounter = 0,
-      audioInput = [],
-      lastAudioInput = [],
-      resultEndTime = 0,
-      isFinalEndTime = 0,
-      finalRequestEndTime = 0,
-      newStream = true,
-      bridgingOffset = 0,
-      lastTranscriptWasFinal = false;
+    restartCounter = 0,
+    audioInput = [],
+    lastAudioInput = [],
+    resultEndTime = 0,
+    isFinalEndTime = 0,
+    finalRequestEndTime = 0,
+    newStream = true,
+    bridgingOffset = 0,
+    lastTranscriptWasFinal = false;
 
   function startStream() {
     // Clear current audioInput
     audioInput = [];
     // Initiate (Reinitiate) a recognize stream
-    recognizeStream = client
-      .streamingRecognize(request)
-      .on('error', (err) => {
-        //console.error('API request error ' + err);
-      })
-      .on('data', speechCallback);
+    if (!recognizeStream) {
+      recognizeStream = client
+        .streamingRecognize(request)
+        .on('error', error => {
+          if (error.code === 11) {
+            //uncomment next line to restart based on timeout error
+            //restartStream();
+          } else {
+            console.log('Recognize ERROR: ' + error);
+          }
+        })
+        .on('data', speechCallback);
 
-    //restart stream when streamingLimit expires
-    setTimeout(restartStream, streamingLimit);
+      //restart stream when streamingLimit expires
+      setTimeout(restartStream, streamingLimit);
+    }
   }
 
-  const speechCallback = (stream) => {
-
+  const speechCallback = stream => {
     //convert API result end time from seconds + nanoseconds into milliseconds
-    resultEndTime = stream.results[0].resultEndTime.seconds * 1000 +
+    resultEndTime =
+      stream.results[0].resultEndTime.seconds * 1000 +
       Math.round(stream.results[0].resultEndTime.nanos / 1000000);
 
     //calculate correct time based on offset from audio sent twice
-    let correctedTime =
-      resultEndTime - bridgingOffset + (streamingLimit * restartCounter);
+    const correctedTime =
+      resultEndTime - bridgingOffset + streamingLimit * restartCounter;
 
     process.stdout.clearLine();
     process.stdout.cursorTo(0);
     let stdoutText = `\n\nReached transcription time limit, press Ctrl+C\n`;
-    if(stream.results[0] && stream.results[0].alternatives[0]){
+
+    if (stream.results[0] && stream.results[0].alternatives[0]) {
       stdoutText =
         correctedTime + ': ' + stream.results[0].alternatives[0].transcript;
     }
 
-    if(stream.results[0].isFinal){
-
+    if (stream.results[0].isFinal) {
       process.stdout.write(chalk.green(`${stdoutText}\n`));
 
       isFinalEndTime = resultEndTime;
       lastTranscriptWasFinal = true;
-    }
-    else {
+    } else {
       //make sure transcript does not exceed console character length
-      if (stdoutText.length > process.stdout.columns){
-        stdoutText = stdoutText.substring(0, process.stdout.columns-4) + '...';
+      if (stdoutText.length > process.stdout.columns) {
+        stdoutText =
+          stdoutText.substring(0, process.stdout.columns - 4) + '...';
       }
       process.stdout.write(chalk.red(`${stdoutText}`));
 
@@ -137,52 +149,14 @@ function infiniteStream(encoding, sampleRateHertz, languageCode, streamingLimit)
     }
   };
 
-  const audioInputStreamTransform = new Transform({
-    transform: (chunk, encoding, callback) => {
-
-      if(newStream && (lastAudioInput.length !=0 )) {
-      //approximate math to calculate time of chunks
-        let chunkTime = streamingLimit / lastAudioInput.length;
-        if(chunkTime != 0){
-          if (bridgingOffset < 0) {
-            bridgingOffset = 0;
-          }
-          if(bridgingOffset > finalRequestEndTime) {
-            bridgingOffset = finalRequestEndTime;
-          }
-          let chunksFromMS = Math.floor(
-            (finalRequestEndTime - bridgingOffset) / chunkTime
-          );
-          bridgingOffset = Math.floor(
-            (lastAudioInput.length - chunksFromMS) * chunkTime
-          );
-
-          for(let i=chunksFromMS; i<lastAudioInput.length; i++){
-            recognizeStream.write(lastAudioInput[i]);
-          }
-
-        }
-        newStream = false;
-      }
-
-      audioInput.push(chunk);
-
-      if (recognizeStream!=null) {
-        recognizeStream.write(chunk);
-      }
-
-      callback();
-    }
-  })
-
   function restartStream() {
-
-    if(recognizeStream){
+    //remove listener, so only one listener active at a time
+    if (recognizeStream) {
       recognizeStream.removeListener('data', speechCallback);
       recognizeStream = null;
     }
-    if(resultEndTime>0){
-        finalRequestEndTime = isFinalEndTime;
+    if (resultEndTime > 0) {
+      finalRequestEndTime = isFinalEndTime;
     }
     resultEndTime = 0;
 
@@ -191,27 +165,66 @@ function infiniteStream(encoding, sampleRateHertz, languageCode, streamingLimit)
 
     restartCounter++;
 
-    if(!lastTranscriptWasFinal){
+    if (!lastTranscriptWasFinal) {
       process.stdout.write(`\n`);
     }
-    process.stdout.write(chalk.yellow(
-      `${(streamingLimit * restartCounter)}: RESTARTING REQUEST\n`)
+
+    process.stdout.write(
+      chalk.yellow(`${streamingLimit * restartCounter}: RESTARTING REQUEST\n`)
     );
 
-    newStream=true;
+    newStream = true;
 
     startStream();
   }
+
+  const audioInputStreamTransform = new Transform({
+    // save audio from microphone to audioInput array
+    transform: (chunk, encoding, callback) => {
+      if (newStream && lastAudioInput.length !== 0) {
+        //approximate math to calculate time of chunks
+        const chunkTime = streamingLimit / lastAudioInput.length;
+        if (chunkTime !== 0) {
+          if (bridgingOffset < 0) {
+            bridgingOffset = 0;
+          }
+          if (bridgingOffset > finalRequestEndTime) {
+            bridgingOffset = finalRequestEndTime;
+          }
+          const chunksFromMS = Math.floor(
+            (finalRequestEndTime - bridgingOffset) / chunkTime
+          );
+          bridgingOffset = Math.floor(
+            (lastAudioInput.length - chunksFromMS) * chunkTime
+          );
+
+          for (let i = chunksFromMS; i < lastAudioInput.length; i++) {
+            if (recognizeStream) {
+              recognizeStream.write(lastAudioInput[i]);
+            }
+          }
+        }
+        newStream = false;
+      }
+
+      audioInput.push(chunk);
+
+      if (recognizeStream) {
+        recognizeStream.write(chunk);
+      }
+      callback();
+    },
+  });
   // Start recording and send the microphone input to the Speech API
   record
     .start({
       sampleRateHertz: sampleRateHertz,
+      channels: 1,
       threshold: 0, //silence threshold
-      silence: (streamingLimit*2)/1000,
       keepSilence: true,
       recordProgram: 'rec', // Try also "arecord" or "sox"
     })
-    .on('error', (err) => {
+    .on('error', err => {
       console.error('Audio recording error ' + err);
     })
     .pipe(audioInputStreamTransform);
@@ -226,14 +239,19 @@ function infiniteStream(encoding, sampleRateHertz, languageCode, streamingLimit)
   // [END infiniteStream]
 }
 
-let argv = require(`yargs`)
+require(`yargs`)
   .demand(1)
   .command(
     `infiniteStream`,
     `infinitely streams audio input from microphone to speech API`,
     {},
     opts =>
-      infiniteStream(opts.encoding, opts.sampleRateHertz, opts.languageCode, opts.streamingLimit)
+      infiniteStream(
+        opts.encoding,
+        opts.sampleRateHertz,
+        opts.languageCode,
+        opts.streamingLimit
+      )
   )
   .options({
     encoding: {
