@@ -56,7 +56,7 @@ function infiniteStream(
   languageCode,
   streamingLimit
 ) {
-  // [START infiniteStream]
+  // [START speech_transcribe_infinite_streaming]
 
   const chalk = require('chalk');
   const {Transform} = require('stream');
@@ -236,7 +236,7 @@ function infiniteStream(
   console.log('=========================================================');
 
   startStream();
-  // [END infiniteStream]
+  // [END speech_transcribe_infinite_streaming]
 }
 
 require(`yargs`)
