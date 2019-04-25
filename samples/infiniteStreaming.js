@@ -95,22 +95,21 @@ function infiniteStream(
     // Clear current audioInput
     audioInput = [];
     // Initiate (Reinitiate) a recognize stream
-    if (!recognizeStream) {
-      recognizeStream = client
-        .streamingRecognize(request)
-        .on('error', error => {
-          if (error.code === 11) {
-            //uncomment next line to restart based on timeout error
-            //restartStream();
-          } else {
-            console.log('Recognize ERROR: ' + error);
-          }
-        })
-        .on('data', speechCallback);
+    recognizeStream = client
+      .streamingRecognize(request)
+      .on('error', err => {
+        if(err.code===11){
+          // uncomment the following code to use timeout error to restart
+          //restartStream();
+        }
+        else {
+          console.error('API request error ' + err);
+        }
+      })
+      .on('data', speechCallback);
 
-      //restart stream when streamingLimit expires
-      setTimeout(restartStream, streamingLimit);
-    }
+    //restart stream when streamingLimit expires
+    setTimeout(restartStream, streamingLimit);
   }
 
   const speechCallback = stream => {
@@ -126,7 +125,6 @@ function infiniteStream(
     process.stdout.clearLine();
     process.stdout.cursorTo(0);
     let stdoutText = `\n\nReached transcription time limit, press Ctrl+C\n`;
-
     if (stream.results[0] && stream.results[0].alternatives[0]) {
       stdoutText =
         correctedTime + ': ' + stream.results[0].alternatives[0].transcript;
@@ -149,37 +147,7 @@ function infiniteStream(
     }
   };
 
-  function restartStream() {
-    //remove listener, so only one listener active at a time
-    if (recognizeStream) {
-      recognizeStream.removeListener('data', speechCallback);
-      recognizeStream = null;
-    }
-    if (resultEndTime > 0) {
-      finalRequestEndTime = isFinalEndTime;
-    }
-    resultEndTime = 0;
-
-    lastAudioInput = [];
-    lastAudioInput = audioInput;
-
-    restartCounter++;
-
-    if (!lastTranscriptWasFinal) {
-      process.stdout.write(`\n`);
-    }
-
-    process.stdout.write(
-      chalk.yellow(`${streamingLimit * restartCounter}: RESTARTING REQUEST\n`)
-    );
-
-    newStream = true;
-
-    startStream();
-  }
-
   const audioInputStreamTransform = new Transform({
-    // save audio from microphone to audioInput array
     transform: (chunk, encoding, callback) => {
       if (newStream && lastAudioInput.length !== 0) {
         //approximate math to calculate time of chunks
@@ -199,9 +167,7 @@ function infiniteStream(
           );
 
           for (let i = chunksFromMS; i < lastAudioInput.length; i++) {
-            if (recognizeStream) {
-              recognizeStream.write(lastAudioInput[i]);
-            }
+            recognizeStream.write(lastAudioInput[i]);
           }
         }
         newStream = false;
@@ -212,15 +178,43 @@ function infiniteStream(
       if (recognizeStream) {
         recognizeStream.write(chunk);
       }
+
       callback();
     },
   });
+
+  function restartStream() {
+    if (recognizeStream) {
+      recognizeStream.removeListener('data', speechCallback);
+      recognizeStream = null;
+    }
+    if (resultEndTime > 0) {
+      finalRequestEndTime = isFinalEndTime;
+    }
+    resultEndTime = 0;
+
+    lastAudioInput = [];
+    lastAudioInput = audioInput;
+
+    restartCounter++;
+
+    if (!lastTranscriptWasFinal) {
+      process.stdout.write(`\n`);
+    }
+    process.stdout.write(
+      chalk.yellow(`${streamingLimit * restartCounter}: RESTARTING REQUEST\n`)
+    );
+
+    newStream = true;
+
+    startStream();
+  }
   // Start recording and send the microphone input to the Speech API
   record
     .start({
       sampleRateHertz: sampleRateHertz,
-      channels: 1,
       threshold: 0, //silence threshold
+      silence: (streamingLimit * 2) / 1000,
       keepSilence: true,
       recordProgram: 'rec', // Try also "arecord" or "sox"
     })
