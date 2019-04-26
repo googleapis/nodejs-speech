@@ -98,11 +98,10 @@ function infiniteStream(
     recognizeStream = client
       .streamingRecognize(request)
       .on('error', err => {
-        if(err.code===11){
+        if (err.code === 11) {
           // uncomment the following code to use timeout error to restart
           //restartStream();
-        }
-        else {
+        } else {
           console.error('API request error ' + err);
         }
       })
