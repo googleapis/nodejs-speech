@@ -15,7 +15,6 @@
     "@google-cloud/storage": "^2.0.0",
     "chalk": "^2.4.2",
     "node-record-lpcm16": "^0.3.0",
-    "stream": "0.0.2",
     "yargs": "^13.0.0"
   },
   "devDependencies": {
