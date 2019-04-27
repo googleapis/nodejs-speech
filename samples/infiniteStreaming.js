@@ -1,5 +1,5 @@
 /**
- * Copyright 2017, Google, Inc.
+ * Copyright 2019 Google LLC
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -45,11 +45,6 @@
  * 5. Set streamingLimit in ms. 10000 ms = 10 seconds. Maximum limit should be 1/2 of SpeechAPI Streaming Limit.
  */
 
-//const encoding = 'LINEAR16';
-//const sampleRateHertz = 16000;
-//const languageCode = 'en-US';
-//const streamingLimit = 10000; //set to low number for demonstration purposes
-
 function infiniteStream(
   encoding,
   sampleRateHertz,
@@ -57,6 +52,11 @@ function infiniteStream(
   streamingLimit
 ) {
   // [START speech_transcribe_infinite_streaming]
+
+  //const encoding = 'LINEAR16';
+  //const sampleRateHertz = 16000;
+  //const languageCode = 'en-US';
+  //const streamingLimit = 10000; //set to low number for demonstration purposes
 
   const chalk = require('chalk');
   const {Transform} = require('stream');
@@ -123,7 +123,7 @@ function infiniteStream(
 
     process.stdout.clearLine();
     process.stdout.cursorTo(0);
-    let stdoutText = `\n\nReached transcription time limit, press Ctrl+C\n`;
+    let stdoutText = '';
     if (stream.results[0] && stream.results[0].alternatives[0]) {
       stdoutText =
         correctedTime + ': ' + stream.results[0].alternatives[0].transcript;
