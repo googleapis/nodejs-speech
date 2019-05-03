@@ -38,11 +38,12 @@
  * 1. SoX must be installed and available in your $PATH- it can be found here:
  * http://sox.sourceforge.net/
  * 2. Microphone must be working
- * 3. Encoding, sampleRateHertz, and # of channels must match header of audioInput file you're
- * recording to.
+ * 3. Encoding, sampleRateHertz, and # of channels must match header of
+ * audioInput file you're recording to.
  * 4. Get Node-Record-lpcm16 https://www.npmjs.com/package/node-record-lpcm16
  * More Info: https://cloud.google.com/speech-to-text/docs/streaming-recognize
- * 5. Set streamingLimit in ms. 10000 ms = 10 seconds. Maximum limit should be 1/2 of SpeechAPI Streaming Limit.
+ * 5. Set streamingLimit in ms. 10000 ms = 10 seconds.
+ * Maximum streaming limit should be 1/2 of SpeechAPI Streaming Limit.
  */
 
 function infiniteStream(
@@ -53,10 +54,10 @@ function infiniteStream(
 ) {
   // [START speech_transcribe_infinite_streaming]
 
-  //const encoding = 'LINEAR16';
-  //const sampleRateHertz = 16000;
-  //const languageCode = 'en-US';
-  //const streamingLimit = 10000; //set to low number for demonstration purposes
+  // const encoding = 'LINEAR16';
+  // const sampleRateHertz = 16000;
+  // const languageCode = 'en-US';
+  // const streamingLimit = 10000; // ms - set to low number for demo purposes
 
   const chalk = require('chalk');
   const {Transform} = require('stream');
@@ -64,7 +65,8 @@ function infiniteStream(
   // Node-Record-lpcm16
   const record = require('node-record-lpcm16');
 
-  // Imports the Google Cloud client library (currently, only v1p1beta1 contains result-end-time)
+  // Imports the Google Cloud client library
+  // Currently, only v1p1beta1 contains result-end-time
   const speech = require('@google-cloud/speech').v1p1beta1;
 
   const client = new speech.SpeechClient();
@@ -80,16 +82,16 @@ function infiniteStream(
     interimResults: true,
   };
 
-  let recognizeStream = null,
-    restartCounter = 0,
-    audioInput = [],
-    lastAudioInput = [],
-    resultEndTime = 0,
-    isFinalEndTime = 0,
-    finalRequestEndTime = 0,
-    newStream = true,
-    bridgingOffset = 0,
-    lastTranscriptWasFinal = false;
+  let recognizeStream = null;
+  let restartCounter = 0;
+  let audioInput = [];
+  let lastAudioInput = [];
+  let resultEndTime = 0;
+  let isFinalEndTime = 0;
+  let finalRequestEndTime = 0;
+  let newStream = true;
+  let bridgingOffset = 0;
+  let lastTranscriptWasFinal = false;
 
   function startStream() {
     // Clear current audioInput
@@ -99,25 +101,24 @@ function infiniteStream(
       .streamingRecognize(request)
       .on('error', err => {
         if (err.code === 11) {
-          // uncomment the following code to use timeout error to restart
-          //restartStream();
+          // restartStream();
         } else {
           console.error('API request error ' + err);
         }
       })
       .on('data', speechCallback);
 
-    //restart stream when streamingLimit expires
+    // Restart stream when streamingLimit expires
     setTimeout(restartStream, streamingLimit);
   }
 
   const speechCallback = stream => {
-    //convert API result end time from seconds + nanoseconds into milliseconds
+    // Convert API result end time from seconds + nanoseconds to milliseconds
     resultEndTime =
       stream.results[0].resultEndTime.seconds * 1000 +
       Math.round(stream.results[0].resultEndTime.nanos / 1000000);
 
-    //calculate correct time based on offset from audio sent twice
+    // Calculate correct time based on offset from audio sent twice
     const correctedTime =
       resultEndTime - bridgingOffset + streamingLimit * restartCounter;
 
@@ -135,7 +136,7 @@ function infiniteStream(
       isFinalEndTime = resultEndTime;
       lastTranscriptWasFinal = true;
     } else {
-      //make sure transcript does not exceed console character length
+      // Make sure transcript does not exceed console character length
       if (stdoutText.length > process.stdout.columns) {
         stdoutText =
           stdoutText.substring(0, process.stdout.columns - 4) + '...';
@@ -149,7 +150,7 @@ function infiniteStream(
   const audioInputStreamTransform = new Transform({
     transform: (chunk, encoding, callback) => {
       if (newStream && lastAudioInput.length !== 0) {
-        //approximate math to calculate time of chunks
+        // Approximate math to calculate time of chunks
         const chunkTime = streamingLimit / lastAudioInput.length;
         if (chunkTime !== 0) {
           if (bridgingOffset < 0) {
@@ -212,8 +213,8 @@ function infiniteStream(
   record
     .start({
       sampleRateHertz: sampleRateHertz,
-      threshold: 0, //silence threshold
-      silence: (streamingLimit * 2) / 1000,
+      threshold: 0, // Silence threshold
+      silence: 1000,
       keepSilence: true,
       recordProgram: 'rec', // Try also "arecord" or "sox"
     })
