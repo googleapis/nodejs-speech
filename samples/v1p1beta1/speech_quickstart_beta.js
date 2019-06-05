@@ -9,7 +9,7 @@
 // [START speech_quickstart_beta]
 // [START speech_quickstart_beta_core]
 
-const speech = require('speech.v1p1beta1').v1p1beta1;
+const speech = require('@google-cloud/speech').v1p1beta1;
 
 /**
  * Performs synchronous speech recognition on an audio file.
