@@ -43,7 +43,7 @@ function microphoneStream(encoding, sampleRateHertz, languageCode) {
   // [START micStreamRecognize]
 
   // Node-Record-lpcm16
-  const record = require('node-record-lpcm16');
+  const recorder = require('node-record-lpcm16');
 
   // Imports the Google Cloud client library
   const speech = require('@google-cloud/speech');
@@ -75,13 +75,14 @@ function microphoneStream(encoding, sampleRateHertz, languageCode) {
     );
 
   // Start recording and send the microphone input to the Speech API
-  record
-    .start({
+  recorder
+    .record({
       sampleRateHertz: sampleRateHertz,
       threshold: 0, //silence threshold
       recordProgram: 'rec', // Try also "arecord" or "sox"
       silence: '5.0', //seconds of silence before ending
     })
+    .stream()
     .on('error', console.error)
     .pipe(recognizeStream);
 
