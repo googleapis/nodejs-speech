@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@google-cloud/speech?activeTab=versions
 
+### [3.2.7](https://www.github.com/googleapis/nodejs-speech/compare/v3.2.6...v3.2.7) (2019-09-03)
+
+
+### Bug Fixes
+
+* **docs:** stop linking reference documents to anchor ([d54da3d](https://www.github.com/googleapis/nodejs-speech/commit/d54da3d))
+
 ### [3.2.6](https://www.github.com/googleapis/nodejs-speech/compare/v3.2.5...v3.2.6) (2019-08-27)
 
 
