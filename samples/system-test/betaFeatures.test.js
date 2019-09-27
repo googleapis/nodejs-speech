@@ -31,10 +31,10 @@ const stereoFilePath = path.join(resourcePath, 'commercial_stereo.wav');
 const multiLanguageFile = path.join(resourcePath, 'multi.wav');
 const BrooklynFilePath = path.join(resourcePath, 'brooklyn.flac');
 
-const monoUri = 'gs://cloud-samples-tests/speech/commercial_mono.wav';
-const multiUri = 'gs://nodejs-docs-samples/multi_mono.wav';
-const brooklynUri = 'gs://cloud-samples-tests/speech/brooklyn.flac';
-const stereoUri = 'gs://cloud-samples-tests/speech/commercial_stereo.wav';
+const monoUri = 'gs://cloud-samples-data/speech/commercial_mono.wav';
+const multiUri = 'gs://cloud-samples-data/speech/multi.wav';
+const brooklynUri = 'gs://cloud-samples-data/speech/brooklyn_bridge.flac';
+const stereoUri = 'gs://cloud-samples-data/speech/commercial_stereo.wav';
 
 describe(`BetaFeatures`, () => {
   it('should run speech diarization on a local file', async () => {
