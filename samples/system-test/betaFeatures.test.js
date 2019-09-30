@@ -32,7 +32,6 @@ const multiLanguageFile = path.join(resourcePath, 'multi.wav');
 const BrooklynFilePath = path.join(resourcePath, 'brooklyn.flac');
 
 const monoUri = 'gs://cloud-samples-data/speech/commercial_mono.wav';
-const brooklynUri = 'gs://cloud-samples-data/speech/brooklyn_bridge.wav';
 const stereoUri = 'gs://cloud-samples-data/speech/commercial_stereo.wav';
 
 describe(`BetaFeatures`, () => {
@@ -69,12 +68,6 @@ describe(`BetaFeatures`, () => {
     const output = execSync(
       `${cmd} wordLevelConfidence -f ${BrooklynFilePath}`
     );
-    assert.match(output, /Transcription: how old is the Brooklyn Bridge/);
-    assert.match(output, /Confidence: \d\.\d/);
-  });
-
-  it('should run word level confidence on a GCS bucket', async () => {
-    const output = execSync(`${cmd} wordLevelConfidenceGCS -u ${brooklynUri}`);
     assert.match(output, /Transcription: how old is the Brooklyn Bridge/);
     assert.match(output, /Confidence: \d\.\d/);
   });
