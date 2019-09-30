@@ -32,8 +32,7 @@ const multiLanguageFile = path.join(resourcePath, 'multi.wav');
 const BrooklynFilePath = path.join(resourcePath, 'brooklyn.flac');
 
 const monoUri = 'gs://cloud-samples-data/speech/commercial_mono.wav';
-const multiUri = 'gs://cloud-samples-data/speech/multi.wav';
-const brooklynUri = 'gs://cloud-samples-data/speech/brooklyn_bridge.flac';
+const brooklynUri = 'gs://cloud-samples-data/speech/brooklyn_bridge.wav';
 const stereoUri = 'gs://cloud-samples-data/speech/commercial_stereo.wav';
 
 describe(`BetaFeatures`, () => {
@@ -63,11 +62,6 @@ describe(`BetaFeatures`, () => {
     const output = execSync(
       `${cmd} multiLanguageTranscribe -f ${multiLanguageFile}`
     );
-    assert.match(output, /Transcription: how are you doing estoy bien e tu/);
-  });
-
-  it('should transcribe multi-language on a GCS bucket', async () => {
-    const output = execSync(`${cmd} multiLanguageTranscribeGCS -u ${multiUri}`);
     assert.match(output, /Transcription: how are you doing estoy bien e tu/);
   });
 
