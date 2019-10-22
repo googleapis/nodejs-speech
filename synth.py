@@ -27,7 +27,7 @@ common_templates = gcp.CommonTemplates()
 versions = ['v1', 'v1p1beta1']
 
 for version in versions:
-    library = gapic.node_library('speech', version)
+    library = gapic.node_library('speech', version, include_samples=True)
 
     # skip index, protos, package.json, and README.md
     s.copy(
