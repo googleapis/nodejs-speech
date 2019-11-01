@@ -69,7 +69,9 @@ class SpeechClient {
     const gaxModule = !global.isBrowser && opts.fallback ? gax.fallback : gax;
 
     const servicePath =
-      opts.servicePath || opts.apiEndpoint || this.constructor.servicePath;
+      opts.servicePath ||
+      opts.apiEndpoint ||
+      this.constructor.servicePath;
 
     // Ensure that options include the service address and port.
     opts = Object.assign(
@@ -110,28 +112,22 @@ class SpeechClient {
     // For Node.js, pass the path to JSON proto file.
     // For browsers, pass the JSON content.
 
-    const nodejsProtoPath = path.join(
-      __dirname,
-      '..',
-      '..',
-      'protos',
-      'protos.json'
-    );
+    const nodejsProtoPath = path.join(__dirname, '..', '..', 'protos', 'protos.json');
     const protos = gaxGrpc.loadProto(
-      opts.fallback ? require('../../protos/protos.json') : nodejsProtoPath
+      opts.fallback ?
+        require("../../protos/protos.json") :
+        nodejsProtoPath
     );
 
     // Some of the methods on this service provide streaming responses.
     // Provide descriptors for these.
     this._descriptors.stream = {
-      streamingRecognize: new gaxModule.StreamDescriptor(
-        gax.StreamType.BIDI_STREAMING
-      ),
+      streamingRecognize: new gaxModule.StreamDescriptor(gax.StreamType.BIDI_STREAMING),
     };
 
-    const protoFilesRoot = opts.fallback
-      ? gaxModule.protobuf.Root.fromJSON(require('../../protos/protos.json'))
-      : gaxModule.protobuf.loadSync(nodejsProtoPath);
+    const protoFilesRoot = opts.fallback ?
+      gaxModule.protobuf.Root.fromJSON(require("../../protos/protos.json")) :
+      gaxModule.protobuf.loadSync(nodejsProtoPath);
 
     // This API contains "long-running operations", which return a
     // an Operation object that allows for tracking of the operation,
@@ -172,9 +168,9 @@ class SpeechClient {
     // Put together the "service stub" for
     // google.cloud.speech.v1.Speech.
     const speechStub = gaxGrpc.createStub(
-      opts.fallback
-        ? protos.lookupService('google.cloud.speech.v1.Speech')
-        : protos.google.cloud.speech.v1.Speech,
+      opts.fallback ?
+        protos.lookupService('google.cloud.speech.v1.Speech') :
+        protos.google.cloud.speech.v1.Speech,
       opts
     );
 
@@ -197,8 +193,7 @@ class SpeechClient {
       this._innerApiCalls[methodName] = gaxModule.createApiCall(
         innerCallPromise,
         defaults[methodName],
-        this._descriptors.stream[methodName] ||
-          this._descriptors.longrunning[methodName]
+        this._descriptors.stream[methodName] || this._descriptors.longrunning[methodName]
       );
     }
   }
@@ -230,7 +225,9 @@ class SpeechClient {
    * in this service.
    */
   static get scopes() {
-    return ['https://www.googleapis.com/auth/cloud-platform'];
+    return [
+      'https://www.googleapis.com/auth/cloud-platform',
+    ];
   }
 
   /**
@@ -497,5 +494,6 @@ class SpeechClient {
     return this._innerApiCalls.streamingRecognize(options);
   }
 }
+
 
 module.exports = SpeechClient;
