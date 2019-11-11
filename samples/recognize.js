@@ -722,12 +722,11 @@ async function speechTranscribeDiarization(fileName) {
   // Creates a client
   const client = new speech.SpeechClient();
 
-
   // Set config for Diarization
   const diarizationConfig = {
     enableSpeakerDiarization: true,
-    maxSpeakerCount: 2
-  }
+    maxSpeakerCount: 2,
+  };
 
   const config = {
     encoding: `LINEAR16`,
