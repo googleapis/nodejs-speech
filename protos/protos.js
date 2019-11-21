@@ -4691,6 +4691,7 @@
                          * @property {google.protobuf.IDuration|null} [startTime] WordInfo startTime
                          * @property {google.protobuf.IDuration|null} [endTime] WordInfo endTime
                          * @property {string|null} [word] WordInfo word
+                         * @property {number|null} [speakerTag] WordInfo speakerTag
                          */
     
                         /**
@@ -4733,6 +4734,14 @@
                         WordInfo.prototype.word = "";
     
                         /**
+                         * WordInfo speakerTag.
+                         * @member {number} speakerTag
+                         * @memberof google.cloud.speech.v1.WordInfo
+                         * @instance
+                         */
+                        WordInfo.prototype.speakerTag = 0;
+    
+                        /**
                          * Creates a new WordInfo instance using the specified properties.
                          * @function create
                          * @memberof google.cloud.speech.v1.WordInfo
@@ -4762,6 +4771,8 @@
                                 $root.google.protobuf.Duration.encode(message.endTime, writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
                             if (message.word != null && message.hasOwnProperty("word"))
                                 writer.uint32(/* id 3, wireType 2 =*/26).string(message.word);
+                            if (message.speakerTag != null && message.hasOwnProperty("speakerTag"))
+                                writer.uint32(/* id 5, wireType 0 =*/40).int32(message.speakerTag);
                             return writer;
                         };
     
@@ -4804,6 +4815,9 @@
                                     break;
                                 case 3:
                                     message.word = reader.string();
+                                    break;
+                                case 5:
+                                    message.speakerTag = reader.int32();
                                     break;
                                 default:
                                     reader.skipType(tag & 7);
@@ -4853,6 +4867,9 @@
                             if (message.word != null && message.hasOwnProperty("word"))
                                 if (!$util.isString(message.word))
                                     return "word: string expected";
+                            if (message.speakerTag != null && message.hasOwnProperty("speakerTag"))
+                                if (!$util.isInteger(message.speakerTag))
+                                    return "speakerTag: integer expected";
                             return null;
                         };
     
@@ -4880,6 +4897,8 @@
                             }
                             if (object.word != null)
                                 message.word = String(object.word);
+                            if (object.speakerTag != null)
+                                message.speakerTag = object.speakerTag | 0;
                             return message;
                         };
     
@@ -4900,6 +4919,7 @@
                                 object.startTime = null;
                                 object.endTime = null;
                                 object.word = "";
+                                object.speakerTag = 0;
                             }
                             if (message.startTime != null && message.hasOwnProperty("startTime"))
                                 object.startTime = $root.google.protobuf.Duration.toObject(message.startTime, options);
@@ -4907,6 +4927,8 @@
                                 object.endTime = $root.google.protobuf.Duration.toObject(message.endTime, options);
                             if (message.word != null && message.hasOwnProperty("word"))
                                 object.word = message.word;
+                            if (message.speakerTag != null && message.hasOwnProperty("speakerTag"))
+                                object.speakerTag = message.speakerTag;
                             return object;
                         };
     

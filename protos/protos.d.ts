@@ -1,3 +1,4 @@
+import * as Long from "long";
 import * as $protobuf from "protobufjs";
 /** Namespace google. */
 export namespace google {
@@ -1867,6 +1868,9 @@ export namespace google {
 
                     /** WordInfo word */
                     word?: (string|null);
+
+                    /** WordInfo speakerTag */
+                    speakerTag?: (number|null);
                 }
 
                 /** Represents a WordInfo. */
@@ -1886,6 +1890,9 @@ export namespace google {
 
                     /** WordInfo word. */
                     public word: string;
+
+                    /** WordInfo speakerTag. */
+                    public speakerTag: number;
 
                     /**
                      * Creates a new WordInfo instance using the specified properties.

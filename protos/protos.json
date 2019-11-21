@@ -221,7 +221,8 @@
                           "type": "int32",
                           "id": 5,
                           "options": {
-                            "(google.api.field_behavior)": "OUTPUT_ONLY"
+                            "(google.api.field_behavior)": "OUTPUT_ONLY",
+                            "deprecated": true
                           }
                         }
                       }
@@ -466,6 +467,13 @@
                         "word": {
                           "type": "string",
                           "id": 3
+                        },
+                        "speakerTag": {
+                          "type": "int32",
+                          "id": 5,
+                          "options": {
+                            "(google.api.field_behavior)": "OUTPUT_ONLY"
+                          }
                         }
                       }
                     }
