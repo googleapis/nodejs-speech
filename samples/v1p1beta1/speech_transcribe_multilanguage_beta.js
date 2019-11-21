@@ -21,67 +21,68 @@
 
 'use strict';
 
-// [START speech_transcribe_multilanguage_beta]
-
-const {SpeechClient} = require('@google-cloud/speech').v1p1beta1;
-
-const fs = require('fs');
-/**
- * Transcribe a short audio file with language detected from a list of possible languages
- *
- * @param localFilePath {string} Path to local audio file, e.g. /path/audio.wav
- */
-function sampleRecognize(localFilePath) {
-  const client = new SpeechClient();
+function main(localFilePath = 'resources/brooklyn_bridge.flac') {
+  // [START speech_transcribe_multilanguage_beta]
+  /**
+   * TODO(developer): Uncomment these variables before running the sample.
+   */
   // const localFilePath = 'resources/brooklyn_bridge.flac';
 
-  // The language of the supplied audio. Even though additional languages are
-  // provided by alternative_language_codes, a primary language is still required.
-  const languageCode = 'fr';
+  // Imports the client library
+  const {SpeechClient} = require('@google-cloud/speech').v1p1beta1;
 
-  // Specify up to 3 additional languages as possible alternative languages
-  // of the supplied audio.
-  const alternativeLanguageCodesElement = 'es';
-  const alternativeLanguageCodesElement2 = 'en';
-  const alternativeLanguageCodes = [
-    alternativeLanguageCodesElement,
-    alternativeLanguageCodesElement2,
-  ];
-  const config = {
-    languageCode: languageCode,
-    alternativeLanguageCodes: alternativeLanguageCodes,
-  };
-  const content = fs.readFileSync(localFilePath).toString('base64');
-  const audio = {
-    content: content,
-  };
-  const request = {
-    config: config,
-    audio: audio,
-  };
-  client
-    .recognize(request)
-    .then(responses => {
-      const response = responses[0];
-      for (const result of response.results) {
-        // The languageCode which was detected as the most likely being spoken in the audio
-        console.log(`Detected language: ${result.languageCode}`);
-        // First alternative is the most probable result
-        const alternative = result.alternatives[0];
-        console.log(`Transcript: ${alternative.transcript}`);
-      }
-    })
-    .catch(err => {
-      console.error(err);
-    });
+  // Additional imports
+  const fs = require('fs');
+
+  // Instantiates a client
+  const speechClient = new SpeechClient();
+
+  async function sampleRecognize() {
+    // The language of the supplied audio. Even though additional languages are
+    // provided by alternative_language_codes, a primary language is still required.
+    const languageCode = 'fr';
+
+    // Specify up to 3 additional languages as possible alternative languages
+    // of the supplied audio.
+    const alternativeLanguageCodesElement = 'es';
+    const alternativeLanguageCodesElement2 = 'en';
+    const alternativeLanguageCodes = [
+      alternativeLanguageCodesElement,
+      alternativeLanguageCodesElement2,
+    ];
+    const config = {
+      languageCode: languageCode,
+      alternativeLanguageCodes: alternativeLanguageCodes,
+    };
+    const content = fs.readFileSync(localFilePath).toString('base64');
+    const audio = {
+      content: content,
+    };
+
+    // Construct request
+    const request = {
+      config: config,
+      audio: audio,
+    };
+
+    // Run request
+    const [response] = await speechClient.recognize(request);
+
+    for (const result of response.results) {
+      // The languageCode which was detected as the most likely being spoken in the audio
+      console.log(`Detected language: ${result.languageCode}`);
+      // First alternative is the most probable result
+      const alternative = result.alternatives[0];
+      console.log(`Transcript: ${alternative.transcript}`);
+    }
+  }
+  sampleRecognize();
+  // [END speech_transcribe_multilanguage_beta]
 }
-
-// [END speech_transcribe_multilanguage_beta]
-// tslint:disable-next-line:no-any
 
 const argv = require(`yargs`).option('local_file_path', {
   default: 'resources/brooklyn_bridge.flac',
   string: true,
 }).argv;
 
-sampleRecognize(argv.local_file_path);
+main(argv.local_file_path);

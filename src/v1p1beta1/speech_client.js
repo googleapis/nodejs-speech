@@ -292,6 +292,8 @@ class SpeechClient {
    * const audio = {
    *   uri: uri,
    * };
+   *
+   * // Construct request
    * const request = {
    *   config: config,
    *   audio: audio,
@@ -366,6 +368,8 @@ class SpeechClient {
    * const audio = {
    *   uri: uri,
    * };
+   *
+   * // Construct request
    * const request = {
    *   config: config,
    *   audio: audio,
@@ -400,6 +404,8 @@ class SpeechClient {
    * const audio = {
    *   uri: uri,
    * };
+   *
+   * // Construct request
    * const request = {
    *   config: config,
    *   audio: audio,
@@ -443,6 +449,8 @@ class SpeechClient {
    * const audio = {
    *   uri: uri,
    * };
+   *
+   * // Construct request
    * const request = {
    *   config: config,
    *   audio: audio,

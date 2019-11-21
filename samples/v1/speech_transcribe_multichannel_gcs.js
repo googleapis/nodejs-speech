@@ -21,64 +21,63 @@
 
 'use strict';
 
-// [START speech_transcribe_multichannel_gcs]
-
-const {SpeechClient} = require('@google-cloud/speech').v1;
-
-/**
- * Transcribe a short audio file from Cloud Storage with multiple channels
- *
- * @param storageUri {string} URI for audio file in Cloud Storage, e.g. gs://[BUCKET]/[FILE]
- */
-function sampleRecognize(storageUri) {
-  const client = new SpeechClient();
+function main(storageUri = 'gs://cloud-samples-data/speech/multi.wav') {
+  // [START speech_transcribe_multichannel_gcs]
+  /**
+   * TODO(developer): Uncomment these variables before running the sample.
+   */
   // const storageUri = 'gs://cloud-samples-data/speech/multi.wav';
 
-  // The number of channels in the input audio file (optional)
-  const audioChannelCount = 2;
+  // Imports the client library
+  const {SpeechClient} = require('@google-cloud/speech').v1;
 
-  // When set to true, each audio channel will be recognized separately.
-  // The recognition result will contain a channel_tag field to state which
-  // channel that result belongs to
-  const enableSeparateRecognitionPerChannel = true;
+  // Instantiates a client
+  const speechClient = new SpeechClient();
 
-  // The language of the supplied audio
-  const languageCode = 'en-US';
-  const config = {
-    audioChannelCount: audioChannelCount,
-    enableSeparateRecognitionPerChannel: enableSeparateRecognitionPerChannel,
-    languageCode: languageCode,
-  };
-  const audio = {
-    uri: storageUri,
-  };
-  const request = {
-    config: config,
-    audio: audio,
-  };
-  client
-    .recognize(request)
-    .then(responses => {
-      const response = responses[0];
-      for (const result of response.results) {
-        // channelTag to recognize which audio channel this result is for
-        console.log(`Channel tag: ${result.channelTag}`);
-        // First alternative is the most probable result
-        const alternative = result.alternatives[0];
-        console.log(`Transcript: ${alternative.transcript}`);
-      }
-    })
-    .catch(err => {
-      console.error(err);
-    });
+  async function sampleRecognize() {
+    // The number of channels in the input audio file (optional)
+    const audioChannelCount = 2;
+
+    // When set to true, each audio channel will be recognized separately.
+    // The recognition result will contain a channel_tag field to state which
+    // channel that result belongs to
+    const enableSeparateRecognitionPerChannel = true;
+
+    // The language of the supplied audio
+    const languageCode = 'en-US';
+    const config = {
+      audioChannelCount: audioChannelCount,
+      enableSeparateRecognitionPerChannel: enableSeparateRecognitionPerChannel,
+      languageCode: languageCode,
+    };
+    const audio = {
+      uri: storageUri,
+    };
+
+    // Construct request
+    const request = {
+      config: config,
+      audio: audio,
+    };
+
+    // Run request
+    const [response] = await speechClient.recognize(request);
+
+    for (const result of response.results) {
+      // channelTag to recognize which audio channel this result is for
+      console.log(`Channel tag: ${result.channelTag}`);
+      // First alternative is the most probable result
+      const alternative = result.alternatives[0];
+      console.log(`Transcript: ${alternative.transcript}`);
+    }
+  }
+  sampleRecognize();
+  // [END speech_transcribe_multichannel_gcs]
 }
-
-// [END speech_transcribe_multichannel_gcs]
-// tslint:disable-next-line:no-any
 
 const argv = require(`yargs`).option('storage_uri', {
   default: 'gs://cloud-samples-data/speech/multi.wav',
   string: true,
 }).argv;
 
-sampleRecognize(argv.storage_uri);
+main(argv.storage_uri);

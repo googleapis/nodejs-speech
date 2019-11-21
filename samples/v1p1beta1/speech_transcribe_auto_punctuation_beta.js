@@ -21,60 +21,61 @@
 
 'use strict';
 
-// [START speech_transcribe_auto_punctuation_beta]
-
-const {SpeechClient} = require('@google-cloud/speech').v1p1beta1;
-
-const fs = require('fs');
-/**
- * Transcribe a short audio file with punctuation
- *
- * @param localFilePath {string} Path to local audio file, e.g. /path/audio.wav
- */
-function sampleRecognize(localFilePath) {
-  const client = new SpeechClient();
+function main(localFilePath = 'resources/commercial_mono.wav') {
+  // [START speech_transcribe_auto_punctuation_beta]
+  /**
+   * TODO(developer): Uncomment these variables before running the sample.
+   */
   // const localFilePath = 'resources/commercial_mono.wav';
 
-  // When enabled, trascription results may include punctuation
-  // (available for select languages).
-  const enableAutomaticPunctuation = true;
+  // Imports the client library
+  const {SpeechClient} = require('@google-cloud/speech').v1p1beta1;
 
-  // The language of the supplied audio. Even though additional languages are
-  // provided by alternative_language_codes, a primary language is still required.
-  const languageCode = 'en-US';
-  const config = {
-    enableAutomaticPunctuation: enableAutomaticPunctuation,
-    languageCode: languageCode,
-  };
-  const content = fs.readFileSync(localFilePath).toString('base64');
-  const audio = {
-    content: content,
-  };
-  const request = {
-    config: config,
-    audio: audio,
-  };
-  client
-    .recognize(request)
-    .then(responses => {
-      const response = responses[0];
-      for (const result of response.results) {
-        // First alternative is the most probable result
-        const alternative = result.alternatives[0];
-        console.log(`Transcript: ${alternative.transcript}`);
-      }
-    })
-    .catch(err => {
-      console.error(err);
-    });
+  // Additional imports
+  const fs = require('fs');
+
+  // Instantiates a client
+  const speechClient = new SpeechClient();
+
+  async function sampleRecognize() {
+    // When enabled, trascription results may include punctuation
+    // (available for select languages).
+    const enableAutomaticPunctuation = true;
+
+    // The language of the supplied audio. Even though additional languages are
+    // provided by alternative_language_codes, a primary language is still required.
+    const languageCode = 'en-US';
+    const config = {
+      enableAutomaticPunctuation: enableAutomaticPunctuation,
+      languageCode: languageCode,
+    };
+    const content = fs.readFileSync(localFilePath).toString('base64');
+    const audio = {
+      content: content,
+    };
+
+    // Construct request
+    const request = {
+      config: config,
+      audio: audio,
+    };
+
+    // Run request
+    const [response] = await speechClient.recognize(request);
+
+    for (const result of response.results) {
+      // First alternative is the most probable result
+      const alternative = result.alternatives[0];
+      console.log(`Transcript: ${alternative.transcript}`);
+    }
+  }
+  sampleRecognize();
+  // [END speech_transcribe_auto_punctuation_beta]
 }
-
-// [END speech_transcribe_auto_punctuation_beta]
-// tslint:disable-next-line:no-any
 
 const argv = require(`yargs`).option('local_file_path', {
   default: 'resources/commercial_mono.wav',
   string: true,
 }).argv;
 
-sampleRecognize(argv.local_file_path);
+main(argv.local_file_path);

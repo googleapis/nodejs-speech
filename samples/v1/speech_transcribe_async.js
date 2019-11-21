@@ -21,62 +21,67 @@
 
 'use strict';
 
-// [START speech_transcribe_async]
-
-const {SpeechClient} = require('@google-cloud/speech').v1;
-
-const fs = require('fs');
-/**
- * Transcribe a long audio file using asynchronous speech recognition
- *
- * @param localFilePath {string} Path to local audio file, e.g. /path/audio.wav
- */
-async function sampleLongRunningRecognize(localFilePath) {
-  const client = new SpeechClient();
+function main(localFilePath = 'resources/brooklyn_bridge.raw') {
+  // [START speech_transcribe_async]
+  /**
+   * TODO(developer): Uncomment these variables before running the sample.
+   */
   // const localFilePath = 'resources/brooklyn_bridge.raw';
 
-  // The language of the supplied audio
-  const languageCode = 'en-US';
+  // Imports the client library
+  const {SpeechClient} = require('@google-cloud/speech').v1;
 
-  // Sample rate in Hertz of the audio data sent
-  const sampleRateHertz = 16000;
+  // Additional imports
+  const fs = require('fs');
 
-  // Encoding of audio data sent. This sample sets this explicitly.
-  // This field is optional for FLAC and WAV audio formats.
-  const encoding = 'LINEAR16';
-  const config = {
-    languageCode: languageCode,
-    sampleRateHertz: sampleRateHertz,
-    encoding: encoding,
-  };
-  const content = fs.readFileSync(localFilePath).toString('base64');
-  const audio = {
-    content: content,
-  };
-  const request = {
-    config: config,
-    audio: audio,
-  };
+  // Instantiates a client
+  const speechClient = new SpeechClient();
 
-  // Create a job whose results you can either wait for now, or get later
-  const [operation] = await client.longRunningRecognize(request);
+  async function sampleLongRunningRecognize() {
+    // The language of the supplied audio
+    const languageCode = 'en-US';
 
-  // Get a Promise representation of the final result of the job
-  const [response] = await operation.promise();
+    // Sample rate in Hertz of the audio data sent
+    const sampleRateHertz = 16000;
 
-  for (const result of response.results) {
-    // First alternative is the most probable result
-    const alternative = result.alternatives[0];
-    console.log(`Transcript: ${alternative.transcript}`);
+    // Encoding of audio data sent. This sample sets this explicitly.
+    // This field is optional for FLAC and WAV audio formats.
+    const encoding = 'LINEAR16';
+    const config = {
+      languageCode: languageCode,
+      sampleRateHertz: sampleRateHertz,
+      encoding: encoding,
+    };
+    const content = fs.readFileSync(localFilePath).toString('base64');
+    const audio = {
+      content: content,
+    };
+
+    // Construct request
+    const request = {
+      config: config,
+      audio: audio,
+    };
+
+    // Start long-running operation. You can wait for now or get results later.
+    const [operation] = await speechClient.longRunningRecognize(request);
+
+    // Wait for operation to complete.
+    const [response] = await operation.promise();
+
+    for (const result of response.results) {
+      // First alternative is the most probable result
+      const alternative = result.alternatives[0];
+      console.log(`Transcript: ${alternative.transcript}`);
+    }
   }
+  sampleLongRunningRecognize();
+  // [END speech_transcribe_async]
 }
-
-// [END speech_transcribe_async]
-// tslint:disable-next-line:no-any
 
 const argv = require(`yargs`).option('local_file_path', {
   default: 'resources/brooklyn_bridge.raw',
   string: true,
 }).argv;
 
-sampleLongRunningRecognize(argv.local_file_path).catch(console.error);
+main(argv.local_file_path);

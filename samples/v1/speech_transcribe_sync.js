@@ -21,63 +21,64 @@
 
 'use strict';
 
-// [START speech_transcribe_sync]
-
-const {SpeechClient} = require('@google-cloud/speech').v1;
-
-const fs = require('fs');
-/**
- * Transcribe a short audio file using synchronous speech recognition
- *
- * @param localFilePath {string} Path to local audio file, e.g. /path/audio.wav
- */
-function sampleRecognize(localFilePath) {
-  const client = new SpeechClient();
+function main(localFilePath = 'resources/brooklyn_bridge.raw') {
+  // [START speech_transcribe_sync]
+  /**
+   * TODO(developer): Uncomment these variables before running the sample.
+   */
   // const localFilePath = 'resources/brooklyn_bridge.raw';
 
-  // The language of the supplied audio
-  const languageCode = 'en-US';
+  // Imports the client library
+  const {SpeechClient} = require('@google-cloud/speech').v1;
 
-  // Sample rate in Hertz of the audio data sent
-  const sampleRateHertz = 16000;
+  // Additional imports
+  const fs = require('fs');
 
-  // Encoding of audio data sent. This sample sets this explicitly.
-  // This field is optional for FLAC and WAV audio formats.
-  const encoding = 'LINEAR16';
-  const config = {
-    languageCode: languageCode,
-    sampleRateHertz: sampleRateHertz,
-    encoding: encoding,
-  };
-  const content = fs.readFileSync(localFilePath).toString('base64');
-  const audio = {
-    content: content,
-  };
-  const request = {
-    config: config,
-    audio: audio,
-  };
-  client
-    .recognize(request)
-    .then(responses => {
-      const response = responses[0];
-      for (const result of response.results) {
-        // First alternative is the most probable result
-        const alternative = result.alternatives[0];
-        console.log(`Transcript: ${alternative.transcript}`);
-      }
-    })
-    .catch(err => {
-      console.error(err);
-    });
+  // Instantiates a client
+  const speechClient = new SpeechClient();
+
+  async function sampleRecognize() {
+    // The language of the supplied audio
+    const languageCode = 'en-US';
+
+    // Sample rate in Hertz of the audio data sent
+    const sampleRateHertz = 16000;
+
+    // Encoding of audio data sent. This sample sets this explicitly.
+    // This field is optional for FLAC and WAV audio formats.
+    const encoding = 'LINEAR16';
+    const config = {
+      languageCode: languageCode,
+      sampleRateHertz: sampleRateHertz,
+      encoding: encoding,
+    };
+    const content = fs.readFileSync(localFilePath).toString('base64');
+    const audio = {
+      content: content,
+    };
+
+    // Construct request
+    const request = {
+      config: config,
+      audio: audio,
+    };
+
+    // Run request
+    const [response] = await speechClient.recognize(request);
+
+    for (const result of response.results) {
+      // First alternative is the most probable result
+      const alternative = result.alternatives[0];
+      console.log(`Transcript: ${alternative.transcript}`);
+    }
+  }
+  sampleRecognize();
+  // [END speech_transcribe_sync]
 }
-
-// [END speech_transcribe_sync]
-// tslint:disable-next-line:no-any
 
 const argv = require(`yargs`).option('local_file_path', {
   default: 'resources/brooklyn_bridge.raw',
   string: true,
 }).argv;
 
-sampleRecognize(argv.local_file_path);
+main(argv.local_file_path);

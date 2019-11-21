@@ -21,66 +21,71 @@
 
 'use strict';
 
-// [START speech_transcribe_async_word_time_offsets_gcs]
-
-const {SpeechClient} = require('@google-cloud/speech').v1;
-
-/**
- * Print start and end time of each word spoken in audio file from Cloud Storage
- *
- * @param storageUri {string} URI for audio file in Cloud Storage, e.g. gs://[BUCKET]/[FILE]
- */
-async function sampleLongRunningRecognize(storageUri) {
-  const client = new SpeechClient();
+function main(
+  storageUri = 'gs://cloud-samples-data/speech/brooklyn_bridge.flac'
+) {
+  // [START speech_transcribe_async_word_time_offsets_gcs]
+  /**
+   * TODO(developer): Uncomment these variables before running the sample.
+   */
   // const storageUri = 'gs://cloud-samples-data/speech/brooklyn_bridge.flac';
 
-  // When enabled, the first result returned by the API will include a list
-  // of words and the start and end time offsets (timestamps) for those words.
-  const enableWordTimeOffsets = true;
+  // Imports the client library
+  const {SpeechClient} = require('@google-cloud/speech').v1;
 
-  // The language of the supplied audio
-  const languageCode = 'en-US';
-  const config = {
-    enableWordTimeOffsets: enableWordTimeOffsets,
-    languageCode: languageCode,
-  };
-  const audio = {
-    uri: storageUri,
-  };
-  const request = {
-    config: config,
-    audio: audio,
-  };
+  // Instantiates a client
+  const speechClient = new SpeechClient();
 
-  // Create a job whose results you can either wait for now, or get later
-  const [operation] = await client.longRunningRecognize(request);
+  async function sampleLongRunningRecognize() {
+    // When enabled, the first result returned by the API will include a list
+    // of words and the start and end time offsets (timestamps) for those words.
+    const enableWordTimeOffsets = true;
 
-  // Get a Promise representation of the final result of the job
-  const [response] = await operation.promise();
+    // The language of the supplied audio
+    const languageCode = 'en-US';
+    const config = {
+      enableWordTimeOffsets: enableWordTimeOffsets,
+      languageCode: languageCode,
+    };
+    const audio = {
+      uri: storageUri,
+    };
 
-  // The first result includes start and end time word offsets
-  const result = response.results[0];
-  // First alternative is the most probable result
-  const alternative = result.alternatives[0];
-  console.log(`Transcript: ${alternative.transcript}`);
-  // Print the start and end time of each word
-  for (const word of alternative.words) {
-    console.log(`Word: ${word.word}`);
-    console.log(
-      `Start time: ${word.startTime.seconds} seconds ${word.startTime.nanos} nanos`
-    );
-    console.log(
-      `End time: ${word.endTime.seconds} seconds ${word.endTime.nanos} nanos`
-    );
+    // Construct request
+    const request = {
+      config: config,
+      audio: audio,
+    };
+
+    // Start long-running operation. You can wait for now or get results later.
+    const [operation] = await speechClient.longRunningRecognize(request);
+
+    // Wait for operation to complete.
+    const [response] = await operation.promise();
+
+    // The first result includes start and end time word offsets
+    const result = response.results[0];
+    // First alternative is the most probable result
+    const alternative = result.alternatives[0];
+    console.log(`Transcript: ${alternative.transcript}`);
+    // Print the start and end time of each word
+    for (const word of alternative.words) {
+      console.log(`Word: ${word.word}`);
+      console.log(
+        `Start time: ${word.startTime.seconds} seconds ${word.startTime.nanos} nanos`
+      );
+      console.log(
+        `End time: ${word.endTime.seconds} seconds ${word.endTime.nanos} nanos`
+      );
+    }
   }
+  sampleLongRunningRecognize();
+  // [END speech_transcribe_async_word_time_offsets_gcs]
 }
-
-// [END speech_transcribe_async_word_time_offsets_gcs]
-// tslint:disable-next-line:no-any
 
 const argv = require(`yargs`).option('storage_uri', {
   default: 'gs://cloud-samples-data/speech/brooklyn_bridge.flac',
   string: true,
 }).argv;
 
-sampleLongRunningRecognize(argv.storage_uri).catch(console.error);
+main(argv.storage_uri);

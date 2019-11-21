@@ -22,68 +22,72 @@
 
 'use strict';
 
-// [START speech_transcribe_diarization_beta]
-
-const {SpeechClient} = require('@google-cloud/speech').v1p1beta1;
-
-const fs = require('fs');
-/**
- * Print confidence level for individual words in a transcription of a short audio file
- * Separating different speakers in an audio file recording
- *
- * @param localFilePath {string} Path to local audio file, e.g. /path/audio.wav
- */
-async function sampleLongRunningRecognize(localFilePath) {
-  const client = new SpeechClient();
+function main(localFilePath = 'resources/commercial_mono.wav') {
+  // [START speech_transcribe_diarization_beta]
+  /**
+   * TODO(developer): Uncomment these variables before running the sample.
+   */
   // const localFilePath = 'resources/commercial_mono.wav';
 
-  // If enabled, each word in the first alternative of each result will be
-  // tagged with a speaker tag to identify the speaker.
-  const enableSpeakerDiarization = true;
+  // Imports the client library
+  const {SpeechClient} = require('@google-cloud/speech').v1p1beta1;
 
-  // Optional. Specifies the estimated number of speakers in the conversation.
-  const diarizationSpeakerCount = 2;
+  // Additional imports
+  const fs = require('fs');
 
-  // The language of the supplied audio
-  const languageCode = 'en-US';
-  const config = {
-    enableSpeakerDiarization: enableSpeakerDiarization,
-    diarizationSpeakerCount: diarizationSpeakerCount,
-    languageCode: languageCode,
-  };
-  const content = fs.readFileSync(localFilePath).toString('base64');
-  const audio = {
-    content: content,
-  };
-  const request = {
-    config: config,
-    audio: audio,
-  };
+  // Instantiates a client
+  const speechClient = new SpeechClient();
 
-  // Create a job whose results you can either wait for now, or get later
-  const [operation] = await client.longRunningRecognize(request);
+  async function sampleLongRunningRecognize() {
+    // If enabled, each word in the first alternative of each result will be
+    // tagged with a speaker tag to identify the speaker.
+    const enableSpeakerDiarization = true;
 
-  // Get a Promise representation of the final result of the job
-  const [response] = await operation.promise();
+    // Optional. Specifies the estimated number of speakers in the conversation.
+    const diarizationSpeakerCount = 2;
 
-  for (const result of response.results) {
-    // First alternative has words tagged with speakers
-    const alternative = result.alternatives[0];
-    console.log(`Transcript: ${alternative.transcript}`);
-    // Print the speakerTag of each word
-    for (const word of alternative.words) {
-      console.log(`Word: ${word.word}`);
-      console.log(`Speaker tag: ${word.speakerTag}`);
+    // The language of the supplied audio
+    const languageCode = 'en-US';
+    const config = {
+      enableSpeakerDiarization: enableSpeakerDiarization,
+      diarizationSpeakerCount: diarizationSpeakerCount,
+      languageCode: languageCode,
+    };
+    const content = fs.readFileSync(localFilePath).toString('base64');
+    const audio = {
+      content: content,
+    };
+
+    // Construct request
+    const request = {
+      config: config,
+      audio: audio,
+    };
+
+    // Start long-running operation. You can wait for now or get results later.
+    const [operation] = await speechClient.longRunningRecognize(request);
+
+    // Wait for operation to complete.
+    const [response] = await operation.promise();
+
+    for (const result of response.results) {
+      // First alternative has words tagged with speakers
+      const alternative = result.alternatives[0];
+      console.log(`Transcript: ${alternative.transcript}`);
+      // Print the speakerTag of each word
+      for (const word of alternative.words) {
+        console.log(`Word: ${word.word}`);
+        console.log(`Speaker tag: ${word.speakerTag}`);
+      }
     }
   }
+  sampleLongRunningRecognize();
+  // [END speech_transcribe_diarization_beta]
 }
-
-// [END speech_transcribe_diarization_beta]
-// tslint:disable-next-line:no-any
 
 const argv = require(`yargs`).option('local_file_path', {
   default: 'resources/commercial_mono.wav',
   string: true,
 }).argv;
 
-sampleLongRunningRecognize(argv.local_file_path).catch(console.error);
+main(argv.local_file_path);

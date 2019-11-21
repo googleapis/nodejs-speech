@@ -21,65 +21,66 @@
 
 'use strict';
 
-// [START speech_transcribe_enhanced_model]
-
-const {SpeechClient} = require('@google-cloud/speech').v1;
-
-const fs = require('fs');
-/**
- * Transcribe a short audio file using an enhanced model
- *
- * @param localFilePath {string} Path to local audio file, e.g. /path/audio.wav
- */
-function sampleRecognize(localFilePath) {
-  const client = new SpeechClient();
+function main(localFilePath = 'resources/hello.wav') {
+  // [START speech_transcribe_enhanced_model]
+  /**
+   * TODO(developer): Uncomment these variables before running the sample.
+   */
   // const localFilePath = 'resources/hello.wav';
 
-  // The enhanced model to use, e.g. phone_call
-  // Currently phone_call is the only model available as an enhanced model.
-  const model = 'phone_call';
+  // Imports the client library
+  const {SpeechClient} = require('@google-cloud/speech').v1;
 
-  // Use an enhanced model for speech recognition (when set to true).
-  // Project must be eligible for requesting enhanced models.
-  // Enhanced speech models require that you opt-in to data logging.
-  const useEnhanced = true;
+  // Additional imports
+  const fs = require('fs');
 
-  // The language of the supplied audio
-  const languageCode = 'en-US';
-  const config = {
-    model: model,
-    useEnhanced: useEnhanced,
-    languageCode: languageCode,
-  };
-  const content = fs.readFileSync(localFilePath).toString('base64');
-  const audio = {
-    content: content,
-  };
-  const request = {
-    config: config,
-    audio: audio,
-  };
-  client
-    .recognize(request)
-    .then(responses => {
-      const response = responses[0];
-      for (const result of response.results) {
-        // First alternative is the most probable result
-        const alternative = result.alternatives[0];
-        console.log(`Transcript: ${alternative.transcript}`);
-      }
-    })
-    .catch(err => {
-      console.error(err);
-    });
+  // Instantiates a client
+  const speechClient = new SpeechClient();
+
+  async function sampleRecognize() {
+    // The enhanced model to use, e.g. phone_call
+    // Currently phone_call is the only model available as an enhanced model.
+    const model = 'phone_call';
+
+    // Use an enhanced model for speech recognition (when set to true).
+    // Project must be eligible for requesting enhanced models.
+    // Enhanced speech models require that you opt-in to data logging.
+    const useEnhanced = true;
+
+    // The language of the supplied audio
+    const languageCode = 'en-US';
+    const config = {
+      model: model,
+      useEnhanced: useEnhanced,
+      languageCode: languageCode,
+    };
+    const content = fs.readFileSync(localFilePath).toString('base64');
+    const audio = {
+      content: content,
+    };
+
+    // Construct request
+    const request = {
+      config: config,
+      audio: audio,
+    };
+
+    // Run request
+    const [response] = await speechClient.recognize(request);
+
+    for (const result of response.results) {
+      // First alternative is the most probable result
+      const alternative = result.alternatives[0];
+      console.log(`Transcript: ${alternative.transcript}`);
+    }
+  }
+  sampleRecognize();
+  // [END speech_transcribe_enhanced_model]
 }
-
-// [END speech_transcribe_enhanced_model]
-// tslint:disable-next-line:no-any
 
 const argv = require(`yargs`).option('local_file_path', {
   default: 'resources/hello.wav',
   string: true,
 }).argv;
 
-sampleRecognize(argv.local_file_path);
+main(argv.local_file_path);

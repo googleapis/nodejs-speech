@@ -21,53 +21,52 @@
 
 'use strict';
 
-// [START speech_transcribe_model_selection_gcs]
-
-const {SpeechClient} = require('@google-cloud/speech').v1;
-
-/**
- * Transcribe a short audio file from Cloud Storage using a specified transcription model
- *
- * @param storageUri {string} URI for audio file in Cloud Storage, e.g. gs://[BUCKET]/[FILE]
- * @param model {string} The transcription model to use, e.g. video, phone_call, default
- * For a list of available transcription models, see:
- * https://cloud.google.com/speech-to-text/docs/transcription-model#transcription_models
- */
-function sampleRecognize(storageUri, model) {
-  const client = new SpeechClient();
+function main(
+  storageUri = 'gs://cloud-samples-data/speech/hello.wav',
+  model = 'phone_call'
+) {
+  // [START speech_transcribe_model_selection_gcs]
+  /**
+   * TODO(developer): Uncomment these variables before running the sample.
+   */
   // const storageUri = 'gs://cloud-samples-data/speech/hello.wav';
   // const model = 'phone_call';
 
-  // The language of the supplied audio
-  const languageCode = 'en-US';
-  const config = {
-    model: model,
-    languageCode: languageCode,
-  };
-  const audio = {
-    uri: storageUri,
-  };
-  const request = {
-    config: config,
-    audio: audio,
-  };
-  client
-    .recognize(request)
-    .then(responses => {
-      const response = responses[0];
-      for (const result of response.results) {
-        // First alternative is the most probable result
-        const alternative = result.alternatives[0];
-        console.log(`Transcript: ${alternative.transcript}`);
-      }
-    })
-    .catch(err => {
-      console.error(err);
-    });
-}
+  // Imports the client library
+  const {SpeechClient} = require('@google-cloud/speech').v1;
 
-// [END speech_transcribe_model_selection_gcs]
-// tslint:disable-next-line:no-any
+  // Instantiates a client
+  const speechClient = new SpeechClient();
+
+  async function sampleRecognize() {
+    // The language of the supplied audio
+    const languageCode = 'en-US';
+    const config = {
+      model: model,
+      languageCode: languageCode,
+    };
+    const audio = {
+      uri: storageUri,
+    };
+
+    // Construct request
+    const request = {
+      config: config,
+      audio: audio,
+    };
+
+    // Run request
+    const [response] = await speechClient.recognize(request);
+
+    for (const result of response.results) {
+      // First alternative is the most probable result
+      const alternative = result.alternatives[0];
+      console.log(`Transcript: ${alternative.transcript}`);
+    }
+  }
+  sampleRecognize();
+  // [END speech_transcribe_model_selection_gcs]
+}
 
 const argv = require(`yargs`)
   .option('storage_uri', {
@@ -79,4 +78,4 @@ const argv = require(`yargs`)
     string: true,
   }).argv;
 
-sampleRecognize(argv.storage_uri, argv.model);
+main(argv.storage_uri, argv.model);

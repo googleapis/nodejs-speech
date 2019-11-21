@@ -21,74 +21,76 @@
 
 'use strict';
 
-// [START speech_adaptation_beta]
-
-const {SpeechClient} = require('@google-cloud/speech').v1p1beta1;
-
-/**
- * Transcribe a short audio file with speech adaptation.
- *
- * @param storageUri {string} URI for audio file in Cloud Storage, e.g. gs://[BUCKET]/[FILE]
- * @param phrase {string} Phrase "hints" help recognize the specified phrases from your audio.
- */
-function sampleRecognize(storageUri, phrase) {
-  const client = new SpeechClient();
+function main(
+  storageUri = 'gs://cloud-samples-data/speech/brooklyn_bridge.mp3',
+  phrase = 'Brooklyn Bridge'
+) {
+  // [START speech_adaptation_beta]
+  /**
+   * TODO(developer): Uncomment these variables before running the sample.
+   */
   // const storageUri = 'gs://cloud-samples-data/speech/brooklyn_bridge.mp3';
   // const phrase = 'Brooklyn Bridge';
-  const phrases = [phrase];
 
-  // Hint Boost. This value increases the probability that a specific
-  // phrase will be recognized over other similar sounding phrases.
-  // The higher the boost, the higher the chance of false positive
-  // recognition as well. Can accept wide range of positive values.
-  // Most use cases are best served with values between 0 and 20.
-  // Using a binary search happroach may help you find the optimal value.
-  const boost = 20.0;
-  const speechContextsElement = {
-    phrases: phrases,
-    boost: boost,
-  };
-  const speechContexts = [speechContextsElement];
+  // Imports the client library
+  const {SpeechClient} = require('@google-cloud/speech').v1p1beta1;
 
-  // Sample rate in Hertz of the audio data sent
-  const sampleRateHertz = 44100;
+  // Instantiates a client
+  const speechClient = new SpeechClient();
 
-  // The language of the supplied audio
-  const languageCode = 'en-US';
+  async function sampleRecognize() {
+    const phrases = [phrase];
 
-  // Encoding of audio data sent. This sample sets this explicitly.
-  // This field is optional for FLAC and WAV audio formats.
-  const encoding = 'MP3';
-  const config = {
-    speechContexts: speechContexts,
-    sampleRateHertz: sampleRateHertz,
-    languageCode: languageCode,
-    encoding: encoding,
-  };
-  const audio = {
-    uri: storageUri,
-  };
-  const request = {
-    config: config,
-    audio: audio,
-  };
-  client
-    .recognize(request)
-    .then(responses => {
-      const response = responses[0];
-      for (const result of response.results) {
-        // First alternative is the most probable result
-        const alternative = result.alternatives[0];
-        console.log(`Transcript: ${alternative.transcript}`);
-      }
-    })
-    .catch(err => {
-      console.error(err);
-    });
+    // Hint Boost. This value increases the probability that a specific
+    // phrase will be recognized over other similar sounding phrases.
+    // The higher the boost, the higher the chance of false positive
+    // recognition as well. Can accept wide range of positive values.
+    // Most use cases are best served with values between 0 and 20.
+    // Using a binary search happroach may help you find the optimal value.
+    const boost = 20.0;
+    const speechContextsElement = {
+      phrases: phrases,
+      boost: boost,
+    };
+    const speechContexts = [speechContextsElement];
+
+    // Sample rate in Hertz of the audio data sent
+    const sampleRateHertz = 44100;
+
+    // The language of the supplied audio
+    const languageCode = 'en-US';
+
+    // Encoding of audio data sent. This sample sets this explicitly.
+    // This field is optional for FLAC and WAV audio formats.
+    const encoding = 'MP3';
+    const config = {
+      speechContexts: speechContexts,
+      sampleRateHertz: sampleRateHertz,
+      languageCode: languageCode,
+      encoding: encoding,
+    };
+    const audio = {
+      uri: storageUri,
+    };
+
+    // Construct request
+    const request = {
+      config: config,
+      audio: audio,
+    };
+
+    // Run request
+    const [response] = await speechClient.recognize(request);
+
+    for (const result of response.results) {
+      // First alternative is the most probable result
+      const alternative = result.alternatives[0];
+      console.log(`Transcript: ${alternative.transcript}`);
+    }
+  }
+  sampleRecognize();
+  // [END speech_adaptation_beta]
 }
-
-// [END speech_adaptation_beta]
-// tslint:disable-next-line:no-any
 
 const argv = require(`yargs`)
   .option('storage_uri', {
@@ -100,4 +102,4 @@ const argv = require(`yargs`)
     string: true,
   }).argv;
 
-sampleRecognize(argv.storage_uri, argv.phrase);
+main(argv.storage_uri, argv.phrase);

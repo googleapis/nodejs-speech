@@ -34,6 +34,8 @@ describe('SpeechSmokeTest', () => {
     const audio = {
       uri: uri,
     };
+
+    // Construct request
     const request = {
       config: config,
       audio: audio,

@@ -21,68 +21,67 @@
 
 'use strict';
 
-// [START speech_contexts_classes_beta]
-
-const {SpeechClient} = require('@google-cloud/speech').v1p1beta1;
-
-/**
- * Transcribe a short audio file with static context classes.
- *
- * @param storageUri {string} URI for audio file in Cloud Storage, e.g. gs://[BUCKET]/[FILE]
- * @param phrase {string} Phrase "hints" help recognize the specified phrases from your audio.
- * In this sample we are using a static class phrase ($TIME).
- * Classes represent groups of words that represent common concepts
- * that occur in natural language.
- */
-function sampleRecognize(storageUri, phrase) {
-  const client = new SpeechClient();
+function main(
+  storageUri = 'gs://cloud-samples-data/speech/time.mp3',
+  phrase = '$TIME'
+) {
+  // [START speech_contexts_classes_beta]
+  /**
+   * TODO(developer): Uncomment these variables before running the sample.
+   */
   // const storageUri = 'gs://cloud-samples-data/speech/time.mp3';
   // const phrase = '$TIME';
-  const phrases = [phrase];
-  const speechContextsElement = {
-    phrases: phrases,
-  };
-  const speechContexts = [speechContextsElement];
 
-  // The language of the supplied audio
-  const languageCode = 'en-US';
+  // Imports the client library
+  const {SpeechClient} = require('@google-cloud/speech').v1p1beta1;
 
-  // Sample rate in Hertz of the audio data sent
-  const sampleRateHertz = 24000;
+  // Instantiates a client
+  const speechClient = new SpeechClient();
 
-  // Encoding of audio data sent. This sample sets this explicitly.
-  // This field is optional for FLAC and WAV audio formats.
-  const encoding = 'MP3';
-  const config = {
-    speechContexts: speechContexts,
-    languageCode: languageCode,
-    sampleRateHertz: sampleRateHertz,
-    encoding: encoding,
-  };
-  const audio = {
-    uri: storageUri,
-  };
-  const request = {
-    config: config,
-    audio: audio,
-  };
-  client
-    .recognize(request)
-    .then(responses => {
-      const response = responses[0];
-      for (const result of response.results) {
-        // First alternative is the most probable result
-        const alternative = result.alternatives[0];
-        console.log(`Transcript: ${alternative.transcript}`);
-      }
-    })
-    .catch(err => {
-      console.error(err);
-    });
+  async function sampleRecognize() {
+    const phrases = [phrase];
+    const speechContextsElement = {
+      phrases: phrases,
+    };
+    const speechContexts = [speechContextsElement];
+
+    // The language of the supplied audio
+    const languageCode = 'en-US';
+
+    // Sample rate in Hertz of the audio data sent
+    const sampleRateHertz = 24000;
+
+    // Encoding of audio data sent. This sample sets this explicitly.
+    // This field is optional for FLAC and WAV audio formats.
+    const encoding = 'MP3';
+    const config = {
+      speechContexts: speechContexts,
+      languageCode: languageCode,
+      sampleRateHertz: sampleRateHertz,
+      encoding: encoding,
+    };
+    const audio = {
+      uri: storageUri,
+    };
+
+    // Construct request
+    const request = {
+      config: config,
+      audio: audio,
+    };
+
+    // Run request
+    const [response] = await speechClient.recognize(request);
+
+    for (const result of response.results) {
+      // First alternative is the most probable result
+      const alternative = result.alternatives[0];
+      console.log(`Transcript: ${alternative.transcript}`);
+    }
+  }
+  sampleRecognize();
+  // [END speech_contexts_classes_beta]
 }
-
-// [END speech_contexts_classes_beta]
-// tslint:disable-next-line:no-any
 
 const argv = require(`yargs`)
   .option('storage_uri', {
@@ -94,4 +93,4 @@ const argv = require(`yargs`)
     string: true,
   }).argv;
 
-sampleRecognize(argv.storage_uri, argv.phrase);
+main(argv.storage_uri, argv.phrase);

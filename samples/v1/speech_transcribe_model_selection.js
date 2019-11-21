@@ -21,55 +21,53 @@
 
 'use strict';
 
-// [START speech_transcribe_model_selection]
-
-const {SpeechClient} = require('@google-cloud/speech').v1;
-
-const fs = require('fs');
-/**
- * Transcribe a short audio file using a specified transcription model
- *
- * @param localFilePath {string} Path to local audio file, e.g. /path/audio.wav
- * @param model {string} The transcription model to use, e.g. video, phone_call, default
- * For a list of available transcription models, see:
- * https://cloud.google.com/speech-to-text/docs/transcription-model#transcription_models
- */
-function sampleRecognize(localFilePath, model) {
-  const client = new SpeechClient();
+function main(localFilePath = 'resources/hello.wav', model = 'phone_call') {
+  // [START speech_transcribe_model_selection]
+  /**
+   * TODO(developer): Uncomment these variables before running the sample.
+   */
   // const localFilePath = 'resources/hello.wav';
   // const model = 'phone_call';
 
-  // The language of the supplied audio
-  const languageCode = 'en-US';
-  const config = {
-    model: model,
-    languageCode: languageCode,
-  };
-  const content = fs.readFileSync(localFilePath).toString('base64');
-  const audio = {
-    content: content,
-  };
-  const request = {
-    config: config,
-    audio: audio,
-  };
-  client
-    .recognize(request)
-    .then(responses => {
-      const response = responses[0];
-      for (const result of response.results) {
-        // First alternative is the most probable result
-        const alternative = result.alternatives[0];
-        console.log(`Transcript: ${alternative.transcript}`);
-      }
-    })
-    .catch(err => {
-      console.error(err);
-    });
-}
+  // Imports the client library
+  const {SpeechClient} = require('@google-cloud/speech').v1;
 
-// [END speech_transcribe_model_selection]
-// tslint:disable-next-line:no-any
+  // Additional imports
+  const fs = require('fs');
+
+  // Instantiates a client
+  const speechClient = new SpeechClient();
+
+  async function sampleRecognize() {
+    // The language of the supplied audio
+    const languageCode = 'en-US';
+    const config = {
+      model: model,
+      languageCode: languageCode,
+    };
+    const content = fs.readFileSync(localFilePath).toString('base64');
+    const audio = {
+      content: content,
+    };
+
+    // Construct request
+    const request = {
+      config: config,
+      audio: audio,
+    };
+
+    // Run request
+    const [response] = await speechClient.recognize(request);
+
+    for (const result of response.results) {
+      // First alternative is the most probable result
+      const alternative = result.alternatives[0];
+      console.log(`Transcript: ${alternative.transcript}`);
+    }
+  }
+  sampleRecognize();
+  // [END speech_transcribe_model_selection]
+}
 
 const argv = require(`yargs`)
   .option('local_file_path', {
@@ -81,4 +79,4 @@ const argv = require(`yargs`)
     string: true,
   }).argv;
 
-sampleRecognize(argv.local_file_path, argv.model);
+main(argv.local_file_path, argv.model);
