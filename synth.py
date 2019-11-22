@@ -54,7 +54,7 @@ for version in versions:
         'export interface SpeechClient extends ImprovedStreamingClient {}\n'
     )
 
-templates = common_templates.node_library()
+templates = common_templates.node_library(source_location='build/src')
 s.copy(templates)
 
 #
