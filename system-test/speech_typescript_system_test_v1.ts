@@ -18,13 +18,14 @@ import * as fs from 'fs';
 import * as path from 'path';
 import {google} from '../protos/protos';
 
-describe('SpeechClient TypeScript system test default', () => {
+describe('SpeechClient TypeScript system test v1', () => {
   it('calls recognize', async () => {
-    const client = new speech.SpeechClient();
+    const client = new speech.v1.SpeechClient();
 
     const languageCode = 'en-US';
     const sampleRateHertz = 44100;
-    const encoding = google.cloud.speech.v1.RecognitionConfig.AudioEncoding.FLAC;
+    const encoding =
+      google.cloud.speech.v1.RecognitionConfig.AudioEncoding.FLAC;
     const config = {
       languageCode,
       sampleRateHertz,
@@ -39,15 +40,19 @@ describe('SpeechClient TypeScript system test default', () => {
       audio,
     };
     const [response] = await client.recognize(request);
-    assert.strictEqual(response?.results?.[0]?.alternatives?.[0]?.transcript, 'hello');
+    assert.strictEqual(
+      response?.results?.[0]?.alternatives?.[0]?.transcript,
+      'hello'
+    );
   });
 
   it('calls longRunningRecognize', async () => {
-    const client = new speech.SpeechClient();
+    const client = new speech.v1.SpeechClient();
 
     const languageCode = 'en-US';
     const sampleRateHertz = 44100;
-    const encoding = google.cloud.speech.v1.RecognitionConfig.AudioEncoding.FLAC;
+    const encoding =
+      google.cloud.speech.v1.RecognitionConfig.AudioEncoding.FLAC;
     const config = {
       languageCode,
       sampleRateHertz,
@@ -63,7 +68,10 @@ describe('SpeechClient TypeScript system test default', () => {
     };
     const [operation] = await client.longRunningRecognize(request);
     const [response] = await operation.promise();
-    assert.strictEqual(response?.results?.[0]?.alternatives?.[0]?.transcript, 'hello');
+    assert.strictEqual(
+      response?.results?.[0]?.alternatives?.[0]?.transcript,
+      'hello'
+    );
   });
 
   it('calls streamingRecognize', done => {
@@ -76,7 +84,8 @@ describe('SpeechClient TypeScript system test default', () => {
 
     const languageCode = 'en-US';
     const sampleRateHertz = 24000;
-    const encoding = google.cloud.speech.v1.RecognitionConfig.AudioEncoding.LINEAR16;
+    const encoding =
+      google.cloud.speech.v1.RecognitionConfig.AudioEncoding.LINEAR16;
     const config = {
       languageCode,
       sampleRateHertz,
@@ -87,16 +96,19 @@ describe('SpeechClient TypeScript system test default', () => {
       interimResults: false,
     };
 
-    const client = new speech.SpeechClient();
+    const client = new speech.v1.SpeechClient();
     const stream = client.streamingRecognize(request);
     let gotResponse = false;
-    stream.on('data', (response: google.cloud.speech.v1.IStreamingRecognizeResponse) => {
-      assert.strictEqual(
-        response?.results?.[0]?.alternatives?.[0]?.transcript,
-        'test of streaming recognize call'
-      );
-      gotResponse = true;
-    });
+    stream.on(
+      'data',
+      (response: google.cloud.speech.v1.IStreamingRecognizeResponse) => {
+        assert.strictEqual(
+          response?.results?.[0]?.alternatives?.[0]?.transcript,
+          'test of streaming recognize call'
+        );
+        gotResponse = true;
+      }
+    );
     stream.on('end', () => {
       assert(gotResponse);
       done();
