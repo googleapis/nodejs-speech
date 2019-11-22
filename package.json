@@ -41,8 +41,7 @@
     "predocs-test": "npm run docs",
     "compile": "tsc -p . && cp system-test/*.js build/system-test/ && cp -r protos build/",
     "prepare": "npm run compile",
-    "pretest": "npm run compile",
-    "posttest": "npm run lint"
+    "pretest": "npm run compile"
   },
   "dependencies": {
     "@google-cloud/common": "^2.0.0",
