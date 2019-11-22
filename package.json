@@ -8,10 +8,10 @@
     "node": ">=8.10.0"
   },
   "repository": "googleapis/nodejs-speech",
-  "main": "./src/index.js",
+  "main": "./build/src/index.js",
   "files": [
-    "protos",
-    "src",
+    "build/protos",
+    "build/src",
     "AUTHORS",
     "LICENSE"
   ],
@@ -29,30 +29,39 @@
     "Google Cloud Speech API"
   ],
   "scripts": {
-    "cover": "nyc --reporter=lcov mocha test/*.js && nyc report",
+    "cover": "nyc --reporter=lcov mocha build/test/*.js && nyc report",
     "docs": "jsdoc -c .jsdoc.js",
-    "lint": "eslint '**/*.js'",
+    "lint": "gts check && eslint '**/*.js'",
     "samples-test": "cd samples/ && npm link ../ && npm test && cd ../",
-    "system-test": "mocha system-test/*.js --timeout 600000",
-    "test-no-cover": "mocha test/*.js",
+    "system-test": "mocha build/system-test/*.js --timeout 600000",
+    "test-no-cover": "mocha build/test/*.js",
     "test": "npm run cover",
-    "fix": "eslint --fix '**/*.js'",
+    "fix": "gts fix && eslint --fix '**/*.js'",
     "docs-test": "linkinator docs",
-    "predocs-test": "npm run docs"
+    "predocs-test": "npm run docs",
+    "compile": "tsc -p . && cp system-test/*.js build/system-test/ && cp -r protos build/",
+    "prepare": "npm run compile",
+    "pretest": "npm run compile",
+    "posttest": "npm run lint"
   },
   "dependencies": {
     "@google-cloud/common": "^2.0.0",
-    "google-gax": "^1.7.5",
+    "google-gax": "^1.11.1",
     "protobufjs": "^6.8.6",
     "pumpify": "^2.0.0",
-    "stream-events": "^1.0.4"
+    "stream-events": "^1.0.4",
+    "@types/pumpify": "^1.4.1"
   },
   "devDependencies": {
+    "@types/mocha": "^5.2.7",
+    "@types/node": "^12.0.0",
+    "@types/sinon": "^7.5.1",
     "codecov": "^3.0.2",
     "eslint": "^6.0.0",
     "eslint-config-prettier": "^6.0.0",
     "eslint-plugin-node": "^10.0.0",
     "eslint-plugin-prettier": "^3.0.0",
+    "gts": "^1.1.2",
     "intelli-espower-loader": "^1.0.1",
     "jsdoc": "^3.5.5",
     "jsdoc-fresh": "^1.0.1",
@@ -60,9 +69,10 @@
     "linkinator": "^1.5.0",
     "mocha": "^6.0.0",
     "nyc": "^14.0.0",
+    "pack-n-play": "^1.0.0-2",
     "power-assert": "^1.6.0",
     "prettier": "^1.13.5",
-    "proxyquire": "^2.1.0",
-    "sinon": "^7.0.0"
+    "sinon": "^7.0.0",
+    "typescript": "~3.7.0"
   }
 }
