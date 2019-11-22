@@ -29,14 +29,12 @@
     "Google Cloud Speech API"
   ],
   "scripts": {
-    "cover": "nyc --reporter=lcov mocha build/test/*.js && nyc report",
     "docs": "jsdoc -c .jsdoc.js",
-    "lint": "gts check && eslint '**/*.js'",
+    "lint": "gts check && eslint samples/*.js samples/system-test/*.js system-test/*.js",
     "samples-test": "cd samples/ && npm link ../ && npm test && cd ../",
-    "system-test": "mocha build/system-test/*.js --timeout 600000",
-    "test-no-cover": "mocha build/test/*.js",
-    "test": "npm run cover",
-    "fix": "gts fix && eslint --fix '**/*.js'",
+    "system-test": "c8 mocha build/system-test/*.js --timeout 600000",
+    "test": "c8 mocha build/test/*.js",
+    "fix": "gts fix && eslint --fix samples/*.js samples/system-test/*.js system-test/*.js",
     "docs-test": "linkinator docs",
     "predocs-test": "npm run docs",
     "compile": "tsc -p . && cp system-test/*.js build/system-test/ && cp -r protos build/",
@@ -55,6 +53,7 @@
     "@types/mocha": "^5.2.7",
     "@types/node": "^12.0.0",
     "@types/sinon": "^7.5.1",
+    "c8": "^6.0.0",
     "codecov": "^3.0.2",
     "eslint": "^6.0.0",
     "eslint-config-prettier": "^6.0.0",
@@ -67,11 +66,14 @@
     "jsdoc-region-tag": "^1.0.2",
     "linkinator": "^1.5.0",
     "mocha": "^6.0.0",
-    "nyc": "^14.0.0",
+    "null-loader": "^3.0.0",
     "pack-n-play": "^1.0.0-2",
     "power-assert": "^1.6.0",
     "prettier": "^1.13.5",
     "sinon": "^7.0.0",
-    "typescript": "~3.7.0"
+    "ts-loader": "^6.2.1",
+    "typescript": "~3.7.0",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10"
   }
 }
