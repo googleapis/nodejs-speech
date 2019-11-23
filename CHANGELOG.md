@@ -6,6 +6,9 @@
 
 ## [3.5.0](https://www.github.com/googleapis/nodejs-speech/compare/v3.4.0...v3.5.0) (2019-11-22)
 
+In this release this library has been converted to TypeScript. This change is supposed to be compatible
+with the previous versions, but if you find that your code is broken by this change, please file an
+issue!
 
 ### Features
 
