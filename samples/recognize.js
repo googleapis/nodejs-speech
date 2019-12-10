@@ -263,7 +263,7 @@ async function asyncRecognizeGCS(
   const transcription = response.results
     .map(result => result.alternatives[0].transcript)
     .join('\n');
-  console.log(`Transcription: ${transcription}`);
+  console.log('Transcription: ${transcription}');
   // [END speech_transcribe_async_gcs]
 }
 
