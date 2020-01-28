@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@google-cloud/speech?activeTab=versions
 
+### [3.5.5](https://www.github.com/googleapis/nodejs-speech/compare/v3.5.4...v3.5.5) (2020-01-28)
+
+
+### Bug Fixes
+
+* enum, bytes, and Long types now accept strings ([9742189](https://www.github.com/googleapis/nodejs-speech/commit/974218903e4203de243b5d21229f273bf15ae7fc))
+
 ### [3.5.4](https://www.github.com/googleapis/nodejs-speech/compare/v3.5.3...v3.5.4) (2020-01-05)
 
 
