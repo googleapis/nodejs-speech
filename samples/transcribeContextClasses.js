@@ -63,7 +63,8 @@ function main(storageUri) {
     });
   }
 
-  transcribeContextClasses();
+  transcribeContextClasses().catch(console.error);
+  // [END speech_transcribe_sync]
 }
 
 main(...process.argv.slice(2));
