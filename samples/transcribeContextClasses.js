@@ -40,7 +40,7 @@ function main(storageUri) {
     };
 
     // RecognitionConfig: to configure your encoding and sample_rate_hertz, see:
-    // https://cloud.google.com/speech-to-text/docs/reference/rpc/google.cloud.speech.v1#audioencoding
+    // https://cloud.google.com/speech-to-text/docs/reference/rpc/google.cloud.speech.v1#recognitionconfig
     const config = {
       encoding: 'LINEAR16',
       sampleRateHertz: 8000,
