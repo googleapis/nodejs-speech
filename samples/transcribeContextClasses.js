@@ -26,7 +26,7 @@ function main(storageUri) {
   const client = new speech.SpeechClient();
 
   async function transcribeContextClasses() {
-    // storageUri = 'gs://YOUR_BUCKET_ID/path/to/your/file.mp3'
+    // storageUri = 'gs://YOUR_BUCKET_ID/path/to/your/file.wav'
     const audio = {
       uri: storageUri,
     };
