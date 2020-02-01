@@ -67,7 +67,7 @@
     "mocha": "^7.0.0",
     "null-loader": "^3.0.0",
     "pack-n-play": "^1.0.0-2",
-        "prettier": "^1.13.5",
+    "prettier": "^1.13.5",
     "sinon": "^8.0.0",
     "ts-loader": "^6.2.1",
     "typescript": "3.6.4",
