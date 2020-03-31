@@ -69,7 +69,7 @@ function microphoneStream(encoding, sampleRateHertz, languageCode) {
       process.stdout.write(
         data.results[0] && data.results[0].alternatives[0]
           ? `Transcription: ${data.results[0].alternatives[0].transcript}\n`
-          : `\n\nReached transcription time limit, press Ctrl+C\n`
+          : '\n\nReached transcription time limit, press Ctrl+C\n'
       )
     );
 
@@ -89,11 +89,11 @@ function microphoneStream(encoding, sampleRateHertz, languageCode) {
   // [END micStreamRecognize]
 }
 
-require(`yargs`)
+require('yargs')
   .demand(1)
   .command(
-    `micStreamRecognize`,
-    `Streams audio input from microphone, translates to text`,
+    'micStreamRecognize',
+    'Streams audio input from microphone, translates to text',
     {},
     opts =>
       microphoneStream(opts.encoding, opts.sampleRateHertz, opts.languageCode)
@@ -121,9 +121,9 @@ require(`yargs`)
       type: 'string',
     },
   })
-  .example(`node $0 micStreamRecognize`)
+  .example('node $0 micStreamRecognize')
   .wrap(120)
   .recommendCommands()
-  .epilogue(`For more information, see https://cloud.google.com/speech/docs`)
+  .epilogue('For more information, see https://cloud.google.com/speech/docs')
   .help()
   .strict().argv;
