@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@google-cloud/speech?activeTab=versions
 
+## [3.7.0](https://www.github.com/googleapis/nodejs-speech/compare/v3.6.0...v3.7.0) (2020-04-01)
+
+
+### Features
+
+* deferred client initialization ([#548](https://www.github.com/googleapis/nodejs-speech/issues/548)) ([ef931e7](https://www.github.com/googleapis/nodejs-speech/commit/ef931e790c83d17a5037e71e67d82af3ec65c701))
+* export protos in src/index.ts ([7c33510](https://www.github.com/googleapis/nodejs-speech/commit/7c335100bd86fc0beba7ca00334373819caf7cbe))
+
 ## [3.6.0](https://www.github.com/googleapis/nodejs-speech/compare/v3.5.4...v3.6.0) (2020-02-04)
 
 
