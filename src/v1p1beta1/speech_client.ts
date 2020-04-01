@@ -530,4 +530,5 @@ export class SpeechClient {
 }
 
 import {ImprovedStreamingClient} from '../helpers';
-export type SpeechClient = ImprovedStreamingClient;
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface SpeechClient extends ImprovedStreamingClient {}
