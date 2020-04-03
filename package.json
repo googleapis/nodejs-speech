@@ -43,7 +43,7 @@
     "prelint": "cd samples; npm link ../; npm i"
   },
   "dependencies": {
-    "@google-cloud/common": "^3.0.0",
+    "@google-cloud/common": "^2.0.0",
     "google-gax": "^2.0.1",
     "protobufjs": "^6.8.6",
     "pumpify": "^2.0.0",
@@ -53,7 +53,7 @@
   "devDependencies": {
     "@types/mocha": "^7.0.0",
     "@types/node": "^12.0.0",
-    "@types/sinon": "^9.0.0",
+    "@types/sinon": "^7.5.2",
     "c8": "^7.0.0",
     "codecov": "^3.0.2",
     "eslint": "^6.0.0",
