@@ -1,6 +1,13 @@
 {
-  "updateTime": "2020-04-03T12:12:01.061224Z",
+  "updateTime": "2020-04-09T13:59:33.221703Z",
   "sources": [
+    {
+      "git": {
+        "name": ".",
+        "remote": "https://github.com/googleapis/nodejs-speech.git",
+        "sha": "7f769c5f67adeef078e21be77d95e6d4df750f55"
+      }
+    },
     {
       "git": {
         "name": "googleapis",
