@@ -147,7 +147,7 @@ function infiniteStream(
   };
 
   const audioInputStreamTransform = new Writable({
-    write (chunk, encoding, next) {
+    write(chunk, encoding, next) {
       if (newStream && lastAudioInput.length !== 0) {
         // Approximate math to calculate time of chunks
         const chunkTime = streamingLimit / lastAudioInput.length;
@@ -185,7 +185,7 @@ function infiniteStream(
       if (recognizeStream) {
         recognizeStream.end();
       }
-    }
+    },
   });
 
   function restartStream() {
