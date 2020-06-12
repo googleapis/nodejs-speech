@@ -4,7 +4,7 @@
       "git": {
         "name": ".",
         "remote": "https://github.com/googleapis/nodejs-speech.git",
-        "sha": "3af749c8f705d92dba12169ba97c176ff3006a31"
+        "sha": "e3ac050fc99adf0907b29fe8ef54c24037dc7229"
       }
     },
     {
