@@ -198,8 +198,10 @@ async function asyncRecognize(
     languageCode: languageCode,
   };
 
-  // Note that transcription is limited to 60 seconds audio. 
-  // Use a GCS file for audio longer than 1 minute.
+  /**
+   * Note that transcription is limited to 60 seconds audio.
+   * Use a GCS file for audio longer than 1 minute.
+   */
   const audio = {
     content: fs.readFileSync(filename).toString('base64'),
   };
