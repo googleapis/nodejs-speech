@@ -14,7 +14,7 @@
 
 'use strict';
 
-async function main(storageUri) {
+function main(storageUri) {
   // [START speech_transcribe_sync]
   // Provides "hints" to the speech recognizer to favor
   // specific classes of words in the results.
@@ -63,7 +63,7 @@ async function main(storageUri) {
     });
   }
 
-  transcribeContextClasses().catch(console.error);
+  transcribeContextClasses();
   // [END speech_transcribe_sync]
 }
 

@@ -27,7 +27,7 @@
 //   description: Analyzes an audio stream, and detects speech along with metadata.
 //   usage: node recognize.v1p1beta1.js ./resources/commercial_mono.wav <encoding> <sampleRateHertz> <languageCode>
 
-async function main(
+function main(
   filename,
   encoding = 'LINEAR16',
   sampleRateHertz = 16000,

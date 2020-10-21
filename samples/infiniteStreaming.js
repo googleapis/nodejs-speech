@@ -50,7 +50,7 @@
  * Maximum streaming limit should be 1/2 of SpeechAPI Streaming Limit.
  */
 
-async function main(
+function main(
   encoding = 'LINEAR16',
   sampleRateHertz = 16000,
   languageCode = 'en-US',

@@ -39,7 +39,7 @@
  * More Info: https://cloud.google.com/speech-to-text/docs/streaming-recognize
  */
 
-async function main(
+function main(
   encoding = 'LINEAR16',
   sampleRateHertz = 16000,
   languageCode = 'en-US'

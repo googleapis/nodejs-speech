@@ -14,7 +14,7 @@
 
 'use strict';
 
-async function main() {
+function main() {
   // [START speech_quickstart]
   // Imports the Google Cloud client library
   const speech = require('@google-cloud/speech');
