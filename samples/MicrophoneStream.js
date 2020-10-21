@@ -22,6 +22,11 @@
 
 'use strict';
 
+// sample-metadata:
+//   title: Microphone stream
+//   description: Streams audio input from microphone, translates to text.
+//   usage: node MicrophoneStream.js <encoding> <sampleRateHertz> <languageCode>
+
 /**
  * Note: Correct microphone settings is required: check enclosed link, and make
  * sure the following conditions are met:
@@ -34,18 +39,23 @@
  * More Info: https://cloud.google.com/speech-to-text/docs/streaming-recognize
  */
 
-// const encoding = 'LINEAR16';
-// const sampleRateHertz = 16000;
-// const languageCode = 'en-US';
-
-function microphoneStream(encoding, sampleRateHertz, languageCode) {
+async function main(
+  encoding = 'LINEAR16',
+  sampleRateHertz = 16000,
+  languageCode = 'en-US'
+) {
   // [START micStreamRecognize]
-
-  // Node-Record-lpcm16
   const recorder = require('node-record-lpcm16');
 
   // Imports the Google Cloud client library
   const speech = require('@google-cloud/speech');
+
+  /**
+   * TODO(developer): Uncomment the following lines before running the sample.
+   */
+  // const encoding = 'LINEAR16';
+  // const sampleRateHertz = 16000;
+  // const languageCode = 'en-US';
 
   const config = {
     encoding: encoding,
@@ -89,41 +99,9 @@ function microphoneStream(encoding, sampleRateHertz, languageCode) {
   // [END micStreamRecognize]
 }
 
-require('yargs')
-  .demand(1)
-  .command(
-    'micStreamRecognize',
-    'Streams audio input from microphone, translates to text',
-    {},
-    opts =>
-      microphoneStream(opts.encoding, opts.sampleRateHertz, opts.languageCode)
-  )
-  .options({
-    encoding: {
-      alias: 'e',
-      default: 'LINEAR16',
-      global: true,
-      requiresArg: true,
-      type: 'string',
-    },
-    sampleRateHertz: {
-      alias: 'r',
-      default: 16000,
-      global: true,
-      requiresArg: true,
-      type: 'number',
-    },
-    languageCode: {
-      alias: 'l',
-      default: 'en-US',
-      global: true,
-      requiresArg: true,
-      type: 'string',
-    },
-  })
-  .example('node $0 micStreamRecognize')
-  .wrap(120)
-  .recommendCommands()
-  .epilogue('For more information, see https://cloud.google.com/speech/docs')
-  .help()
-  .strict().argv;
+process.on('unhandledRejection', err => {
+  console.error(err.message);
+  process.exitCode = 1;
+});
+
+main(...process.argv.slice(2));

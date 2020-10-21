@@ -14,7 +14,7 @@
 
 'use strict';
 
-function main(storageUri) {
+async function main(storageUri) {
   // [START speech_transcribe_sync]
   // Provides "hints" to the speech recognizer to favor
   // specific classes of words in the results.
@@ -66,5 +66,10 @@ function main(storageUri) {
   transcribeContextClasses().catch(console.error);
   // [END speech_transcribe_sync]
 }
+
+process.on('unhandledRejection', err => {
+  console.error(err.message);
+  process.exitCode = 1;
+});
 
 main(...process.argv.slice(2));
