@@ -20,7 +20,6 @@
 //   usage: node samples/transcribeContextClasses.js <storageUri>
 //   example: node samples/transcribeContextClasses.js gs://cloud-samples-data/speech/commercial_mono.wav
 
-
 function main(storageUri) {
   // [START speech_transcribe_sync]
   // Provides "hints" to the speech recognizer to favor

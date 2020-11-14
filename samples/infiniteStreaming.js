@@ -37,7 +37,6 @@
 //   usage: node infiniteStreaming.js <encoding> <sampleRateHertz> <languageCode> <streamingLimit>
 //   example: node infiniteStreaming.js LINEAR16 16000 en-US 290000
 
-
 /**
  * Note: Correct microphone settings required: check enclosed link, and make
  * sure the following conditions are met:

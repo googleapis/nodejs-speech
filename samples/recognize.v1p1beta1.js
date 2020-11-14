@@ -28,7 +28,6 @@
 //   usage: node recognize.v1p1beta1.js ./resources/commercial_mono.wav <encoding> <sampleRateHertz> <languageCode>
 //   example: node recognize.v1p1beta1.js ./resources/commercial_mono.wav LINEAR16 16000 en-US
 
-
 function main(
   filename,
   encoding = 'LINEAR16',

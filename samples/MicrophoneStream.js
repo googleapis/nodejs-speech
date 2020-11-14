@@ -28,7 +28,6 @@
 //   usage: node MicrophoneStream.js <encoding> <sampleRateHertz> <languageCode>
 //   example: node MicrophoneStream.js LINEAR16 16000 en-US
 
-
 /**
  * Note: Correct microphone settings is required: check enclosed link, and make
  * sure the following conditions are met:
