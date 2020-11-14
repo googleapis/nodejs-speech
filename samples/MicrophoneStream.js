@@ -26,6 +26,8 @@
 //   title: Microphone stream
 //   description: Streams audio input from microphone, translates to text.
 //   usage: node MicrophoneStream.js <encoding> <sampleRateHertz> <languageCode>
+//   example: node MicrophoneStream.js LINEAR16 16000 en-US
+
 
 /**
  * Note: Correct microphone settings is required: check enclosed link, and make

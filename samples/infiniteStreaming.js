@@ -35,6 +35,8 @@
 //   title: Infinite Streaming
 //   description: Performs infinite streaming using the streamingRecognize operation with the Cloud Speech API.
 //   usage: node infiniteStreaming.js <encoding> <sampleRateHertz> <languageCode> <streamingLimit>
+//   example: node infiniteStreaming.js LINEAR16 16000 en-US 290000
+
 
 /**
  * Note: Correct microphone settings required: check enclosed link, and make

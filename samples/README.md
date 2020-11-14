@@ -48,10 +48,6 @@ __Usage:__
 
 `node MicrophoneStream.js <encoding> <sampleRateHertz> <languageCode>`
 
-__Example:__
-
-
-`node MicrophoneStream.js LINEAR16 16000 en-US`
 
 -----
 
@@ -88,10 +84,6 @@ __Usage:__
 
 `node infiniteStreaming.js <encoding> <sampleRateHertz> <languageCode> <streamingLimit>`
 
-__Example:__
-
-
-`node infiniteStreaming.js LINEAR16 16000 en-US 290000`
 
 -----
 
@@ -145,12 +137,6 @@ __Usage:__
 
 `node recognize.v1p1beta1.js ./resources/commercial_mono.wav <encoding> <sampleRateHertz> <languageCode>`
 
-__Example:__
-
-
-`node recognize.v1p1beta1.js ./resources/commercial_mono.wav LINEAR16 16000 en-US`
-
-
 
 -----
 
@@ -166,12 +152,7 @@ View the [source code](https://github.com/googleapis/nodejs-speech/blob/master/s
 __Usage:__
 
 
-`node samples/transcribeContextClasses.js <storageUri>`
-
-__Example:__
-
-
-`node samples/transcribeContextClasses.js gs://cloud-samples-data/speech/commercial_mono.wav`
+`node samples/transcribeContextClasses.js`
 
 
 
