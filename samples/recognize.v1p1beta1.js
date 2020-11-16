@@ -26,7 +26,6 @@
 //   title: Recognize speech with metadata
 //   description: Analyzes an audio stream, and detects speech along with metadata.
 //   usage: node recognize.v1p1beta1.js ./resources/commercial_mono.wav <encoding> <sampleRateHertz> <languageCode>
-//   example: node recognize.v1p1beta1.js ./resources/commercial_mono.wav LINEAR16 16000 en-US
 
 function main(
   filename,
