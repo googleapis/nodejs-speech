@@ -14,7 +14,7 @@
 
 'use strict';
 
-function main(gcsnUri) {
+function main(gcsUri) {
   // [START syncRecognizeWithProfanityFilter]
   // Filters profanity
 
@@ -22,9 +22,6 @@ function main(gcsnUri) {
    * TODO(developer): Uncomment these variables before running the sample.
    */
   // const gcsUri = 'gs://my-bucket/audio.raw';
-  // const encoding = 'Encoding of the audio file, e.g. LINEAR16';
-  // const sampleRateHertz = 16000;
-  // const languageCode = 'BCP-47 language code, e.g. en-US';
 
   async function syncRecognizeWithProfanityFilter() {
     // Imports the Google Cloud client library
@@ -38,9 +35,9 @@ function main(gcsnUri) {
     };
 
     const config = {
-      encoding: encoding,
-      sampleRateHertz: sampleRateHertz,
-      languageCode: languageCode,
+      encoding: 'LINEAR16',
+      sampleRateHertz: 16000,
+      languageCode: 'en-US',
       profanityFilter: true, // set this to true
     };
     const request = {
