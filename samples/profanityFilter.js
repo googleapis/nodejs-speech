@@ -35,7 +35,7 @@ function main(gcsUri) {
     };
 
     const config = {
-      encoding: 'LINEAR16',
+      encoding: 'FLAC',
       sampleRateHertz: 16000,
       languageCode: 'en-US',
       profanityFilter: true, // set this to true
