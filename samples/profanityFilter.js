@@ -14,43 +14,41 @@
 
 'use strict';
 
-function main(gcsUri){
-    // [START syncRecognizeWithProfanityFilter]
-    // Filters profanity 
+function main(gcsUri) {
+  // [START syncRecognizeWithProfanityFilter]
+  // Filters profanity
 
-    async function syncRecognizeWithProfanityFilter() {
+  async function syncRecognizeWithProfanityFilter() {
+    // Imports the Google Cloud client library
+    const speech = require('@google-cloud/speech');
 
-        // Imports the Google Cloud client library
-        const speech = require('@google-cloud/speech');
-      
-        // Creates a client
-        const client = new speech.SpeechClient();
-      
-        const audio = {
-          uri: gcsUri,
-        };
-      
-        const config = {
-          encoding: 'FLAC',
-          sampleRateHertz: 16000,
-          languageCode: 'en-US',
-          profanityFilter: true, // set this to true
-        };
-        const request = {
-          audio: audio,
-          config: config,
-        };
-      
-        // Detects speech in the audio file
-        const [response] = await client.recognize(request);
-        const transcription = response.results
-            .map(result => result.alternatives[0].transcript)
-            .join('\n');
-        console.log(`Transcription: ${transcription}`);
-      }
-      syncRecognizeWithProfanityFilter().catch(console.error);
-      // [END syncRecognizeWithProfanityFilter]
+    // Creates a client
+    const client = new speech.SpeechClient();
 
+    const audio = {
+      uri: gcsUri,
+    };
+
+    const config = {
+      encoding: 'FLAC',
+      sampleRateHertz: 16000,
+      languageCode: 'en-US',
+      profanityFilter: true, // set this to true
+    };
+    const request = {
+      audio: audio,
+      config: config,
+    };
+
+    // Detects speech in the audio file
+    const [response] = await client.recognize(request);
+    const transcription = response.results
+      .map(result => result.alternatives[0].transcript)
+      .join('\n');
+    console.log(`Transcription: ${transcription}`);
+  }
+  syncRecognizeWithProfanityFilter().catch(console.error);
+  // [END syncRecognizeWithProfanityFilter]
 }
 
 main(...process.argv.slice(2));
