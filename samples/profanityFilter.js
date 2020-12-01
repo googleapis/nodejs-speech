@@ -14,7 +14,7 @@
 
 'use strict';
 
-function main(gcsnUri) {
+function main(gcsUri) {
   // [START syncRecognizeWithProfanityFilter]
   // Filters profanity
 
@@ -35,9 +35,9 @@ function main(gcsnUri) {
     };
 
     const config = {
-      encoding: encoding,
-      sampleRateHertz: sampleRateHertz,
-      languageCode: languageCode,
+      encoding: 'LINEAR16',
+      sampleRateHertz: 16000,
+      languageCode: 'en-US',
       profanityFilter: true, // set this to true
     };
     const request = {
