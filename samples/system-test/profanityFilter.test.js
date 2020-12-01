@@ -29,4 +29,4 @@ describe('profanityFilter', () => {
     const stdout = execSync(`node profanityFilter.js ${storageUri}`)
     assert.match(stdout, /Transcription:/ );
   });
-  });
+});
