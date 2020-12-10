@@ -23,7 +23,7 @@ function main() {
   const client = new speech.SpeechClient();
 
   async function quickstart() {
-    // The path to the remote LINEAR16 file to transcribe
+    // The path to the remote LINEAR16 file
     const gcsUri = 'gs://cloud-samples-data/speech/brooklyn_bridge.raw';
 
     // The audio file's encoding, sample rate in hertz, and BCP-47 language code
