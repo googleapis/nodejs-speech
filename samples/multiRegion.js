@@ -16,6 +16,7 @@
 
 function main(gcsUri) {
   // [START syncRecognizeWithMultiRegion]
+
   // Filters profanity
 
   /**
