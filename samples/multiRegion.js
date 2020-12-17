@@ -15,7 +15,7 @@
 'use strict';
 
 function main(gcsUri) {
-  // [START syncRecognizeWithProfanityFilter]
+  // [START syncRecognizeWithMultiRegion]
   // Filters profanity
 
   /**
@@ -23,7 +23,7 @@ function main(gcsUri) {
    */
   // const gcsUri = 'gs://my-bucket/audio.raw';
 
-  async function syncRecognizeWithProfanityFilter() {
+  async function syncRecognizeWithMultiRegion() {
     // Imports the Google Cloud client library
     const speech = require('@google-cloud/speech');
 
@@ -54,8 +54,12 @@ function main(gcsUri) {
       .join('\n');
     console.log(`Transcription: ${transcription}`);
   }
-  syncRecognizeWithProfanityFilter().catch(console.error);
-  // [END syncRecognizeWithProfanityFilter]
+  syncRecognizeWithMultiRegion().catch(console.error);
+  // [END syncRecognizeWithMultiRegion]
 }
 
 main(...process.argv.slice(2));
+process.on('unhandledRejection', err => {
+  console.error(err.message);
+  process.exitCode = 1;
+});

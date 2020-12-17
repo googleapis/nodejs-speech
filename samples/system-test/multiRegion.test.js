@@ -29,4 +29,4 @@ describe('multiRegion', () => {
       const stdout = execSync(`node multiRegion.js ${storageUri}`)
       assert.match(stdout, /Transcription:/ );
     });
-  });
+});
