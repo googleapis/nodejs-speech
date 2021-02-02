@@ -4,6 +4,20 @@
 
 [1]: https://www.npmjs.com/package/@google-cloud/speech?activeTab=versions
 
+## [4.2.0](https://www.github.com/googleapis/nodejs-speech/compare/v4.1.5...v4.2.0) (2021-01-06)
+
+
+### Features
+
+* adds a multi region sample ([#685](https://www.github.com/googleapis/nodejs-speech/issues/685)) ([7369d10](https://www.github.com/googleapis/nodejs-speech/commit/7369d105e24727f9844e51f504694874258ceac1))
+
+### [4.1.5](https://www.github.com/googleapis/nodejs-speech/compare/v4.1.4...v4.1.5) (2020-12-02)
+
+
+### Bug Fixes
+
+* **browser:** check for fetch on window ([6378dc1](https://www.github.com/googleapis/nodejs-speech/commit/6378dc193da2f792645ed0ec221c9a3495264486))
+
 ### [4.1.4](https://www.github.com/googleapis/nodejs-speech/compare/v4.1.3...v4.1.4) (2020-11-06)
 
 
