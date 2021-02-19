@@ -993,7 +993,7 @@ require(`yargs`) // eslint-disable-line
   .example(
     'node $0 sync-model-gcs gs://gcs-test-data/Google_Gnome.wav phone_call -e LINEAR16 -r 16000'
   )
-  .example('node $0 sync-auto-punctuation ./resources/commercial_mono.wav')
+  .example('node $0 sync-auto-punctuation ./resources/audio.raw')
   .example('node $0 sync-enhanced-model ./resources/commercial_mono.wav')
   .example('node $0 sync-multi-channel ./resources/commercial_stereo.wav')
   .wrap(120)
