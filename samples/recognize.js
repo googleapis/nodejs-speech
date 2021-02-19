@@ -571,6 +571,7 @@ async function syncRecognizeWithAutoPunctuation(
 
   const config = {
     encoding: encoding,
+    sampleRateHertz: sampleRateHertz,
     languageCode: languageCode,
     enableAutomaticPunctuation: true,
   };
