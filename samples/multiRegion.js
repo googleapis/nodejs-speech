@@ -62,8 +62,4 @@ main(...process.argv.slice(2));
 process.on('unhandledRejection', err => {
   console.error(err.message);
   process.exitCode = 1;
-<<<<<<< HEAD
 });
-=======
-});
->>>>>>> f3c1610 (chore: applied suggested changes)
