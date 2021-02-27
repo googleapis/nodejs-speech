@@ -54,5 +54,4 @@ for version in versions:
 templates = common_templates.node_library(source_location='build/src')
 s.copy(templates)
 
-#
 node.postprocess_gapic_library()
