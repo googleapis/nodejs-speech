@@ -4,15 +4,15 @@
       "git": {
         "name": ".",
         "remote": "git@github.com:googleapis/nodejs-speech.git",
-        "sha": "4c3b812b08dc887ff2f988d49a8ccebcd0a6c5f4"
+        "sha": "ca2e233f8ea9b0b299e7eeb37e2ddd7f06c83f21"
       }
     },
     {
       "git": {
         "name": "googleapis",
         "remote": "https://github.com/googleapis/googleapis.git",
-        "sha": "9adc11e84218d5e234392e7fe81676e778895525",
-        "internalRef": "359844338"
+        "sha": "4b16c60a8fffe213d3a5002f85696fef2b6a8172",
+        "internalRef": "362090097"
       }
     }
   ],
@@ -21,7 +21,7 @@
       "client": {
         "source": "googleapis",
         "apiName": "speech",
-        "apiVersion": "v1",
+        "apiVersion": "v1p1beta1",
         "language": "nodejs",
         "generator": "bazel"
       }
@@ -30,7 +30,7 @@
       "client": {
         "source": "googleapis",
         "apiName": "speech",
-        "apiVersion": "v1p1beta1",
+        "apiVersion": "v1",
         "language": "nodejs",
         "generator": "bazel"
       }
