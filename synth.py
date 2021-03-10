@@ -27,7 +27,7 @@ AUTOSYNTH_MULTIPLE_COMMITS = True
 gapic = gcp.GAPICBazel()
 common_templates = gcp.CommonTemplates()
 
-versions = ['v1', 'v1p1beta1']
+versions = ['v1p1beta1', 'v1']
 name = 'speech'
 
 for version in versions:
