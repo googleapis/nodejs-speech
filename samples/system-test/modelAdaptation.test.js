@@ -16,22 +16,34 @@
 
 'use strict';
 
+const { v4: uuidv4 } = require('uuid');
 const {assert} = require('chai');
 const {describe, it} = require('mocha');
 const cp = require('child_process');
+const speech = require('@google-cloud/speech').v1p1beta1;
 
 const execSync = cmd => cp.execSync(cmd, {encoding: 'utf-8'});
 const storageUri = 'gs://cloud-samples-tests/speech/brooklyn.flac';
 const text = 'how old is the Brooklyn Bridge';
+const adaptationClient = new speech.AdaptationClient();
 
 const projectId = process.env.GCLOUD_PROJECT;
 const location = 'us-west1'
-const customClassId = 'customClass123'
-const phraseSetId = 'phraseSet123'
+const customClassId = uuidv4();
+const phraseSetId = uuidv4();
+const classParent = `projects/${projectId}/locations/${location}/customClasses/${customClassId}`;
+const phraseParent = `projects/${projectId}/locations/${location}/phraseSets/${customClassId}`;
 
 describe('modelAdaptation', () => {
     it('should run modelAdaptation', async () => {
       const stdout = execSync(`node modelAdaptation.js ${projectId} ${location} ${storageUri} ${customClassId} ${phraseSetId}`)
       assert.match(stdout, /Transcription:/ );
     });
+    // Release used resources
+    cleanUp(classParent, phraseParent);
 });
+
+async function cleanUp(classParent, phraseParent) {
+    await adaptationClient.deleteCustomClass({ name: classParent });
+    await adaptationClient.deletePhraseSet({ name: phraseParent });
+}
