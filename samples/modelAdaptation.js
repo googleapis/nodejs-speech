@@ -28,44 +28,35 @@ function main(projectId, location, gcsUri, customClassId, phraseSetId) {
     // items that are likely to occur in your input data.
 
     // The parent resource where the custom class and phrase set will be created.
-    const parent = `projects/${projectId}/locations/${location}`
+    const parent = `projects/${projectId}/locations/${location}`;
 
     // Create the custom class
-    const customClassResponse = await adaptationClient.createCustomClass(
-      {
-        parent: parent,
-        customClassId: customClassId,
-        customClass: {
-          items: [
-            {value: 'sushido'},
-            {value: 'altura'},
-            {value: 'taneda'}
-          ]
-        },
-      }
-    )
+    const customClassResponse = await adaptationClient.createCustomClass({
+      parent: parent,
+      customClassId: customClassId,
+      customClass: {
+        items: [{value: 'sushido'}, {value: 'altura'}, {value: 'taneda'}],
+      },
+    });
 
     // Create the phrase set
-    const phraseSetResponse = await adaptationClient.createPhraseSet(
-      {
-        parent: parent,
-        phraseSetId: phraseSetId,
-        phraseSet: {
-          boost: 10,
-          phrases: [{value: `Visit restaurants like ${customClassId}`}]
-        },
-        
-      }
-    )
+    const phraseSetResponse = await adaptationClient.createPhraseSet({
+      parent: parent,
+      phraseSetId: phraseSetId,
+      phraseSet: {
+        boost: 10,
+        phrases: [{value: `Visit restaurants like ${customClassId}`}],
+      },
+    });
 
     // The next section shows how to use the newly created custom
     // class and phrase set to send a transcription request with speech adaptation
 
     const speechAdaptation = {
-      phraseSets:[phraseSetResponse[0]],
+      phraseSets: [phraseSetResponse[0]],
       phraseSetReferences: [],
-      customClasses:[customClassResponse[0]],
-    }
+      customClasses: [customClassResponse[0]],
+    };
 
     const audio = {
       uri: gcsUri,
