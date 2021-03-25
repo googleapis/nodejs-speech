@@ -24,7 +24,7 @@ const execSync = cmd => cp.execSync(cmd, {encoding: 'utf-8'});
 const storageUri = 'gs://cloud-samples-tests/speech/brooklyn.flac';
 const text = 'how old is the Brooklyn Bridge';
 
-const projectId = process.env.GOOGLE_APPLICATION_CREDENTIALS;
+const projectId = process.env.GOOGLE_APPLICATION_CREDENTIALS.replace(/^.*[\\\/]/, '');
 const location = 'us-west1'
 const customClassId = 'customClass123'
 const phraseSetId = 'phraseSet123'
