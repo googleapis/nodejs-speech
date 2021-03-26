@@ -16,7 +16,7 @@
 
 'use strict';
 
-const short = require('short-uuid');
+const { v4: uuidv4 } = require('uuid');
 const {assert} = require('chai');
 const {describe, it} = require('mocha');
 const cp = require('child_process');
@@ -29,8 +29,8 @@ const adaptationClient = new speech.AdaptationClient();
 
 const projectId = process.env.GCLOUD_PROJECT;
 const location = 'us-west1'
-const customClassId = short.generate();
-const phraseSetId = short.generate();
+const customClassId = uuidv4().replace(/-/g, '').substring(0, 26);
+const phraseSetId = uuidv4().replace(/-/g, '').substring(0, 26);
 const classParent = `projects/${projectId}/locations/${location}/customClasses/${customClassId}`;
 const phraseParent = `projects/${projectId}/locations/${location}/phraseSets/${customClassId}`;
 
