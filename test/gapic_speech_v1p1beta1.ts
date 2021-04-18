@@ -465,7 +465,7 @@ describe('v1p1beta1.SpeechClient', () => {
       assert(
         (client.innerApiCalls.streamingRecognize as SinonStub)
           .getCall(0)
-          .calledWithExactly(undefined)
+          .calledWithExactly(undefined, undefined)
       );
       assert.deepStrictEqual(
         (((stream as unknown) as PassThrough)._transform as SinonStub).getCall(
@@ -509,7 +509,7 @@ describe('v1p1beta1.SpeechClient', () => {
       assert(
         (client.innerApiCalls.streamingRecognize as SinonStub)
           .getCall(0)
-          .calledWithExactly(undefined)
+          .calledWithExactly(undefined, undefined)
       );
       assert.deepStrictEqual(
         (((stream as unknown) as PassThrough)._transform as SinonStub).getCall(
