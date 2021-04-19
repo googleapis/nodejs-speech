@@ -18,40 +18,25 @@ import synthtool as s
 import synthtool.gcp as gcp
 import synthtool.languages.node as node
 import logging
-
-logging.basicConfig(level=logging.DEBUG)
-
-AUTOSYNTH_MULTIPLE_COMMITS = True
+import pathlib
 
 
-gapic = gcp.GAPICBazel()
-common_templates = gcp.CommonTemplates()
-
-versions = ['v1p1beta1', 'v1']
-name = 'speech'
-
-for version in versions:
-    library = gapic.node_library(name, version)
-
-    # skip index, protos, package.json, and README.md
-    s.copy(
-        library,
-        excludes=['package.json', 'src/index.ts',]
-    )
-
+def patch(library: pathlib.Path):
     # Manual helper methods override the streaming API so that it
     # accepts streamingConfig when calling streamingRecognize.
     # Rename the generated methods to avoid confusion.
-    s.replace(f'src/{version}/{name}_client.ts', r'( +)streamingRecognize\(', '\\1_streamingRecognize(')
-    s.replace(f'test/gapic_{name}_{version}.ts', r'client\.streamingRecognize\(', 'client._streamingRecognize(')
-    s.replace(f'src/{version}/{name}_client.ts', r'\Z',
+    s.replace('src/v*/speech_client.ts', r'( +)streamingRecognize\(', '\\1_streamingRecognize(')
+    s.replace('test/gapic_speech_*.ts', r'client\.streamingRecognize\(', 'client._streamingRecognize(')
+    s.replace('src/v*/speech_client.ts', r'\Z',
         '\n' +
         "import {ImprovedStreamingClient} from '../helpers';\n" +
         '// eslint-disable-next-line @typescript-eslint/no-empty-interface\n' +
         'export interface SpeechClient extends ImprovedStreamingClient {}\n'
     )
 
-templates = common_templates.node_library(source_location='build/src')
-s.copy(templates)
 
-node.postprocess_gapic_library()
+node.owlbot_main(
+    staging_excludes=['package.json', 'src/index.ts',],
+    templates_excludes=['src/index.ts'],
+    patch_staging=patch
+)
