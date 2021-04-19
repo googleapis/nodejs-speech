@@ -444,7 +444,7 @@ describe('v1.SpeechClient', () => {
       client.innerApiCalls.streamingRecognize = stubBidiStreamingCall(
         expectedResponse
       );
-      const stream = client._streamingRecognize();
+      const stream = client.streamingRecognize();
       const promise = new Promise((resolve, reject) => {
         stream.on(
           'data',
@@ -489,7 +489,7 @@ describe('v1.SpeechClient', () => {
         undefined,
         expectedError
       );
-      const stream = client._streamingRecognize();
+      const stream = client.streamingRecognize();
       const promise = new Promise((resolve, reject) => {
         stream.on(
           'data',

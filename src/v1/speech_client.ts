@@ -433,7 +433,7 @@ export class SpeechClient {
    * stream.write(request);
    * stream.end();
    */
-  _streamingRecognize(options?: CallOptions): gax.CancellableStream {
+  streamingRecognize(options?: CallOptions): gax.CancellableStream {
     this.initialize();
     return this.innerApiCalls.streamingRecognize(options);
   }
@@ -599,7 +599,3 @@ export class SpeechClient {
     return Promise.resolve();
   }
 }
-
-import {ImprovedStreamingClient} from '../helpers';
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface SpeechClient extends ImprovedStreamingClient {}
