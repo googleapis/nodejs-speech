@@ -21,9 +21,9 @@ import json
 import logging
 from pathlib import Path
 
-node.owlbot_main(templates_excludes=["src/index.ts"])
-name = "speech"
-for version in node.detect_versions():
+def patch(library: Path):
+    version = library.parts(len(library.parts) - 1)
+    name = 'speech'
     # Manual helper methods override the streaming API so that it
     # accepts streamingConfig when calling streamingRecognize.
     # Rename the generated methods to avoid confusion.
@@ -35,4 +35,4 @@ for version in node.detect_versions():
         '// eslint-disable-next-line @typescript-eslint/no-empty-interface\n' +
         'export interface SpeechClient extends ImprovedStreamingClient {}\n'
     )
-node.postprocess_gapic_library_hermetic()
+node.owlbot_main(templates_excludes=["src/index.ts"], patch_staging=patch)
