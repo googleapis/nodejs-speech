@@ -22,7 +22,7 @@ import logging
 from pathlib import Path
 
 def patch(library: Path):
-    version = library.parts(len(library.parts) - 1)
+    version = library.parts[len(library.parts) - 1]
     name = 'speech'
     # Manual helper methods override the streaming API so that it
     # accepts streamingConfig when calling streamingRecognize.
