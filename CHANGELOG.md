@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@google-cloud/speech?activeTab=versions
 
+### [4.4.1](https://www.github.com/googleapis/nodejs-speech/compare/v4.4.0...v4.4.1) (2021-04-29)
+
+
+### Bug Fixes
+
+* remove common protos ([#710](https://www.github.com/googleapis/nodejs-speech/issues/710)) ([cbed1b0](https://www.github.com/googleapis/nodejs-speech/commit/cbed1b0879cd15bd4093948f2f9bde431c0236d6))
+
 ## [4.4.0](https://www.github.com/googleapis/nodejs-speech/compare/v4.3.0...v4.4.0) (2021-03-16)
 
 
