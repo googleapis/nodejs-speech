@@ -14,6 +14,11 @@
 
 'use strict';
 
+// sample-metadata:
+//   title: Transcribe Context Classes
+//   description: Provides "hints" to the speech recognizer to favor specific words and phrases in the results.
+//   usage: node samples/transcribeContextClasses.js <storageUri>
+
 function main(storageUri) {
   // [START speech_transcribe_sync]
   // Provides "hints" to the speech recognizer to favor
@@ -63,8 +68,13 @@ function main(storageUri) {
     });
   }
 
-  transcribeContextClasses().catch(console.error);
+  transcribeContextClasses();
   // [END speech_transcribe_sync]
 }
+
+process.on('unhandledRejection', err => {
+  console.error(err.message);
+  process.exitCode = 1;
+});
 
 main(...process.argv.slice(2));

@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC
+// Copyright 2021 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,8 +18,15 @@
 
 import {SpeechClient} from '@google-cloud/speech';
 
+// check that the client class type name can be used
+function doStuffWithSpeechClient(client: SpeechClient) {
+  client.close();
+}
+
 function main() {
-  new SpeechClient();
+  // check that the client instance can be created
+  const speechClient = new SpeechClient();
+  doStuffWithSpeechClient(speechClient);
 }
 
 main();

@@ -4,6 +4,54 @@
 
 [1]: https://www.npmjs.com/package/@google-cloud/speech?activeTab=versions
 
+## [4.5.0](https://www.github.com/googleapis/nodejs-speech/compare/v4.4.0...v4.5.0) (2021-04-29)
+
+
+### Features
+
+* Support for spoken punctuation and spoken emojis ([#737](https://www.github.com/googleapis/nodejs-speech/issues/737)) ([1a30de0](https://www.github.com/googleapis/nodejs-speech/commit/1a30de054439fc8e49eaef2c8641a507e7836c37))
+
+
+### Bug Fixes
+
+* remove common protos ([#710](https://www.github.com/googleapis/nodejs-speech/issues/710)) ([cbed1b0](https://www.github.com/googleapis/nodejs-speech/commit/cbed1b0879cd15bd4093948f2f9bde431c0236d6))
+
+## [4.4.0](https://www.github.com/googleapis/nodejs-speech/compare/v4.3.0...v4.4.0) (2021-03-16)
+
+
+### Features
+
+* Support output transcript to GCS for LongRunningRecognize. ([#708](https://www.github.com/googleapis/nodejs-speech/issues/708)) ([357e34d](https://www.github.com/googleapis/nodejs-speech/commit/357e34d8fa008eb70ab05511d22954c04d08f061))
+
+## [4.3.0](https://www.github.com/googleapis/nodejs-speech/compare/v4.2.0...v4.3.0) (2021-03-12)
+
+
+### Features
+
+* Support output transcript to GCS for LongRunningRecognize ([#707](https://www.github.com/googleapis/nodejs-speech/issues/707)) ([11e2ec2](https://www.github.com/googleapis/nodejs-speech/commit/11e2ec26caff80a84e1abc917c079371abcf9d60))
+* **v1p1beta1:** support Model Adaptation ([#703](https://www.github.com/googleapis/nodejs-speech/issues/703)) ([fbcc04b](https://www.github.com/googleapis/nodejs-speech/commit/fbcc04bb6fc8e8ecbd90b3559bf2e85210947a37))
+
+## [4.2.0](https://www.github.com/googleapis/nodejs-speech/compare/v4.1.5...v4.2.0) (2021-01-06)
+
+
+### Features
+
+* adds a multi region sample ([#685](https://www.github.com/googleapis/nodejs-speech/issues/685)) ([7369d10](https://www.github.com/googleapis/nodejs-speech/commit/7369d105e24727f9844e51f504694874258ceac1))
+
+### [4.1.5](https://www.github.com/googleapis/nodejs-speech/compare/v4.1.4...v4.1.5) (2020-12-02)
+
+
+### Bug Fixes
+
+* **browser:** check for fetch on window ([6378dc1](https://www.github.com/googleapis/nodejs-speech/commit/6378dc193da2f792645ed0ec221c9a3495264486))
+
+### [4.1.4](https://www.github.com/googleapis/nodejs-speech/compare/v4.1.3...v4.1.4) (2020-11-06)
+
+
+### Bug Fixes
+
+* do not modify options object, use defaultScopes ([#669](https://www.github.com/googleapis/nodejs-speech/issues/669)) ([eafbadd](https://www.github.com/googleapis/nodejs-speech/commit/eafbadd3b22943dd1002c0f523f4d06d15bb9928))
+
 ### [4.1.3](https://www.github.com/googleapis/nodejs-speech/compare/v4.1.2...v4.1.3) (2020-09-12)
 
 

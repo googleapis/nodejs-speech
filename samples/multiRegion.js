@@ -1,10 +1,10 @@
-// Copyright 2017 Google LLC
+// Copyright 2020 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
-//      http://www.apache.org/licenses/LICENSE-2.0
+//     https://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,24 +14,31 @@
 
 'use strict';
 
-function main() {
-  // [START speech_quickstart]
-  // Imports the Google Cloud client library
-  const speech = require('@google-cloud/speech');
+function main(gcsUri) {
+  // [START syncRecognizeWithMultiRegion]
+  // Filters profanity
 
-  // Creates a client
-  const client = new speech.SpeechClient();
+  /**
+   * TODO(developer): Uncomment these variables before running the sample.
+   */
+  // const gcsUri = 'gs://my-bucket/audio.raw';
 
-  async function quickstart() {
-    // The path to the remote LINEAR16 file
-    const gcsUri = 'gs://cloud-samples-data/speech/brooklyn_bridge.raw';
+  async function syncRecognizeWithMultiRegion() {
+    // Imports the Google Cloud client library
+    const speech = require('@google-cloud/speech');
 
-    // The audio file's encoding, sample rate in hertz, and BCP-47 language code
+    // Declare your endpoint
+    const endPoint = 'eu-speech.googleapis.com';
+
+    // Creates a client
+    const client = new speech.SpeechClient({apiEndpoint: endPoint});
+
     const audio = {
       uri: gcsUri,
     };
+
     const config = {
-      encoding: 'LINEAR16',
+      encoding: 'FLAC',
       sampleRateHertz: 16000,
       languageCode: 'en-US',
     };
@@ -47,13 +54,12 @@ function main() {
       .join('\n');
     console.log(`Transcription: ${transcription}`);
   }
-  quickstart();
-  // [END speech_quickstart]
+  syncRecognizeWithMultiRegion().catch(console.error);
+  // [END syncRecognizeWithMultiRegion]
 }
 
+main(...process.argv.slice(2));
 process.on('unhandledRejection', err => {
   console.error(err.message);
   process.exitCode = 1;
 });
-
-main(...process.argv.slice(2));

@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC
+// Copyright 2021 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -19,12 +19,12 @@ package google.cloud.speech.v1p1beta1;
 import "google/api/annotations.proto";
 import "google/api/client.proto";
 import "google/api/field_behavior.proto";
-import "google/api/resource.proto";
 import "google/cloud/speech/v1p1beta1/resource.proto";
 import "google/longrunning/operations.proto";
 import "google/protobuf/any.proto";
 import "google/protobuf/duration.proto";
 import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
 import "google/rpc/status.proto";
 
 option cc_enable_arenas = true;
@@ -37,8 +37,7 @@ option objc_class_prefix = "GCS";
 // Service that implements Google Cloud Speech API.
 service Speech {
   option (google.api.default_host) = "speech.googleapis.com";
-  option (google.api.oauth_scopes) =
-      "https://www.googleapis.com/auth/cloud-platform";
+  option (google.api.oauth_scopes) = "https://www.googleapis.com/auth/cloud-platform";
 
   // Performs synchronous speech recognition: receive results after all audio
   // has been sent and processed.
@@ -56,8 +55,7 @@ service Speech {
   // a `LongRunningRecognizeResponse` message.
   // For more information on asynchronous speech recognition, see the
   // [how-to](https://cloud.google.com/speech-to-text/docs/async-recognize).
-  rpc LongRunningRecognize(LongRunningRecognizeRequest)
-      returns (google.longrunning.Operation) {
+  rpc LongRunningRecognize(LongRunningRecognizeRequest) returns (google.longrunning.Operation) {
     option (google.api.http) = {
       post: "/v1p1beta1/speech:longrunningrecognize"
       body: "*"
@@ -71,8 +69,8 @@ service Speech {
 
   // Performs bidirectional streaming speech recognition: receive results while
   // sending audio. This method is only available via the gRPC API (not REST).
-  rpc StreamingRecognize(stream StreamingRecognizeRequest)
-      returns (stream StreamingRecognizeResponse) {}
+  rpc StreamingRecognize(stream StreamingRecognizeRequest) returns (stream StreamingRecognizeResponse) {
+  }
 }
 
 // The top-level message sent by the client for the `Recognize` method.
@@ -94,6 +92,19 @@ message LongRunningRecognizeRequest {
 
   // Required. The audio data to be recognized.
   RecognitionAudio audio = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // Optional. Specifies an optional destination for the recognition results.
+  TranscriptOutputConfig output_config = 4 [(google.api.field_behavior) = OPTIONAL];
+}
+
+// Specifies an optional destination for the recognition results.
+message TranscriptOutputConfig {
+  oneof output_type {
+    // Specifies a Cloud Storage URI for the recognition results. Must be
+    // specified in the format: `gs://bucket_name/object_name`, and the bucket
+    // must already exist.
+    string gcs_uri = 1;
+  }
 }
 
 // The top-level message sent by the client for the `StreamingRecognize` method.
@@ -139,6 +150,16 @@ message StreamingRecognitionConfig {
   // `END_OF_SINGLE_UTTERANCE` event and cease recognition. It will return no
   // more than one `StreamingRecognitionResult` with the `is_final` flag set to
   // `true`.
+  //
+  // The `single_utterance` field can only be used with specified models,
+  // otherwise an error is thrown. The `model` field in [`RecognitionConfig`][]
+  // must be set to:
+  //
+  // * `command_and_search`
+  // * `phone_call` AND additional field `useEnhanced`=`true`
+  // * The `model` field is left undefined. In this case the API auto-selects
+  //   a model based on any other parameters that you set in
+  //   `RecognitionConfig`.
   bool single_utterance = 2;
 
   // If `true`, interim results (tentative hypotheses) may be
@@ -161,7 +182,7 @@ message RecognitionConfig {
   // a lossless encoding (`FLAC` or `LINEAR16`). The accuracy of the speech
   // recognition can be reduced if lossy codecs are used to capture or transmit
   // audio, particularly if background noise is present. Lossy codecs include
-  // `MULAW`, `AMR`, `AMR_WB`, `OGG_OPUS`, `SPEEX_WITH_HEADER_BYTE`, and `MP3`.
+  // `MULAW`, `AMR`, `AMR_WB`, `OGG_OPUS`, `SPEEX_WITH_HEADER_BYTE`, `MP3`.
   //
   // The `FLAC` and `WAV` audio file formats include a header that describes the
   // included audio content. You can request recognition for `WAV` files that
@@ -172,8 +193,7 @@ message RecognitionConfig {
   // an `AudioEncoding` when you send  send `FLAC` or `WAV` audio, the
   // encoding configuration must match the encoding described in the audio
   // header; otherwise the request returns an
-  // [google.rpc.Code.INVALID_ARGUMENT][google.rpc.Code.INVALID_ARGUMENT] error
-  // code.
+  // [google.rpc.Code.INVALID_ARGUMENT][google.rpc.Code.INVALID_ARGUMENT] error code.
   enum AudioEncoding {
     // Not specified.
     ENCODING_UNSPECIFIED = 0;
@@ -218,16 +238,22 @@ message RecognitionConfig {
     // wideband is supported. `sample_rate_hertz` must be 16000.
     SPEEX_WITH_HEADER_BYTE = 7;
 
-    // MP3 audio. Support all standard MP3 bitrates (which range from 32-320
+    // MP3 audio. MP3 encoding is a Beta feature and only available in
+    // v1p1beta1. Support all standard MP3 bitrates (which range from 32-320
     // kbps). When using this encoding, `sample_rate_hertz` has to match the
     // sample rate of the file being used.
     MP3 = 8;
+
+    // Opus encoded audio frames in WebM container
+    // ([OggOpus](https://wiki.xiph.org/OggOpus)). This is a Beta features and
+    // only available in v1p1beta1. `sample_rate_hertz` must be one of 8000,
+    // 12000, 16000, 24000, or 48000.
+    WEBM_OPUS = 9;
   }
 
   // Encoding of audio data sent in all `RecognitionAudio` messages.
   // This field is optional for `FLAC` and `WAV` audio files and required
-  // for all other audio formats. For details, see
-  // [AudioEncoding][google.cloud.speech.v1p1beta1.RecognitionConfig.AudioEncoding].
+  // for all other audio formats. For details, see [AudioEncoding][google.cloud.speech.v1p1beta1.RecognitionConfig.AudioEncoding].
   AudioEncoding encoding = 1;
 
   // Sample rate in Hertz of the audio data sent in all
@@ -236,8 +262,7 @@ message RecognitionConfig {
   // source to 16000 Hz. If that's not possible, use the native sample rate of
   // the audio source (instead of re-sampling).
   // This field is optional for FLAC and WAV audio files, but is
-  // required for all other audio formats. For details, see
-  // [AudioEncoding][google.cloud.speech.v1p1beta1.RecognitionConfig.AudioEncoding].
+  // required for all other audio formats. For details, see [AudioEncoding][google.cloud.speech.v1p1beta1.RecognitionConfig.AudioEncoding].
   int32 sample_rate_hertz = 2;
 
   // The number of channels in the input audio data.
@@ -298,7 +323,7 @@ message RecognitionConfig {
   // Speech adaptation configuration improves the accuracy of speech
   // recognition. When speech adaptation is set it supersedes the
   // `speech_contexts` field. For more information, see the [speech
-  // adaptation](https://cloud.google.com/speech-to-text/docs/context-strength)
+  // adaptation](https://cloud.google.com/speech-to-text/docs/adaptation)
   // documentation.
   SpeechAdaptation adaptation = 20;
 
@@ -306,7 +331,7 @@ message RecognitionConfig {
   // A means to provide context to assist the speech recognition. For more
   // information, see
   // [speech
-  // adaptation](https://cloud.google.com/speech-to-text/docs/context-strength).
+  // adaptation](https://cloud.google.com/speech-to-text/docs/adaptation).
   repeated SpeechContext speech_contexts = 6;
 
   // If `true`, the top result includes a list of words and
@@ -325,6 +350,22 @@ message RecognitionConfig {
   // requests in other languages has no effect at all.
   // The default 'false' value does not add punctuation to result hypotheses.
   bool enable_automatic_punctuation = 11;
+
+  // The spoken punctuation behavior for the call
+  // If not set, uses default behavior based on model of choice
+  // e.g. command_and_search will enable spoken punctuation by default
+  // If 'true', replaces spoken punctuation with the corresponding symbols in
+  // the request. For example, "how are you question mark" becomes "how are
+  // you?". See https://cloud.google.com/speech-to-text/docs/spoken-punctuation
+  // for support. If 'false', spoken punctuation is not replaced.
+  google.protobuf.BoolValue enable_spoken_punctuation = 22;
+
+  // The spoken emoji behavior for the call
+  // If not set, uses default behavior based on model of choice
+  // If 'true', adds spoken emoji formatting for the request. This will replace
+  // spoken emojis with the corresponding Unicode symbols in the final
+  // transcript. If 'false', spoken emojis are not replaced.
+  google.protobuf.BoolValue enable_spoken_emojis = 23;
 
   // If 'true', enables speaker detection for each recognized word in
   // the top alternative of the recognition result using a speaker_tag provided
@@ -370,7 +411,7 @@ message RecognitionConfig {
   //   </tr>
   //   <tr>
   //     <td><code>video</code></td>
-  //     <td>Best for audio that originated from from video or includes multiple
+  //     <td>Best for audio that originated from video or includes multiple
   //         speakers. Ideally the audio is recorded at a 16khz or greater
   //         sampling rate. This is a premium model that costs more than the
   //         standard rate.</td>
@@ -413,8 +454,10 @@ message SpeakerDiarizationConfig {
   int32 max_speaker_count = 3;
 
   // Output only. Unused.
-  int32 speaker_tag = 5
-      [deprecated = true, (google.api.field_behavior) = OUTPUT_ONLY];
+  int32 speaker_tag = 5 [
+    deprecated = true,
+    (google.api.field_behavior) = OUTPUT_ONLY
+  ];
 }
 
 // Description of audio data to be recognized.
@@ -578,8 +621,8 @@ message SpeechContext {
 
 // Contains audio data in the encoding specified in the `RecognitionConfig`.
 // Either `content` or `uri` must be supplied. Supplying both or neither
-// returns [google.rpc.Code.INVALID_ARGUMENT][google.rpc.Code.INVALID_ARGUMENT].
-// See [content limits](https://cloud.google.com/speech-to-text/quotas#content).
+// returns [google.rpc.Code.INVALID_ARGUMENT][google.rpc.Code.INVALID_ARGUMENT]. See
+// [content limits](https://cloud.google.com/speech-to-text/quotas#content).
 message RecognitionAudio {
   // The audio source, which is either inline content or a Google Cloud
   // Storage uri.
@@ -594,9 +637,8 @@ message RecognitionAudio {
     // Currently, only Google Cloud Storage URIs are
     // supported, which must be specified in the following format:
     // `gs://bucket_name/object_name` (other URI formats return
-    // [google.rpc.Code.INVALID_ARGUMENT][google.rpc.Code.INVALID_ARGUMENT]).
-    // For more information, see [Request
-    // URIs](https://cloud.google.com/storage/docs/reference-uris).
+    // [google.rpc.Code.INVALID_ARGUMENT][google.rpc.Code.INVALID_ARGUMENT]). For more information, see
+    // [Request URIs](https://cloud.google.com/storage/docs/reference-uris).
     string uri = 2;
   }
 }
@@ -619,6 +661,12 @@ message LongRunningRecognizeResponse {
   // Sequential list of transcription results corresponding to
   // sequential portions of audio.
   repeated SpeechRecognitionResult results = 2;
+
+  // Original output config if present in the request.
+  TranscriptOutputConfig output_config = 6;
+
+  // If the transcript output fails this field contains the relevant error.
+  google.rpc.Status output_error = 7;
 }
 
 // Describes the progress of a long-running `LongRunningRecognize` call. It is
@@ -635,9 +683,12 @@ message LongRunningRecognizeMetadata {
   // Time of the most recent processing update.
   google.protobuf.Timestamp last_update_time = 3;
 
-  // The URI of the audio file being transcribed. Empty if the audio was sent
+  // Output only. The URI of the audio file being transcribed. Empty if the audio was sent
   // as byte content.
   string uri = 4 [(google.api.field_behavior) = OUTPUT_ONLY];
+
+  // Output only. A copy of the TranscriptOutputConfig if it was set in the request.
+  TranscriptOutputConfig output_config = 5 [(google.api.field_behavior) = OUTPUT_ONLY];
 }
 
 // `StreamingRecognizeResponse` is the only message returned to the client by
@@ -646,8 +697,8 @@ message LongRunningRecognizeMetadata {
 // audio, and `single_utterance` is set to false, then no messages are streamed
 // back to the client.
 //
-// Here's an example of a series of ten `StreamingRecognizeResponse`s that might
-// be returned while processing audio:
+// Here's an example of a series of `StreamingRecognizeResponse`s that might be
+// returned while processing audio:
 //
 // 1. results { alternatives { transcript: "tube" } stability: 0.01 }
 //
@@ -751,9 +802,9 @@ message StreamingRecognitionResult {
   // For audio_channel_count = N, its output values can range from '1' to 'N'.
   int32 channel_tag = 5;
 
-  // Output only. The [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt)
-  // language tag of the language in this result. This language code was
-  // detected to have the most likelihood of being spoken in the audio.
+  // Output only. The [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag
+  // of the language in this result. This language code was detected to have
+  // the most likelihood of being spoken in the audio.
   string language_code = 6 [(google.api.field_behavior) = OUTPUT_ONLY];
 }
 
@@ -770,9 +821,9 @@ message SpeechRecognitionResult {
   // For audio_channel_count = N, its output values can range from '1' to 'N'.
   int32 channel_tag = 2;
 
-  // Output only. The [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt)
-  // language tag of the language in this result. This language code was
-  // detected to have the most likelihood of being spoken in the audio.
+  // Output only. The [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag
+  // of the language in this result. This language code was detected to have
+  // the most likelihood of being spoken in the audio.
   string language_code = 5 [(google.api.field_behavior) = OUTPUT_ONLY];
 }
 
