@@ -39,8 +39,10 @@ describe('modelAdaptation', () => {
       const stdout = execSync(`node modelAdaptation.js ${projectId} ${location} ${storageUri} ${customClassId} ${phraseSetId}`)
       assert.match(stdout, /Transcription:/ );
     });
-    // Release used resources
-    cleanUp(classParent, phraseParent);
+    after(async () => {
+      // Release used resources
+      await cleanUp(classParent, phraseParent);
+    })
 });
 
 async function cleanUp(classParent, phraseParent) {
