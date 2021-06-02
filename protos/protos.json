@@ -735,6 +735,14 @@
                           "type": "bool",
                           "id": 11
                         },
+                        "enableSpokenPunctuation": {
+                          "type": "google.protobuf.BoolValue",
+                          "id": 22
+                        },
+                        "enableSpokenEmojis": {
+                          "type": "google.protobuf.BoolValue",
+                          "id": 23
+                        },
                         "enableSpeakerDiarization": {
                           "type": "bool",
                           "id": 16,
@@ -777,7 +785,8 @@
                             "AMR_WB": 5,
                             "OGG_OPUS": 6,
                             "SPEEX_WITH_HEADER_BYTE": 7,
-                            "MP3": 8
+                            "MP3": 8,
+                            "WEBM_OPUS": 9
                           }
                         }
                       }
@@ -938,6 +947,14 @@
                           "rule": "repeated",
                           "type": "SpeechRecognitionResult",
                           "id": 2
+                        },
+                        "outputConfig": {
+                          "type": "TranscriptOutputConfig",
+                          "id": 6
+                        },
+                        "outputError": {
+                          "type": "google.rpc.Status",
+                          "id": 7
                         }
                       }
                     },
@@ -958,6 +975,13 @@
                         "uri": {
                           "type": "string",
                           "id": 4,
+                          "options": {
+                            "(google.api.field_behavior)": "OUTPUT_ONLY"
+                          }
+                        },
+                        "outputConfig": {
+                          "type": "TranscriptOutputConfig",
+                          "id": 5,
                           "options": {
                             "(google.api.field_behavior)": "OUTPUT_ONLY"
                           }
@@ -1583,6 +1607,10 @@
                   "rule": "repeated",
                   "type": "HttpRule",
                   "id": 1
+                },
+                "fullyDecodeReservedExpansion": {
+                  "type": "bool",
+                  "id": 2
                 }
               }
             },
@@ -1631,6 +1659,10 @@
                 "body": {
                   "type": "string",
                   "id": 7
+                },
+                "responseBody": {
+                  "type": "string",
+                  "id": 12
                 },
                 "additionalBindings": {
                   "rule": "repeated",
@@ -1765,11 +1797,12 @@
         },
         "protobuf": {
           "options": {
-            "go_package": "github.com/golang/protobuf/protoc-gen-go/descriptor;descriptor",
+            "go_package": "google.golang.org/protobuf/types/descriptorpb",
             "java_package": "com.google.protobuf",
             "java_outer_classname": "DescriptorProtos",
             "csharp_namespace": "Google.Protobuf.Reflection",
             "objc_class_prefix": "GPB",
+            "cc_enable_arenas": true,
             "optimize_for": "SPEED"
           },
           "nested": {
@@ -1908,6 +1941,10 @@
                     "end": {
                       "type": "int32",
                       "id": 2
+                    },
+                    "options": {
+                      "type": "ExtensionRangeOptions",
+                      "id": 3
                     }
                   }
                 },
@@ -1924,6 +1961,21 @@
                   }
                 }
               }
+            },
+            "ExtensionRangeOptions": {
+              "fields": {
+                "uninterpretedOption": {
+                  "rule": "repeated",
+                  "type": "UninterpretedOption",
+                  "id": 999
+                }
+              },
+              "extensions": [
+                [
+                  1000,
+                  536870911
+                ]
+              ]
             },
             "FieldDescriptorProto": {
               "fields": {
@@ -1966,6 +2018,10 @@
                 "options": {
                   "type": "FieldOptions",
                   "id": 8
+                },
+                "proto3Optional": {
+                  "type": "bool",
+                  "id": 17
                 }
               },
               "nested": {
@@ -2026,6 +2082,30 @@
                 "options": {
                   "type": "EnumOptions",
                   "id": 3
+                },
+                "reservedRange": {
+                  "rule": "repeated",
+                  "type": "EnumReservedRange",
+                  "id": 4
+                },
+                "reservedName": {
+                  "rule": "repeated",
+                  "type": "string",
+                  "id": 5
+                }
+              },
+              "nested": {
+                "EnumReservedRange": {
+                  "fields": {
+                    "start": {
+                      "type": "int32",
+                      "id": 1
+                    },
+                    "end": {
+                      "type": "int32",
+                      "id": 2
+                    }
+                  }
                 }
               }
             },
@@ -2159,6 +2239,13 @@
                     "default": false
                   }
                 },
+                "phpGenericServices": {
+                  "type": "bool",
+                  "id": 42,
+                  "options": {
+                    "default": false
+                  }
+                },
                 "deprecated": {
                   "type": "bool",
                   "id": 23,
@@ -2170,7 +2257,7 @@
                   "type": "bool",
                   "id": 31,
                   "options": {
-                    "default": false
+                    "default": true
                   }
                 },
                 "objcClassPrefix": {
@@ -2188,6 +2275,18 @@
                 "phpClassPrefix": {
                   "type": "string",
                   "id": 40
+                },
+                "phpNamespace": {
+                  "type": "string",
+                  "id": 41
+                },
+                "phpMetadataNamespace": {
+                  "type": "string",
+                  "id": 44
+                },
+                "rubyPackage": {
+                  "type": "string",
+                  "id": 45
                 },
                 "uninterpretedOption": {
                   "rule": "repeated",
@@ -2603,9 +2702,6 @@
                 }
               }
             },
-            "Empty": {
-              "fields": {}
-            },
             "Duration": {
               "fields": {
                 "seconds": {
@@ -2618,6 +2714,9 @@
                 }
               }
             },
+            "Empty": {
+              "fields": {}
+            },
             "Timestamp": {
               "fields": {
                 "seconds": {
@@ -2627,6 +2726,78 @@
                 "nanos": {
                   "type": "int32",
                   "id": 2
+                }
+              }
+            },
+            "DoubleValue": {
+              "fields": {
+                "value": {
+                  "type": "double",
+                  "id": 1
+                }
+              }
+            },
+            "FloatValue": {
+              "fields": {
+                "value": {
+                  "type": "float",
+                  "id": 1
+                }
+              }
+            },
+            "Int64Value": {
+              "fields": {
+                "value": {
+                  "type": "int64",
+                  "id": 1
+                }
+              }
+            },
+            "UInt64Value": {
+              "fields": {
+                "value": {
+                  "type": "uint64",
+                  "id": 1
+                }
+              }
+            },
+            "Int32Value": {
+              "fields": {
+                "value": {
+                  "type": "int32",
+                  "id": 1
+                }
+              }
+            },
+            "UInt32Value": {
+              "fields": {
+                "value": {
+                  "type": "uint32",
+                  "id": 1
+                }
+              }
+            },
+            "BoolValue": {
+              "fields": {
+                "value": {
+                  "type": "bool",
+                  "id": 1
+                }
+              }
+            },
+            "StringValue": {
+              "fields": {
+                "value": {
+                  "type": "string",
+                  "id": 1
+                }
+              }
+            },
+            "BytesValue": {
+              "fields": {
+                "value": {
+                  "type": "bytes",
+                  "id": 1
                 }
               }
             },
@@ -2643,26 +2814,40 @@
         },
         "longrunning": {
           "options": {
+            "cc_enable_arenas": true,
             "csharp_namespace": "Google.LongRunning",
             "go_package": "google.golang.org/genproto/googleapis/longrunning;longrunning",
             "java_multiple_files": true,
             "java_outer_classname": "OperationsProto",
-            "java_package": "com.google.longrunning"
+            "java_package": "com.google.longrunning",
+            "php_namespace": "Google\\LongRunning"
           },
           "nested": {
+            "operationInfo": {
+              "type": "google.longrunning.OperationInfo",
+              "id": 1049,
+              "extend": "google.protobuf.MethodOptions"
+            },
             "Operations": {
+              "options": {
+                "(google.api.default_host)": "longrunning.googleapis.com"
+              },
               "methods": {
                 "ListOperations": {
                   "requestType": "ListOperationsRequest",
                   "responseType": "ListOperationsResponse",
                   "options": {
-                    "(google.api.http).get": "/v1/{name=operations}"
+                    "(google.api.http).get": "/v1/{name=operations}",
+                    "(google.api.method_signature)": "name,filter"
                   },
                   "parsedOptions": [
                     {
                       "(google.api.http)": {
                         "get": "/v1/{name=operations}"
                       }
+                    },
+                    {
+                      "(google.api.method_signature)": "name,filter"
                     }
                   ]
                 },
@@ -2670,13 +2855,17 @@
                   "requestType": "GetOperationRequest",
                   "responseType": "Operation",
                   "options": {
-                    "(google.api.http).get": "/v1/{name=operations/**}"
+                    "(google.api.http).get": "/v1/{name=operations/**}",
+                    "(google.api.method_signature)": "name"
                   },
                   "parsedOptions": [
                     {
                       "(google.api.http)": {
                         "get": "/v1/{name=operations/**}"
                       }
+                    },
+                    {
+                      "(google.api.method_signature)": "name"
                     }
                   ]
                 },
@@ -2684,13 +2873,17 @@
                   "requestType": "DeleteOperationRequest",
                   "responseType": "google.protobuf.Empty",
                   "options": {
-                    "(google.api.http).delete": "/v1/{name=operations/**}"
+                    "(google.api.http).delete": "/v1/{name=operations/**}",
+                    "(google.api.method_signature)": "name"
                   },
                   "parsedOptions": [
                     {
                       "(google.api.http)": {
                         "delete": "/v1/{name=operations/**}"
                       }
+                    },
+                    {
+                      "(google.api.method_signature)": "name"
                     }
                   ]
                 },
@@ -2699,7 +2892,8 @@
                   "responseType": "google.protobuf.Empty",
                   "options": {
                     "(google.api.http).post": "/v1/{name=operations/**}:cancel",
-                    "(google.api.http).body": "*"
+                    "(google.api.http).body": "*",
+                    "(google.api.method_signature)": "name"
                   },
                   "parsedOptions": [
                     {
@@ -2707,8 +2901,15 @@
                         "post": "/v1/{name=operations/**}:cancel",
                         "body": "*"
                       }
+                    },
+                    {
+                      "(google.api.method_signature)": "name"
                     }
                   ]
+                },
+                "WaitOperation": {
+                  "requestType": "WaitOperationRequest",
+                  "responseType": "Operation"
                 }
               }
             },
@@ -2800,11 +3001,36 @@
                   "id": 1
                 }
               }
+            },
+            "WaitOperationRequest": {
+              "fields": {
+                "name": {
+                  "type": "string",
+                  "id": 1
+                },
+                "timeout": {
+                  "type": "google.protobuf.Duration",
+                  "id": 2
+                }
+              }
+            },
+            "OperationInfo": {
+              "fields": {
+                "responseType": {
+                  "type": "string",
+                  "id": 1
+                },
+                "metadataType": {
+                  "type": "string",
+                  "id": 2
+                }
+              }
             }
           }
         },
         "rpc": {
           "options": {
+            "cc_enable_arenas": true,
             "go_package": "google.golang.org/genproto/googleapis/rpc/status;status",
             "java_multiple_files": true,
             "java_outer_classname": "StatusProto",

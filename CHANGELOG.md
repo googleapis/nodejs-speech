@@ -4,6 +4,33 @@
 
 [1]: https://www.npmjs.com/package/@google-cloud/speech?activeTab=versions
 
+### [4.5.1](https://www.github.com/googleapis/nodejs-speech/compare/v4.5.0...v4.5.1) (2021-05-20)
+
+
+### Bug Fixes
+
+* **deps:** require google-gax v2.12.0 ([#740](https://www.github.com/googleapis/nodejs-speech/issues/740)) ([0c9c68f](https://www.github.com/googleapis/nodejs-speech/commit/0c9c68f79eee3a9132f0cf18c44a45928da2e809))
+* use require() to load JSON protos ([#746](https://www.github.com/googleapis/nodejs-speech/issues/746)) ([689af48](https://www.github.com/googleapis/nodejs-speech/commit/689af48120572779143f16f7d1b0652bdddd931e))
+
+## [4.5.0](https://www.github.com/googleapis/nodejs-speech/compare/v4.4.0...v4.5.0) (2021-04-29)
+
+
+### Features
+
+* Support for spoken punctuation and spoken emojis ([#737](https://www.github.com/googleapis/nodejs-speech/issues/737)) ([1a30de0](https://www.github.com/googleapis/nodejs-speech/commit/1a30de054439fc8e49eaef2c8641a507e7836c37))
+
+
+### Bug Fixes
+
+* remove common protos ([#710](https://www.github.com/googleapis/nodejs-speech/issues/710)) ([cbed1b0](https://www.github.com/googleapis/nodejs-speech/commit/cbed1b0879cd15bd4093948f2f9bde431c0236d6))
+
+## [4.4.0](https://www.github.com/googleapis/nodejs-speech/compare/v4.3.0...v4.4.0) (2021-03-16)
+
+
+### Features
+
+* Support output transcript to GCS for LongRunningRecognize. ([#708](https://www.github.com/googleapis/nodejs-speech/issues/708)) ([357e34d](https://www.github.com/googleapis/nodejs-speech/commit/357e34d8fa008eb70ab05511d22954c04d08f061))
+
 ## [4.3.0](https://www.github.com/googleapis/nodejs-speech/compare/v4.2.0...v4.3.0) (2021-03-12)
 
 
