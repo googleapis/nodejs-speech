@@ -17,7 +17,6 @@
 const {assert} = require('chai');
 const {after, before, describe, it} = require('mocha');
 const cp = require('child_process');
-const {SpeechClient} = require('@google-cloud/speech').v1p1beta1;
 const {Storage} = require('@google-cloud/storage');
 const uuid = require('uuid');
 
