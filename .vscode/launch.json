@@ -9,6 +9,26 @@
       "request": "launch",
       "name": "Launch Program",
       "program": "${workspaceFolder}/samples/betaFeatures.js"
-    }
+    },
+    {
+      "args": [
+          "--timeout",
+          "999999",
+          "--colors",
+          "${workspaceFolder}/samples/system-test/export-to-storage.v1p1beta1.test.js"
+      ],
+      "internalConsoleOptions": "openOnSessionStart",
+      "name": "Mocha Tests",
+      "program": "${workspaceFolder}/samples/node_modules/mocha/bin/_mocha",
+      "request": "launch",
+      "skipFiles": [
+          "<node_internals>/**"
+      ],
+      "type": "pwa-node",
+      "env": {
+          "GOOGLE_APPLICATION_CREDENTIALS": "/Users/erschmid/Devtools/vidint-erschmid.json",
+      },
+      "cwd": "${workspaceFolder}/samples/"
+    },
   ]
 }
