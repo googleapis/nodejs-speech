@@ -61,7 +61,11 @@ function main(
       outputConfig,
     };
 
-    const [response] = await client.recognize(request);
+    const [operation] = await client.longRunningRecognize(request);
+
+    // Wait for operation to complete
+    const [response] = await operation.promise();
+
     const transcription = response.results
       .map(result => result.alternatives[0].transcript)
       .join('\n');
