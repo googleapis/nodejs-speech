@@ -32,7 +32,7 @@ const location = 'global'
 const customClassId = uuidv4().replace(/-/g, '').substring(0, 8);
 const phraseSetId = uuidv4().replace(/-/g, '').substring(0, 8);
 const classParent = `projects/${projectId}/locations/${location}/customClasses/${customClassId}`;
-const phraseParent = `projects/${projectId}/locations/${location}/phraseSets/${customClassId}`;
+const phraseParent = `projects/${projectId}/locations/${location}/phraseSets/${phraseSetId}`;
 
 describe('modelAdaptation', () => {
     // TODO: investigate why this test fails when us-west1 used as location.
