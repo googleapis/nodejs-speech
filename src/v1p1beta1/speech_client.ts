@@ -390,6 +390,10 @@ export class SpeechClient {
    *   for more details and examples.
    * @example
    * const [response] = await client.recognize(request);
+   *
+   * @example <caption>include:samples/generated/v1p1beta1/speech.recognize.js</caption>
+   * region_tag:speech_recognize_sample
+   *
    */
   recognize(
     request?: protos.google.cloud.speech.v1p1beta1.IRecognizeRequest,
@@ -446,6 +450,10 @@ export class SpeechClient {
    * stream.on('end', () => { ... });
    * stream.write(request);
    * stream.end();
+   *
+   * @example <caption>include:samples/generated/v1p1beta1/speech.streaming_recognize.js</caption>
+   * region_tag:speech_streaming_recognize_sample
+   *
    */
   _streamingRecognize(options?: CallOptions): gax.CancellableStream {
     this.initialize();
@@ -517,6 +525,10 @@ export class SpeechClient {
    * @example
    * const [operation] = await client.longRunningRecognize(request);
    * const [response] = await operation.promise();
+   *
+   * @example <caption>include:samples/generated/v1p1beta1/speech.long_running_recognize.js</caption>
+   * region_tag:speech_long_running_recognize_sample
+   *
    */
   longRunningRecognize(
     request?: protos.google.cloud.speech.v1p1beta1.ILongRunningRecognizeRequest,
@@ -574,6 +586,10 @@ export class SpeechClient {
    * console.log(decodedOperation.result);
    * console.log(decodedOperation.done);
    * console.log(decodedOperation.metadata);
+   *
+   * @example <caption>include:samples/generated/v1p1beta1/speech.long_running_recognize.js</caption>
+   * region_tag:speech_long_running_recognize_sample
+   *
    */
   async checkLongRunningRecognizeProgress(
     name: string
