@@ -19,7 +19,9 @@ function main(
   outputStorageUri,
   encoding,
   sampleRateHertz,
-  languageCode
+  languageCode,
+  bucketName,
+  objectName
 ) {
   // [START speech_export_to_gcs]
   /**
@@ -35,11 +37,36 @@ function main(
 
   // Imports the Speech-to-Text client library
   const speech = require('@google-cloud/speech').v1p1beta1;
+  const {Storage} = require('@google-cloud/storage');
+  const path = require('path');
+  const fsp = require('fs.promises');
+
+  const protobuf = require('protobufjs');
+  const serializer = require('proto3-json-serializer');
+
+  // All of the Google API's protocol buffer files
+  const protos = require('google-proto-files');
+
+  // Load some proto file
+  const rpcProtos = protos.getProtoPath('cloud');
+
+  const root = protobuf.loadSync([
+    path.join(rpcProtos, 'speech/v1/cloud_speech.proto'),
+    'google/protobuf/duration.proto',
+  ]);
+
+  const LongRunningRecognizeResponse = root.lookupType(
+    'LongRunningRecognizeResponse'
+  );
 
   // Creates a client
-  const client = new speech.SpeechClient();
+  const speechClient = new speech.SpeechClient();
+
+  // Creates a storage client
+  const storageClient = new Storage();
 
   async function exportTranscriptToStorage() {
+    const destFileName = 'file.json';
     const audio = {
       uri: inputUri,
     };
@@ -61,12 +88,31 @@ function main(
       outputConfig,
     };
 
-    const [operation] = await client.longRunningRecognize(request);
+    //  This creates a recognition job that you can wait for now, or get its result later.
+    const [operation] = await speechClient.longRunningRecognize(request);
 
-    // Wait for operation to complete
-    const [response] = await operation.promise();
+    // Get a Promise representation of the final result of the job
+    await operation.promise();
 
-    const transcription = response.results
+    // Destination file
+    const options = {
+      destination: destFileName,
+    };
+
+    // Get bucket with name
+    await storageClient.bucket(bucketName).file(objectName).download(options);
+
+    // Get content as json
+    const content = JSON.parse((await fsp.readFile(destFileName)).toString());
+
+    // Get transcript exported in storage bucket
+    const storageTranscript = serializer.fromProto3JSON(
+      LongRunningRecognizeResponse,
+      content
+    );
+
+    // Print results
+    const transcription = storageTranscript.results
       .map(result => result.alternatives[0].transcript)
       .join('\n');
     console.log('Transcription: ', transcription);
