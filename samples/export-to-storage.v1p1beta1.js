@@ -88,9 +88,10 @@ function main(
       outputConfig,
     };
 
+    //  This creates a recognition job that you can wait for now, or get its result later.
     const [operation] = await speechClient.longRunningRecognize(request);
 
-    // Wait for operation to complete
+    // Get a Promise representation of the final result of the job
     await operation.promise();
 
     // Destination file
