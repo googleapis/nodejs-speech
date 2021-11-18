@@ -39,7 +39,7 @@ function main(
   const speech = require('@google-cloud/speech').v1p1beta1;
   const {Storage} = require('@google-cloud/storage');
   const path = require('path');
-  const fsp = require('fs/promises');
+  const fsp = require('fs.promises');
 
   const protobuf = require('protobufjs');
   const serializer = require('proto3-json-serializer');
