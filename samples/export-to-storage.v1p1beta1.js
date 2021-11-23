@@ -36,7 +36,7 @@ function main(
   // const languageCode = 'BCP-47_LANGUAGE_CODE_OF_AUDIO';
 
   // Imports the Speech-to-Text client library
-  const speech = require('@google-cloud/speech').v1p1beta1;
+  const speech = require('@google-cloud/speech');
   const {Storage} = require('@google-cloud/storage');
   const path = require('path');
   const fsp = require('fs.promises');
