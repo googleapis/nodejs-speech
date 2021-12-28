@@ -13,5 +13,5 @@
   "codeowner_team": "@googleapis/ml-apis",
   "default_version": "v1",
   "api_shortname": "speech",
-  "library_type": ""
+  "library_type": "GAPIC_COMBO"
 }
