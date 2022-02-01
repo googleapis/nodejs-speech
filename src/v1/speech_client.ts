@@ -445,7 +445,7 @@ export class SpeechClient {
    */
   _streamingRecognize(options?: CallOptions): gax.CancellableStream {
     this.initialize();
-    return this.innerApiCalls.streamingRecognize(options);
+    return this.innerApiCalls.streamingRecognize(null, options);
   }
 
   /**
