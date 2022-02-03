@@ -45,7 +45,7 @@ function main(projectId, location, gcsUri, customClassId, phraseSetId) {
       phraseSetId: phraseSetId,
       phraseSet: {
         boost: 10,
-        phrases: [{value: `Visit restaurants like ${customClassId}`}],
+        phrases: [{value: `Visit restaurants like \${${customClassId}}`}],
       },
     });
 
