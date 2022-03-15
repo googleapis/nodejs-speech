@@ -328,7 +328,6 @@ describe('v1p1beta1.AdaptationClient', () => {
         new protos.google.cloud.speech.v1p1beta1.CreatePhraseSetRequest()
       );
       request.parent = '';
-      const expectedHeaderRequestParams = 'parent=';
       const expectedError = new Error('The client has already been closed.');
       client.close();
       await assert.rejects(client.createPhraseSet(request), expectedError);
@@ -455,7 +454,6 @@ describe('v1p1beta1.AdaptationClient', () => {
         new protos.google.cloud.speech.v1p1beta1.GetPhraseSetRequest()
       );
       request.name = '';
-      const expectedHeaderRequestParams = 'name=';
       const expectedError = new Error('The client has already been closed.');
       client.close();
       await assert.rejects(client.getPhraseSet(request), expectedError);
@@ -586,7 +584,6 @@ describe('v1p1beta1.AdaptationClient', () => {
       );
       request.phraseSet = {};
       request.phraseSet.name = '';
-      const expectedHeaderRequestParams = 'phrase_set.name=';
       const expectedError = new Error('The client has already been closed.');
       client.close();
       await assert.rejects(client.updatePhraseSet(request), expectedError);
@@ -713,7 +710,6 @@ describe('v1p1beta1.AdaptationClient', () => {
         new protos.google.cloud.speech.v1p1beta1.DeletePhraseSetRequest()
       );
       request.name = '';
-      const expectedHeaderRequestParams = 'name=';
       const expectedError = new Error('The client has already been closed.');
       client.close();
       await assert.rejects(client.deletePhraseSet(request), expectedError);
@@ -840,7 +836,6 @@ describe('v1p1beta1.AdaptationClient', () => {
         new protos.google.cloud.speech.v1p1beta1.CreateCustomClassRequest()
       );
       request.parent = '';
-      const expectedHeaderRequestParams = 'parent=';
       const expectedError = new Error('The client has already been closed.');
       client.close();
       await assert.rejects(client.createCustomClass(request), expectedError);
@@ -967,7 +962,6 @@ describe('v1p1beta1.AdaptationClient', () => {
         new protos.google.cloud.speech.v1p1beta1.GetCustomClassRequest()
       );
       request.name = '';
-      const expectedHeaderRequestParams = 'name=';
       const expectedError = new Error('The client has already been closed.');
       client.close();
       await assert.rejects(client.getCustomClass(request), expectedError);
@@ -1098,7 +1092,6 @@ describe('v1p1beta1.AdaptationClient', () => {
       );
       request.customClass = {};
       request.customClass.name = '';
-      const expectedHeaderRequestParams = 'custom_class.name=';
       const expectedError = new Error('The client has already been closed.');
       client.close();
       await assert.rejects(client.updateCustomClass(request), expectedError);
@@ -1225,7 +1218,6 @@ describe('v1p1beta1.AdaptationClient', () => {
         new protos.google.cloud.speech.v1p1beta1.DeleteCustomClassRequest()
       );
       request.name = '';
-      const expectedHeaderRequestParams = 'name=';
       const expectedError = new Error('The client has already been closed.');
       client.close();
       await assert.rejects(client.deleteCustomClass(request), expectedError);
