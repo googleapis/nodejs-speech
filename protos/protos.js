@@ -99,7 +99,7 @@
                         };
     
                         /**
-                         * Callback as used by {@link google.cloud.speech.v1.Speech#recognize}.
+                         * Callback as used by {@link google.cloud.speech.v1.Speech|recognize}.
                          * @memberof google.cloud.speech.v1.Speech
                          * @typedef RecognizeCallback
                          * @type {function}
@@ -132,7 +132,7 @@
                          */
     
                         /**
-                         * Callback as used by {@link google.cloud.speech.v1.Speech#longRunningRecognize}.
+                         * Callback as used by {@link google.cloud.speech.v1.Speech|longRunningRecognize}.
                          * @memberof google.cloud.speech.v1.Speech
                          * @typedef LongRunningRecognizeCallback
                          * @type {function}
@@ -165,7 +165,7 @@
                          */
     
                         /**
-                         * Callback as used by {@link google.cloud.speech.v1.Speech#streamingRecognize}.
+                         * Callback as used by {@link google.cloud.speech.v1.Speech|streamingRecognize}.
                          * @memberof google.cloud.speech.v1.Speech
                          * @typedef StreamingRecognizeCallback
                          * @type {function}
@@ -6836,7 +6836,7 @@
                         };
     
                         /**
-                         * Callback as used by {@link google.cloud.speech.v1p1beta1.Speech#recognize}.
+                         * Callback as used by {@link google.cloud.speech.v1p1beta1.Speech|recognize}.
                          * @memberof google.cloud.speech.v1p1beta1.Speech
                          * @typedef RecognizeCallback
                          * @type {function}
@@ -6869,7 +6869,7 @@
                          */
     
                         /**
-                         * Callback as used by {@link google.cloud.speech.v1p1beta1.Speech#longRunningRecognize}.
+                         * Callback as used by {@link google.cloud.speech.v1p1beta1.Speech|longRunningRecognize}.
                          * @memberof google.cloud.speech.v1p1beta1.Speech
                          * @typedef LongRunningRecognizeCallback
                          * @type {function}
@@ -6902,7 +6902,7 @@
                          */
     
                         /**
-                         * Callback as used by {@link google.cloud.speech.v1p1beta1.Speech#streamingRecognize}.
+                         * Callback as used by {@link google.cloud.speech.v1p1beta1.Speech|streamingRecognize}.
                          * @memberof google.cloud.speech.v1p1beta1.Speech
                          * @typedef StreamingRecognizeCallback
                          * @type {function}
@@ -14142,7 +14142,7 @@
                         };
     
                         /**
-                         * Callback as used by {@link google.cloud.speech.v1p1beta1.Adaptation#createPhraseSet}.
+                         * Callback as used by {@link google.cloud.speech.v1p1beta1.Adaptation|createPhraseSet}.
                          * @memberof google.cloud.speech.v1p1beta1.Adaptation
                          * @typedef CreatePhraseSetCallback
                          * @type {function}
@@ -14175,7 +14175,7 @@
                          */
     
                         /**
-                         * Callback as used by {@link google.cloud.speech.v1p1beta1.Adaptation#getPhraseSet}.
+                         * Callback as used by {@link google.cloud.speech.v1p1beta1.Adaptation|getPhraseSet}.
                          * @memberof google.cloud.speech.v1p1beta1.Adaptation
                          * @typedef GetPhraseSetCallback
                          * @type {function}
@@ -14208,7 +14208,7 @@
                          */
     
                         /**
-                         * Callback as used by {@link google.cloud.speech.v1p1beta1.Adaptation#listPhraseSet}.
+                         * Callback as used by {@link google.cloud.speech.v1p1beta1.Adaptation|listPhraseSet}.
                          * @memberof google.cloud.speech.v1p1beta1.Adaptation
                          * @typedef ListPhraseSetCallback
                          * @type {function}
@@ -14241,7 +14241,7 @@
                          */
     
                         /**
-                         * Callback as used by {@link google.cloud.speech.v1p1beta1.Adaptation#updatePhraseSet}.
+                         * Callback as used by {@link google.cloud.speech.v1p1beta1.Adaptation|updatePhraseSet}.
                          * @memberof google.cloud.speech.v1p1beta1.Adaptation
                          * @typedef UpdatePhraseSetCallback
                          * @type {function}
@@ -14274,7 +14274,7 @@
                          */
     
                         /**
-                         * Callback as used by {@link google.cloud.speech.v1p1beta1.Adaptation#deletePhraseSet}.
+                         * Callback as used by {@link google.cloud.speech.v1p1beta1.Adaptation|deletePhraseSet}.
                          * @memberof google.cloud.speech.v1p1beta1.Adaptation
                          * @typedef DeletePhraseSetCallback
                          * @type {function}
@@ -14307,7 +14307,7 @@
                          */
     
                         /**
-                         * Callback as used by {@link google.cloud.speech.v1p1beta1.Adaptation#createCustomClass}.
+                         * Callback as used by {@link google.cloud.speech.v1p1beta1.Adaptation|createCustomClass}.
                          * @memberof google.cloud.speech.v1p1beta1.Adaptation
                          * @typedef CreateCustomClassCallback
                          * @type {function}
@@ -14340,7 +14340,7 @@
                          */
     
                         /**
-                         * Callback as used by {@link google.cloud.speech.v1p1beta1.Adaptation#getCustomClass}.
+                         * Callback as used by {@link google.cloud.speech.v1p1beta1.Adaptation|getCustomClass}.
                          * @memberof google.cloud.speech.v1p1beta1.Adaptation
                          * @typedef GetCustomClassCallback
                          * @type {function}
@@ -14373,7 +14373,7 @@
                          */
     
                         /**
-                         * Callback as used by {@link google.cloud.speech.v1p1beta1.Adaptation#listCustomClasses}.
+                         * Callback as used by {@link google.cloud.speech.v1p1beta1.Adaptation|listCustomClasses}.
                          * @memberof google.cloud.speech.v1p1beta1.Adaptation
                          * @typedef ListCustomClassesCallback
                          * @type {function}
@@ -14406,7 +14406,7 @@
                          */
     
                         /**
-                         * Callback as used by {@link google.cloud.speech.v1p1beta1.Adaptation#updateCustomClass}.
+                         * Callback as used by {@link google.cloud.speech.v1p1beta1.Adaptation|updateCustomClass}.
                          * @memberof google.cloud.speech.v1p1beta1.Adaptation
                          * @typedef UpdateCustomClassCallback
                          * @type {function}
@@ -14439,7 +14439,7 @@
                          */
     
                         /**
-                         * Callback as used by {@link google.cloud.speech.v1p1beta1.Adaptation#deleteCustomClass}.
+                         * Callback as used by {@link google.cloud.speech.v1p1beta1.Adaptation|deleteCustomClass}.
                          * @memberof google.cloud.speech.v1p1beta1.Adaptation
                          * @typedef DeleteCustomClassCallback
                          * @type {function}
@@ -30164,7 +30164,7 @@
                 };
     
                 /**
-                 * Callback as used by {@link google.longrunning.Operations#listOperations}.
+                 * Callback as used by {@link google.longrunning.Operations|listOperations}.
                  * @memberof google.longrunning.Operations
                  * @typedef ListOperationsCallback
                  * @type {function}
@@ -30197,7 +30197,7 @@
                  */
     
                 /**
-                 * Callback as used by {@link google.longrunning.Operations#getOperation}.
+                 * Callback as used by {@link google.longrunning.Operations|getOperation}.
                  * @memberof google.longrunning.Operations
                  * @typedef GetOperationCallback
                  * @type {function}
@@ -30230,7 +30230,7 @@
                  */
     
                 /**
-                 * Callback as used by {@link google.longrunning.Operations#deleteOperation}.
+                 * Callback as used by {@link google.longrunning.Operations|deleteOperation}.
                  * @memberof google.longrunning.Operations
                  * @typedef DeleteOperationCallback
                  * @type {function}
@@ -30263,7 +30263,7 @@
                  */
     
                 /**
-                 * Callback as used by {@link google.longrunning.Operations#cancelOperation}.
+                 * Callback as used by {@link google.longrunning.Operations|cancelOperation}.
                  * @memberof google.longrunning.Operations
                  * @typedef CancelOperationCallback
                  * @type {function}
@@ -30296,7 +30296,7 @@
                  */
     
                 /**
-                 * Callback as used by {@link google.longrunning.Operations#waitOperation}.
+                 * Callback as used by {@link google.longrunning.Operations|waitOperation}.
                  * @memberof google.longrunning.Operations
                  * @typedef WaitOperationCallback
                  * @type {function}
