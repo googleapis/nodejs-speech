@@ -107,9 +107,9 @@ describe('SpeechClient TypeScript system test v1', () => {
     stream.on(
       'data',
       (response: google.cloud.speech.v1.IStreamingRecognizeResponse) => {
-        assert.strictEqual(
+        assert.match(
           response.results![0].alternatives![0].transcript,
-          'test of streaming recognize call'
+          /test.*call/
         );
         gotResponse = true;
       }
