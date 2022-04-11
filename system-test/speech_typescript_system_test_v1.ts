@@ -74,7 +74,7 @@ describe('SpeechClient TypeScript system test v1', () => {
     const [operation] = await client.longRunningRecognize(request);
     const [response] = await operation.promise();
     assert.strictEqual(
-      response.results![0].alternatives![0].transcript,
+      response.results![0].alternatives![0].transcript ?? "",
       'hello'
     );
   });
@@ -108,7 +108,7 @@ describe('SpeechClient TypeScript system test v1', () => {
       'data',
       (response: google.cloud.speech.v1.IStreamingRecognizeResponse) => {
         assert.match(
-          response.results![0].alternatives![0].transcript,
+          response.results![0].alternatives![0].transcript ?? "",
           /test.*call/
         );
         gotResponse = true;
