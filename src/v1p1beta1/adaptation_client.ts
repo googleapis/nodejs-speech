@@ -344,8 +344,7 @@ export class AdaptationClient {
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.parent
-   *   Required. The parent resource where this phrase set will be created.
-   *   Format:
+   *   Required. The parent resource where this phrase set will be created. Format:
    *
    *   `projects/{project}/locations/{location}/phraseSets`
    *
@@ -358,8 +357,8 @@ export class AdaptationClient {
    *   Required. The ID to use for the phrase set, which will become the final
    *   component of the phrase set's resource name.
    *
-   *   This value should be 4-63 characters, and valid characters
-   *   are /{@link 0-9|a-z}-/.
+   *   This value should restrict to letters, numbers, and hyphens, with the first
+   *   character a letter, the last a letter or a number, and be 4-63 characters.
    * @param {google.cloud.speech.v1p1beta1.PhraseSet} request.phraseSet
    *   Required. The phrase set to create.
    * @param {object} [options]
@@ -748,8 +747,7 @@ export class AdaptationClient {
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.parent
-   *   Required. The parent resource where this custom class will be created.
-   *   Format:
+   *   Required. The parent resource where this custom class will be created. Format:
    *
    *   `projects/{project}/locations/{location}/customClasses`
    *
@@ -762,8 +760,8 @@ export class AdaptationClient {
    *   Required. The ID to use for the custom class, which will become the final
    *   component of the custom class' resource name.
    *
-   *   This value should be 4-63 characters, and valid characters
-   *   are /{@link 0-9|a-z}-/.
+   *   This value should restrict to letters, numbers, and hyphens, with the first
+   *   character a letter, the last a letter or a number, and be 4-63 characters.
    * @param {google.cloud.speech.v1p1beta1.CustomClass} request.customClass
    *   Required. The custom class to create.
    * @param {object} [options]
