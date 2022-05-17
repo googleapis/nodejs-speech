@@ -92,21 +92,21 @@ export namespace google {
                 namespace Speech {
 
                     /**
-                     * Callback as used by {@link google.cloud.speech.v1.Speech#recognize}.
+                     * Callback as used by {@link google.cloud.speech.v1.Speech|recognize}.
                      * @param error Error, if any
                      * @param [response] RecognizeResponse
                      */
                     type RecognizeCallback = (error: (Error|null), response?: google.cloud.speech.v1.RecognizeResponse) => void;
 
                     /**
-                     * Callback as used by {@link google.cloud.speech.v1.Speech#longRunningRecognize}.
+                     * Callback as used by {@link google.cloud.speech.v1.Speech|longRunningRecognize}.
                      * @param error Error, if any
                      * @param [response] Operation
                      */
                     type LongRunningRecognizeCallback = (error: (Error|null), response?: google.longrunning.Operation) => void;
 
                     /**
-                     * Callback as used by {@link google.cloud.speech.v1.Speech#streamingRecognize}.
+                     * Callback as used by {@link google.cloud.speech.v1.Speech|streamingRecognize}.
                      * @param error Error, if any
                      * @param [response] StreamingRecognizeResponse
                      */
@@ -2737,21 +2737,21 @@ export namespace google {
                 namespace Speech {
 
                     /**
-                     * Callback as used by {@link google.cloud.speech.v1p1beta1.Speech#recognize}.
+                     * Callback as used by {@link google.cloud.speech.v1p1beta1.Speech|recognize}.
                      * @param error Error, if any
                      * @param [response] RecognizeResponse
                      */
                     type RecognizeCallback = (error: (Error|null), response?: google.cloud.speech.v1p1beta1.RecognizeResponse) => void;
 
                     /**
-                     * Callback as used by {@link google.cloud.speech.v1p1beta1.Speech#longRunningRecognize}.
+                     * Callback as used by {@link google.cloud.speech.v1p1beta1.Speech|longRunningRecognize}.
                      * @param error Error, if any
                      * @param [response] Operation
                      */
                     type LongRunningRecognizeCallback = (error: (Error|null), response?: google.longrunning.Operation) => void;
 
                     /**
-                     * Callback as used by {@link google.cloud.speech.v1p1beta1.Speech#streamingRecognize}.
+                     * Callback as used by {@link google.cloud.speech.v1p1beta1.Speech|streamingRecognize}.
                      * @param error Error, if any
                      * @param [response] StreamingRecognizeResponse
                      */
@@ -5702,70 +5702,70 @@ export namespace google {
                 namespace Adaptation {
 
                     /**
-                     * Callback as used by {@link google.cloud.speech.v1p1beta1.Adaptation#createPhraseSet}.
+                     * Callback as used by {@link google.cloud.speech.v1p1beta1.Adaptation|createPhraseSet}.
                      * @param error Error, if any
                      * @param [response] PhraseSet
                      */
                     type CreatePhraseSetCallback = (error: (Error|null), response?: google.cloud.speech.v1p1beta1.PhraseSet) => void;
 
                     /**
-                     * Callback as used by {@link google.cloud.speech.v1p1beta1.Adaptation#getPhraseSet}.
+                     * Callback as used by {@link google.cloud.speech.v1p1beta1.Adaptation|getPhraseSet}.
                      * @param error Error, if any
                      * @param [response] PhraseSet
                      */
                     type GetPhraseSetCallback = (error: (Error|null), response?: google.cloud.speech.v1p1beta1.PhraseSet) => void;
 
                     /**
-                     * Callback as used by {@link google.cloud.speech.v1p1beta1.Adaptation#listPhraseSet}.
+                     * Callback as used by {@link google.cloud.speech.v1p1beta1.Adaptation|listPhraseSet}.
                      * @param error Error, if any
                      * @param [response] ListPhraseSetResponse
                      */
                     type ListPhraseSetCallback = (error: (Error|null), response?: google.cloud.speech.v1p1beta1.ListPhraseSetResponse) => void;
 
                     /**
-                     * Callback as used by {@link google.cloud.speech.v1p1beta1.Adaptation#updatePhraseSet}.
+                     * Callback as used by {@link google.cloud.speech.v1p1beta1.Adaptation|updatePhraseSet}.
                      * @param error Error, if any
                      * @param [response] PhraseSet
                      */
                     type UpdatePhraseSetCallback = (error: (Error|null), response?: google.cloud.speech.v1p1beta1.PhraseSet) => void;
 
                     /**
-                     * Callback as used by {@link google.cloud.speech.v1p1beta1.Adaptation#deletePhraseSet}.
+                     * Callback as used by {@link google.cloud.speech.v1p1beta1.Adaptation|deletePhraseSet}.
                      * @param error Error, if any
                      * @param [response] Empty
                      */
                     type DeletePhraseSetCallback = (error: (Error|null), response?: google.protobuf.Empty) => void;
 
                     /**
-                     * Callback as used by {@link google.cloud.speech.v1p1beta1.Adaptation#createCustomClass}.
+                     * Callback as used by {@link google.cloud.speech.v1p1beta1.Adaptation|createCustomClass}.
                      * @param error Error, if any
                      * @param [response] CustomClass
                      */
                     type CreateCustomClassCallback = (error: (Error|null), response?: google.cloud.speech.v1p1beta1.CustomClass) => void;
 
                     /**
-                     * Callback as used by {@link google.cloud.speech.v1p1beta1.Adaptation#getCustomClass}.
+                     * Callback as used by {@link google.cloud.speech.v1p1beta1.Adaptation|getCustomClass}.
                      * @param error Error, if any
                      * @param [response] CustomClass
                      */
                     type GetCustomClassCallback = (error: (Error|null), response?: google.cloud.speech.v1p1beta1.CustomClass) => void;
 
                     /**
-                     * Callback as used by {@link google.cloud.speech.v1p1beta1.Adaptation#listCustomClasses}.
+                     * Callback as used by {@link google.cloud.speech.v1p1beta1.Adaptation|listCustomClasses}.
                      * @param error Error, if any
                      * @param [response] ListCustomClassesResponse
                      */
                     type ListCustomClassesCallback = (error: (Error|null), response?: google.cloud.speech.v1p1beta1.ListCustomClassesResponse) => void;
 
                     /**
-                     * Callback as used by {@link google.cloud.speech.v1p1beta1.Adaptation#updateCustomClass}.
+                     * Callback as used by {@link google.cloud.speech.v1p1beta1.Adaptation|updateCustomClass}.
                      * @param error Error, if any
                      * @param [response] CustomClass
                      */
                     type UpdateCustomClassCallback = (error: (Error|null), response?: google.cloud.speech.v1p1beta1.CustomClass) => void;
 
                     /**
-                     * Callback as used by {@link google.cloud.speech.v1p1beta1.Adaptation#deleteCustomClass}.
+                     * Callback as used by {@link google.cloud.speech.v1p1beta1.Adaptation|deleteCustomClass}.
                      * @param error Error, if any
                      * @param [response] Empty
                      */
@@ -9374,6 +9374,9 @@ export namespace google {
             /** FieldOptions lazy */
             lazy?: (boolean|null);
 
+            /** FieldOptions unverifiedLazy */
+            unverifiedLazy?: (boolean|null);
+
             /** FieldOptions deprecated */
             deprecated?: (boolean|null);
 
@@ -9410,6 +9413,9 @@ export namespace google {
 
             /** FieldOptions lazy. */
             public lazy: boolean;
+
+            /** FieldOptions unverifiedLazy. */
+            public unverifiedLazy: boolean;
 
             /** FieldOptions deprecated. */
             public deprecated: boolean;
@@ -12022,35 +12028,35 @@ export namespace google {
         namespace Operations {
 
             /**
-             * Callback as used by {@link google.longrunning.Operations#listOperations}.
+             * Callback as used by {@link google.longrunning.Operations|listOperations}.
              * @param error Error, if any
              * @param [response] ListOperationsResponse
              */
             type ListOperationsCallback = (error: (Error|null), response?: google.longrunning.ListOperationsResponse) => void;
 
             /**
-             * Callback as used by {@link google.longrunning.Operations#getOperation}.
+             * Callback as used by {@link google.longrunning.Operations|getOperation}.
              * @param error Error, if any
              * @param [response] Operation
              */
             type GetOperationCallback = (error: (Error|null), response?: google.longrunning.Operation) => void;
 
             /**
-             * Callback as used by {@link google.longrunning.Operations#deleteOperation}.
+             * Callback as used by {@link google.longrunning.Operations|deleteOperation}.
              * @param error Error, if any
              * @param [response] Empty
              */
             type DeleteOperationCallback = (error: (Error|null), response?: google.protobuf.Empty) => void;
 
             /**
-             * Callback as used by {@link google.longrunning.Operations#cancelOperation}.
+             * Callback as used by {@link google.longrunning.Operations|cancelOperation}.
              * @param error Error, if any
              * @param [response] Empty
              */
             type CancelOperationCallback = (error: (Error|null), response?: google.protobuf.Empty) => void;
 
             /**
-             * Callback as used by {@link google.longrunning.Operations#waitOperation}.
+             * Callback as used by {@link google.longrunning.Operations|waitOperation}.
              * @param error Error, if any
              * @param [response] Operation
              */
