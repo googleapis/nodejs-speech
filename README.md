@@ -116,14 +116,6 @@ Samples are in the [`samples/`](https://github.com/googleapis/nodejs-speech/tree
 The [Cloud Speech Node.js Client API Reference][client-docs] documentation
 also contains samples.
 
-## Run the test
-
-If you want to run all tests of the sample code, you can run the following command from the root
-```bash
-npm test
-```
-
-
 ## Supported Node.js Versions
 
 Our client libraries follow the [Node.js release schedule](https://nodejs.org/en/about/releases/).
