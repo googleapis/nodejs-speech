@@ -38,26 +38,7 @@ function main(
   // Imports the Speech-to-Text client library
   const speech = require('@google-cloud/speech');
   const {Storage} = require('@google-cloud/storage');
-  const path = require('path');
   const fsp = require('fs.promises');
-
-  const protobuf = require('protobufjs');
-  const serializer = require('proto3-json-serializer');
-
-  // All of the Google API's protocol buffer files
-  const protos = require('google-proto-files');
-
-  // Load some proto file
-  const rpcProtos = protos.getProtoPath('cloud');
-
-  const root = protobuf.loadSync([
-    path.join(rpcProtos, 'speech/v1/cloud_speech.proto'),
-    'google/protobuf/duration.proto',
-  ]);
-
-  const LongRunningRecognizeResponse = root.lookupType(
-    'LongRunningRecognizeResponse'
-  );
 
   // Creates a client
   const speechClient = new speech.SpeechClient();
