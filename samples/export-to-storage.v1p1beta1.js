@@ -105,14 +105,8 @@ function main(
     // Get content as json
     const content = JSON.parse((await fsp.readFile(destFileName)).toString());
 
-    // Get transcript exported in storage bucket
-    const storageTranscript = serializer.fromProto3JSON(
-      LongRunningRecognizeResponse,
-      content
-    );
-
     // Print results
-    const transcription = storageTranscript.results
+    const transcription = content.results
       .map(result => result.alternatives[0].transcript)
       .join('\n');
     console.log('Transcription: ', transcription);
