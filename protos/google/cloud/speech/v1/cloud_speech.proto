@@ -242,6 +242,8 @@ message RecognitionConfig {
     // ([OggOpus](https://wiki.xiph.org/OggOpus)). `sample_rate_hertz` must be
     // one of 8000, 12000, 16000, 24000, or 48000.
     WEBM_OPUS = 9;
+
+    MP3 = 10;
   }
 
   // Encoding of audio data sent in all `RecognitionAudio` messages.
