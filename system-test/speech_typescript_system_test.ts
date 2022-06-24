@@ -79,6 +79,36 @@ describe('SpeechClient TypeScript system test default', () => {
     );
   });
 
+  it('calls REST longRunningRecognize', async () => {
+    const client = new speech.SpeechClient({fallback: 'rest'});
+
+    const languageCode = 'en-US';
+    const sampleRateHertz = 44100;
+    const encoding =
+      google.cloud.speech.v1.RecognitionConfig.AudioEncoding.FLAC;
+    const audioChannelCount = 2;
+    const config = {
+      languageCode,
+      sampleRateHertz,
+      encoding,
+      audioChannelCount,
+    };
+    const uri = 'gs://cloud-samples-data/speech/hello.flac';
+    const audio = {
+      uri,
+    };
+    const request = {
+      config,
+      audio,
+    };
+    const [operation] = await client.longRunningRecognize(request);
+    const [response] = await operation.promise();
+    assert.strictEqual(
+      response.results![0].alternatives![0].transcript,
+      'hello'
+    );
+  });
+
   it('calls streamingRecognize', done => {
     const filename = path.join(
       'system-test',

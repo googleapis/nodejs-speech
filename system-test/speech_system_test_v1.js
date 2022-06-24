@@ -70,6 +70,31 @@ describe('SpeechClient system test v1', () => {
     assert.strictEqual(response.results[0].alternatives[0].transcript, 'hello');
   });
 
+  it('calls REST longRunningRecognize', async () => {
+    const client = new speech.v1.SpeechClient({fallback: 'rest'});
+
+    const languageCode = 'en-US';
+    const sampleRateHertz = 44100;
+    const encoding = 'FLAC';
+    const config = {
+      languageCode: languageCode,
+      sampleRateHertz: sampleRateHertz,
+      encoding: encoding,
+      audioChannelCount: 2,
+    };
+    const uri = 'gs://cloud-samples-data/speech/hello.flac';
+    const audio = {
+      uri: uri,
+    };
+    const request = {
+      config: config,
+      audio: audio,
+    };
+    const [operation] = await client.longRunningRecognize(request);
+    const [response] = await operation.promise();
+    assert.strictEqual(response.results[0].alternatives[0].transcript, 'hello');
+  });
+
   it('calls streamingRecognize', done => {
     const filename = path.join(
       'system-test',
