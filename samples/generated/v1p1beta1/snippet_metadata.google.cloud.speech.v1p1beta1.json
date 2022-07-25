@@ -1,7 +1,7 @@
 {
     "clientLibrary": {
         "name": "nodejs-speech",
-        "version": "4.10.2",
+        "version": "5.0.0",
         "language": "TYPESCRIPT",
         "apis": [
             {
@@ -22,7 +22,7 @@
             "segments": [
                 {
                     "start": 25,
-                    "end": 70,
+                    "end": 69,
                     "type": "FULL"
                 }
             ],
@@ -242,7 +242,7 @@
             "segments": [
                 {
                     "start": 25,
-                    "end": 70,
+                    "end": 69,
                     "type": "FULL"
                 }
             ],

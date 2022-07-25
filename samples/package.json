@@ -5,7 +5,7 @@
   "author": "Google LLC",
   "repository": "googleapis/nodejs-speech",
   "engines": {
-    "node": ">=10.17.0"
+    "node": ">=12.0.0"
   },
   "files": [
     "*.js",
@@ -15,14 +15,14 @@
     "test": "c8 mocha system-test --timeout 600000"
   },
   "dependencies": {
-    "@google-cloud/speech": "^4.10.2",
-    "@google-cloud/storage": "^5.0.0",
+    "@google-cloud/speech": "^5.0.0",
+    "@google-cloud/storage": "^6.0.0",
     "chalk": "^5.0.0",
     "fs.promises": "^0.1.2",
-    "google-proto-files": "^2.5.0",
+    "google-proto-files": "^3.0.0",
     "node-record-lpcm16": "^1.0.1",
-    "proto3-json-serializer": "^0.1.6",
-    "protobufjs": "^6.11.2",
+    "proto3-json-serializer": "^1.0.0",
+    "protobufjs": "^7.0.0",
     "sox": "^0.1.0",
     "yargs": "^16.0.0"
   },
