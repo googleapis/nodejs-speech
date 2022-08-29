@@ -1,0 +1,31 @@
+{
+  "name": "nodejs-docs-samples-speech",
+  "private": true,
+  "license": "Apache-2.0",
+  "author": "Google LLC",
+  "repository": "googleapis/nodejs-speech",
+  "engines": {
+    "node": ">=10.17.0"
+  },
+  "files": [
+    "*.js",
+    "resources/"
+  ],
+  "scripts": {
+    "test": "c8 mocha system-test --timeout 600000"
+  },
+  "dependencies": {
+    "@google-cloud/speech": "^4.5.0",
+    "@google-cloud/storage": "^5.0.0",
+    "chalk": "^4.0.0",
+    "node-record-lpcm16": "^1.0.1",
+    "sox": "^0.1.0",
+    "yargs": "^16.0.0"
+  },
+  "devDependencies": {
+    "c8": "^7.0.0",
+    "chai": "^4.2.0",
+    "mocha": "^8.0.0",
+    "uuid": "^8.0.0"
+  }
+}
