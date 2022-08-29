@@ -5,8 +5,7 @@
   "license": "Apache-2.0",
   "author": "Google Inc.",
   "engines": {
-    "npm" : ">=7.0.0",
-    "node" : ">=16.0.0"
+    "node" : ">=14.0.0"
   },
   "repository": "googleapis/nodejs-speech",
   "main": "./build/src/index.js",
