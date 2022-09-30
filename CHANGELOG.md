@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@google-cloud/speech?activeTab=versions
 
+## [5.1.0](https://github.com/googleapis/nodejs-speech/compare/v5.0.3...v5.1.0) (2022-09-30)
+
+
+### Features
+
+* Speech v2 API ([#967](https://github.com/googleapis/nodejs-speech/issues/967)) ([a3989b0](https://github.com/googleapis/nodejs-speech/commit/a3989b0a88784d4418510e232919539427f17409))
+
 ## [5.0.3](https://github.com/googleapis/nodejs-speech/compare/v5.0.2...v5.0.3) (2022-09-22)
 
 
