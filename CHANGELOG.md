@@ -11,6 +11,9 @@
 
 * Speech v2 API ([#967](https://github.com/googleapis/nodejs-speech/issues/967)) ([a3989b0](https://github.com/googleapis/nodejs-speech/commit/a3989b0a88784d4418510e232919539427f17409))
 
+**Note:** the v2 API is not enabled yet, it will be enabled within a few weeks. The v1 version is still the default at this moment.
+We'll switch the default to v2 in the next major release of the library.
+
 ## [5.0.3](https://github.com/googleapis/nodejs-speech/compare/v5.0.2...v5.0.3) (2022-09-22)
 
 
