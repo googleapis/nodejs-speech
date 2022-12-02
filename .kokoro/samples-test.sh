@@ -22,6 +22,8 @@ export NPM_CONFIG_PREFIX=${HOME}/.npm-global
 export GOOGLE_APPLICATION_CREDENTIALS=${KOKORO_GFILE_DIR}/service-account.json
 export GCLOUD_PROJECT=long-door-651
 
+export NOT_REAL_SECRET=${SECRET_LOCATION}/not_a_real_secret_testing_permissions
+
 cd $(dirname $0)/..
 
 # Run a pre-test hook, if a pre-samples-test.sh is in the project

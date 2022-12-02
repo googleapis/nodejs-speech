@@ -35,4 +35,4 @@ def patch(library: Path):
         '// eslint-disable-next-line @typescript-eslint/no-empty-interface\n' +
         'export interface SpeechClient extends ImprovedStreamingClient {}\n'
     )
-node.owlbot_main(templates_excludes=["src/index.ts"], patch_staging=patch)
+node.owlbot_main(templates_excludes=["src/index.ts", ".kokoro/samples-test.sh", ".kokoro/presubmit/node12/samples-test.cfg"], patch_staging=patch)
