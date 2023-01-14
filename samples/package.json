@@ -11,9 +11,6 @@
     "*.js",
     "resources/"
   ],
-  "scripts": {
-    "test": "c8 mocha system-test --timeout 600000"
-  },
   "dependencies": {
     "@google-cloud/speech": "^5.1.1",
     "@google-cloud/storage": "^6.0.0",
